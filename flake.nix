@@ -44,6 +44,7 @@
             pkgs.libiconv
             # Useful for json manipulation
             pkgs.jq
+            pkgs.git
             # Used for storing large files in git
             pkgs.git-lfs
             # Service that provides nix caches
