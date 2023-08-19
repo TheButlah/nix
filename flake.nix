@@ -35,6 +35,8 @@
           paths = [
             # Better than bash
             pkgs.zsh
+            # ZSH package manager
+            pkgs.oh-my-zsh
             # Nice autosuggestions
             pkgs.zsh-autosuggestions
             # best editor
