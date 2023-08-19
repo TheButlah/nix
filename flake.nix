@@ -35,6 +35,8 @@
           paths = [
             # Better than bash
             pkgs.zsh
+            # Nice autosuggestions
+            pkgs.zsh-autosuggestions
             # best editor
             pkgs.neovim
             # Makes activating project-specific stuff easy
