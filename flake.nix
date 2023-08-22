@@ -78,9 +78,7 @@
           # Cross compilation
           pkgs.zig
 
-          # 🦀 Cargo Cult 🦀
-          # Everything here is rust btw
-          rustToolchain
+          # 🦀 Cargo Cult 🦀 - everything here is rust btw
           # awesome prompt
           pkgs.starship
           # Better than tmux, also rust
@@ -89,6 +87,11 @@
           pkgs.ripgrep
           # If I need to do soy development, at least it wont be with shit tools
           pkgs.fnm
+          # ~blazingly fast~ terminal in wgpu
+          pkgs.wezterm
+
+          # Tools for rust development
+          rustToolchain
           pkgs.cargo-zigbuild
           pkgs.cargo-expand
           pkgs.probe-rs
