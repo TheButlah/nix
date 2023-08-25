@@ -91,7 +91,8 @@
           pkgs.wezterm
 
           # Tools for rust development
-          rustToolchain
+          # rustToolchain
+          pkgs.rustup
           pkgs.cargo-zigbuild
           pkgs.cargo-expand
           pkgs.probe-rs
