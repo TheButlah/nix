@@ -30,6 +30,11 @@
     enable = true;
     extraConfig = builtins.readFile ./wezterm.lua;
   };
+  programs.zellij = {
+    enable = true;
+	enableZshIntegration = true;
+	enableBashIntegration = true;
+  };
 
   xdg.enable = true;
   xdg.configFile = {
