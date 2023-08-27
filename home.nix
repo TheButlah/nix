@@ -12,15 +12,17 @@
   programs.home-manager.enable = true;
   programs.git = {
     enable = true;
-	userName = "Ryan Butler";
-	userEmail = "thebutlah" + /* This is done to avoid spam */ "@gmail.com";
-	lfs.enable = true;
+    userName = "Ryan Butler";
+    userEmail = "thebutlah" + /* This is done to avoid spam */ "@gmail.com";
+    lfs.enable = true;
   };
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
     oh-my-zsh.enable = true;
-    defaultKeymap = "vicmd";
+    initExtra = ''
+      		set -o vi
+      	'';
   };
   programs.starship = {
     enable = true;
@@ -32,8 +34,8 @@
   };
   programs.zellij = {
     enable = true;
-	enableZshIntegration = true;
-	enableBashIntegration = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
   };
 
   xdg.enable = true;
