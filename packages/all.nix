@@ -7,6 +7,8 @@
   pkgs.git
   # Used for storing large files in git
   pkgs.git-lfs
+  pkgs.curl
+  pkgs.wget
 
 
   # Shell
@@ -36,6 +38,8 @@
   pkgs.zellij
   # Speedy grep replacement
   pkgs.ripgrep
+  pkgs.bat
+  pkgs.exa
 
 
   # Build tools
