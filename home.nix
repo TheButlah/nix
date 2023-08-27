@@ -26,6 +26,10 @@
     enable = true;
     settings = lib.trivial.importTOML ./starship.toml;
   };
+  programs.wezterm = {
+    enable = true;
+    extraConfig = builtins.readFile ./wezterm.lua;
+  };
 
   xdg.enable = true;
   xdg.configFile = {
