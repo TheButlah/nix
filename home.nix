@@ -3,10 +3,12 @@
     username = "ryan";
     homeDirectory = "/home/ryan";
     packages = import ./packages/all.nix { inherit pkgs; };
-    sessionVariables = { };
+    sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
   };
 
-  # Enable home-manager and git
   programs.home-manager.enable = true;
   programs.git.enable = true;
   programs.zsh = {
@@ -18,6 +20,16 @@
   programs.starship = {
     enable = true;
     settings = lib.trivial.importTOML ./starship.toml;
+  };
+
+  xdg.enable = true;
+  xdg.configFile = {
+    "nvim" = {
+      source = pkgs.fetchgit {
+        url = "https://github.com/thebutlah/init.lua";
+        sha256 = "sha256-0Hea7q2OaB6Gld5n5MztxIE4wJapCAjSPD4Cz7+Z044=";
+      };
+    };
   };
 
   # Nicely reload system units when changing configs
