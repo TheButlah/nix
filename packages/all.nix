@@ -24,6 +24,7 @@
   # GUI
   # ~blazingly fast~ terminal in wgpu
   pkgs.wezterm
+  (pkgs.nerdfonts.override { fonts = [ "Meslo" "RobotoMono" ]; })
 
 
   # CLI

@@ -17,7 +17,7 @@ end
 
 config.window_decorations = "RESIZE | INTEGRATED_BUTTONS"
 config.window_padding = { left = 0, right = 0, top = "0.2cell", bottom = "0.2cell" }
-config.font_size = 16.0
+config.font_size = 15.0
 
 -- and finally, return the configuration to wezterm
 return config
