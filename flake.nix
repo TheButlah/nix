@@ -16,22 +16,21 @@
     };
   };
 
-  outputs = { self, nixpkgs, utils, fenix, home-manager }: {
+  outputs = inputs@{ self, nixpkgs, utils, fenix, home-manager }: {
     nixosConfigurations = {
-      ryan-wsl = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./configuration.nix
-          home-manager.nixosModules.home-manager
-          {
+      ryan-mac-utm = nixpkgs.lib.nixosSystem rec {
+        system = "aarch64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [ 
+		  ./machines/ryan-mac-utm/configuration.nix
+		  home-manager.nixosModules.home-manager
+		  {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.ryan = import ./home.nix;
-
-            # Optionally, use home-manager.extraSpecialArgs to pass
-            # arguments to home.nix
+			home-manager.extraSpecialArgs = { pkgs = nixpkgs.legacyPackages.${system}; };
           }
-        ];
+		];
       };
     };
   } //
@@ -48,62 +47,19 @@
         file = ./rust-toolchain.toml;
         sha256 = "R0F0Risbr74xg9mEYydyebx/z0Wu6HI0/KWwrV30vZo=";
       };
-      packages = [
-        # Better than bash
-        pkgs.zsh
-        # ZSH package manager
-        pkgs.oh-my-zsh
-        # Nice autosuggestions
-        pkgs.zsh-autosuggestions
-        # best editor
-        pkgs.neovim
-        # Makes activating project-specific stuff easy
-        pkgs.direnv
-        # This is missing on mac m1 nix, for some reason. You need it to compile.
-        # see https://stackoverflow.com/a/69732679
-        pkgs.libiconv
-        # Useful for json manipulation
-        pkgs.jq
-        pkgs.git
-        # Used for storing large files in git
-        pkgs.git-lfs
-        # Service that provides nix caches
-        pkgs.cachix
-        # Cross compilation
-        pkgs.zig
-
-        # 🦀 Cargo Cult 🦀 - everything here is rust btw
-        # awesome prompt
-        pkgs.starship
-        # Better than tmux, also rust
-        pkgs.zellij
-        # Speedy grep replacement
-        pkgs.ripgrep
-        # If I need to do soy development, at least it wont be with shit tools
-        pkgs.fnm
-        # ~blazingly fast~ terminal in wgpu
-        pkgs.wezterm
-
-        # Tools for rust development
-        # rustToolchain
-        pkgs.rustup
-        pkgs.cargo-zigbuild
-        pkgs.cargo-expand
-        pkgs.probe-rs
-        pkgs.cargo-binutils
-      ];
+      allPackages = import ./packages/all.nix { inherit pkgs; };
     in
     # See https://nixos.wiki/wiki/Flakes#Output_schema
     {
       # I'm using this as a replacement for brew
       packages.default = pkgs.buildEnv {
         name = "my-packages";
-        paths = packages;
+        paths = allPackages;
       };
       devShells.default = pkgs.mkShell
         {
           name = "my-dev-shell";
-          buildInputs = packages;
+          buildInputs = allPackages;
         };
       # This formats the nix files, not the rest of the repo.
       formatter = pkgs.nixpkgs-fmt;
