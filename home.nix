@@ -10,7 +10,12 @@
   };
 
   programs.home-manager.enable = true;
-  programs.git.enable = true;
+  programs.git = {
+    enable = true;
+	userName = "Ryan Butler";
+	userEmail = "thebutlah" + /* This is done to avoid spam */ "@gmail.com";
+	lfs.enable = true;
+  };
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
