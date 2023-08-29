@@ -1,4 +1,11 @@
-{ pkgs, lib, username, ... }: {
+{ pkgs, lib, config, username, ... }:
+let
+  nvim_cfg = pkgs.fetchgit {
+    url = "https://github.com/thebutlah/init.lua";
+    sha256 = "sha256-0Hea7q2OaB6Gld5n5MztxIE4wJapCAjSPD4Cz7+Z044=";
+  };
+in
+{
   home = {
     inherit username;
     homeDirectory = "/home/${username}";
@@ -42,12 +49,9 @@
   xdg.enable = true;
   xdg.configFile = {
     # Raw symlink to the plugin manager lock file, so that it stays writeable
-    "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${nvimDir}/lazy-lock.json";
+    "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${nvim_cfg}/lazy-lock.json";
     "nvim" = {
-      source = pkgs.fetchgit {
-        url = "https://github.com/thebutlah/init.lua";
-        sha256 = "sha256-0Hea7q2OaB6Gld5n5MztxIE4wJapCAjSPD4Cz7+Z044=";
-      };
+      source = nvim_cfg;
     };
   };
 
