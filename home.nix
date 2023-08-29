@@ -41,6 +41,8 @@
 
   xdg.enable = true;
   xdg.configFile = {
+    # Raw symlink to the plugin manager lock file, so that it stays writeable
+    "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${nvimDir}/lazy-lock.json";
     "nvim" = {
       source = pkgs.fetchgit {
         url = "https://github.com/thebutlah/init.lua";
