@@ -1,4 +1,16 @@
-{ pkgs, ... }: [
+{ pkgs, ... }: 
+let 
+my = {
+  # https://github.com/calops/nix/blob/54b053dbcd957c55de115acda16358f8b2062aba/programs/cli/neovim/default.nix#L12
+  neovim = pkgs.neovim.overrideAttrs (attrs: {
+      disallowedReferences = [];
+      nativeBuildInputs = attrs.nativeBuildInputs ++ [pkgs.makeWrapper];
+      postFixup = ''
+        wrapProgram $out/bin/nvim --prefix PATH : ${pkgs.lib.makeBinPath [pkgs.gcc]}
+      '';
+    });
+};
+in [
   # bootstrap
   # Service that provides nix caches
   pkgs.cachix
@@ -30,8 +42,8 @@
 
 
   # CLI
-  # best editor
-  pkgs.neovim
+  # neovim best editor
+  my.neovim
   # Useful for json manipulation
   pkgs.jq
   # Better than tmux, also rust
