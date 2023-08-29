@@ -32,6 +32,20 @@
           }
         ];
       };
+      nixos = nixpkgs.lib.nixosSystem rec {
+        system = "aarch64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./machines/ryan-orbstack/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.ryan = import ./home.nix;
+            home-manager.extraSpecialArgs = { pkgs = nixpkgs.legacyPackages.${system}; };
+          }
+        ];
+      };
     };
   } //
   # This helper function is used to more easily abstract
