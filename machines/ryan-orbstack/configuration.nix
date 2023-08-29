@@ -24,8 +24,11 @@ with lib;
   users.users.ryan = {
     isNormalUser = true;
     description = "Ryan Butler";
+    group = "ryan";
+    home = "/home/ryan";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
+    initialHashedPassword = "$y$j9T$sTbFlnxPZ0EYDwGthPcSF/$0gjYTv0GySuvnpjPbuZUryvmh.TpwLDbUrVHBJegalD";
   };
 
   # networking.hostName = mkForce "nixos"; # Overwrite the hostname.
