@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ modulesPath, config, pkgs, lib, ... }:
+{ username, modulesPath, config, pkgs, lib, ... }:
 
 with lib;
 
@@ -21,11 +21,11 @@ with lib;
   programs.zsh.enable = true;
   #  services.openssh.enable = true;
   # environment.systemPackages = import ../../packages/all.nix { inherit pkgs; };
-  users.users.ryan = {
+  users.users.${username} = {
     isNormalUser = true;
     description = "Ryan Butler";
-    group = "ryan";
-    home = "/home/ryan";
+    group = "${username}";
+    home = "/home/${username}";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     initialHashedPassword = "$y$j9T$sTbFlnxPZ0EYDwGthPcSF/$0gjYTv0GySuvnpjPbuZUryvmh.TpwLDbUrVHBJegalD";

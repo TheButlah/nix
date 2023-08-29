@@ -34,15 +34,15 @@
       };
       nixos = nixpkgs.lib.nixosSystem rec {
         system = "aarch64-linux";
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs; username = "ryan.butler"; };
         modules = [
           ./machines/ryan-orbstack/configuration.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.ryan = import ./home.nix;
-            home-manager.extraSpecialArgs = { pkgs = nixpkgs.legacyPackages.${system}; };
+            home-manager.users."ryan.butler" = import ./home.nix;
+            home-manager.extraSpecialArgs = { pkgs = nixpkgs.legacyPackages.${system}; username = "ryan.butler"; };
           }
         ];
       };

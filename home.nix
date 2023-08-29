@@ -1,7 +1,7 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, username, ... }: {
   home = {
-    username = "ryan";
-    homeDirectory = "/home/ryan";
+    inherit username;
+    homeDirectory = "/home/${username}";
     packages = import ./packages/all.nix { inherit pkgs; };
     sessionVariables = {
       EDITOR = "nvim";
@@ -37,6 +37,7 @@
     enableZshIntegration = true;
     enableBashIntegration = true;
   };
+  programs.direnv.enable = true;
 
   xdg.enable = true;
   xdg.configFile = {
