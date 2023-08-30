@@ -10,13 +10,19 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+	# Nifty management of user settings etc
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+	# Allows non-nixos unpatched binaries to run on nix-os
+	nix-ld = {
+	  url = "github:Mic92/nix-ld";
+	  inputs.nixpkgs.follows = "nixpkgs";
+	};
   };
 
-  outputs = inputs@{ self, nixpkgs, utils, fenix, home-manager }: {
+  outputs = inputs@{ self, nixpkgs, utils, fenix, home-manager, nix-ld, }: {
     nixosConfigurations = {
       ryan-mac-utm = nixpkgs.lib.nixosSystem rec {
         system = "aarch64-linux";
@@ -37,6 +43,10 @@
         specialArgs = { inherit inputs; username = "ryan.butler"; };
         modules = [
           ./machines/ryan-orbstack/configuration.nix
+
+          nix-ld.nixosModules.nix-ld
+          { programs.nix-ld.dev.enable = true; }
+
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

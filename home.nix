@@ -1,11 +1,4 @@
-{ pkgs, lib, config, username, ... }:
-let
-  nvim_cfg = pkgs.fetchgit {
-    url = "https://github.com/thebutlah/init.lua";
-    sha256 = "sha256-0Hea7q2OaB6Gld5n5MztxIE4wJapCAjSPD4Cz7+Z044=";
-  };
-in
-{
+{ pkgs, lib, config, username, ... }: {
   home = {
     inherit username;
     homeDirectory = "/home/${username}";
@@ -48,11 +41,13 @@ in
 
   xdg.enable = true;
   xdg.configFile = {
-    # Raw symlink to the plugin manager lock file, so that it stays writeable
-    "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${nvim_cfg}/lazy-lock.json";
-    "nvim" = {
-      source = nvim_cfg;
-    };
+    # TODO: Try to get this to work
+	# See https://www.reddit.com/r/neovim/comments/15lvm44/treesitter_through_nixhomemanager_all_other/jvflvyq/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+	# Raw symlink to the plugin manager lock file, so that it stays writeable
+    # "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${nvim_cfg}/lazy-lock.json";
+    # "nvim" = {
+    #   source = nvim_cfg;
+    # };
   };
 
   fonts.fontconfig.enable = true;
