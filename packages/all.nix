@@ -55,5 +55,8 @@
   pkgs.fnm
   # see https://stackoverflow.com/a/69732679
   pkgs.libiconv
+
+  # Devops
   pkgs.docker
+  pkgs.awscli
 ]
