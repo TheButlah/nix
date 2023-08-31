@@ -2,13 +2,16 @@
   # bootstrap
   # Service that provides nix caches
   pkgs.cachix
-  # Better than bash
   pkgs.zsh
+  # Macos has an old bash
+  pkgs.bash
   pkgs.git
   # Used for storing large files in git
   pkgs.git-lfs
   pkgs.curl
   pkgs.wget
+  # Macos has an old/weird tar
+  pkgs.gnutar
 
 
   # Shell
