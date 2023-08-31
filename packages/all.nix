@@ -54,4 +54,5 @@
   pkgs.fnm
   # see https://stackoverflow.com/a/69732679
   pkgs.libiconv
+  pkgs.docker
 ]
