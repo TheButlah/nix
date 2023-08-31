@@ -40,6 +40,7 @@
   pkgs.ripgrep
   pkgs.bat
   pkgs.exa
+  pkgs.htop
 
 
   # Build tools
