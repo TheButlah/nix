@@ -13,7 +13,6 @@
   # Macos has an old/weird tar
   pkgs.gnutar
 
-
   # Shell
   # ZSH package manager
   pkgs.oh-my-zsh
@@ -25,12 +24,10 @@
   # awesome prompt
   pkgs.starship
 
-
   # GUI
   # ~blazingly fast~ terminal in wgpu
   pkgs.wezterm
   (pkgs.nerdfonts.override { fonts = [ "Meslo" "RobotoMono" ]; })
-
 
   # CLI
   # best editor
@@ -44,7 +41,7 @@
   pkgs.bat
   pkgs.exa
   pkgs.htop
-
+  pkgs.picocom
 
   # Build tools
   # rustToolchain
