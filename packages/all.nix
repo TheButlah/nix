@@ -42,6 +42,7 @@
   pkgs.exa
   pkgs.htop
   pkgs.picocom
+  pkgs.asciinema
 
   # Build tools
   # rustToolchain
