@@ -43,6 +43,7 @@
   pkgs.htop
   pkgs.picocom
   pkgs.asciinema
+  pkgs.shellcheck
 
   # Build tools
   # rustToolchain
