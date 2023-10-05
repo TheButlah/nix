@@ -12,6 +12,8 @@
   pkgs.wget
   # Macos has an old/weird tar
   pkgs.gnutar
+  # MacOS uses BSD coreutils, this improves compatibility
+  pkgs.coreutils
 
   # Shell
   # ZSH package manager
