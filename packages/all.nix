@@ -41,7 +41,7 @@
   # Speedy grep replacement
   pkgs.ripgrep
   pkgs.bat
-  pkgs.exa
+  pkgs.eza
   pkgs.htop
   pkgs.picocom
   pkgs.asciinema
