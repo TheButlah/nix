@@ -61,6 +61,7 @@
   pkgs.libiconv
   pkgs.python312
   pkgs.go
+  pkgs.android-tools
 
   # Devops
   pkgs.docker
