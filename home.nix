@@ -1,8 +1,8 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, isWork ? true, ... }: {
   home = {
     username = "ryan";
     homeDirectory = "/home/ryan";
-    packages = import ./packages/all.nix { inherit pkgs; };
+    packages = import ./packages/all.nix { inherit pkgs isWork; };
     sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
@@ -38,10 +38,10 @@
     enableBashIntegration = true;
   };
   programs.direnv = {
-  enable = true;
-  enableBashIntegration = true; # see note on other shells below
-  enableZshIntegration = true;
-  nix-direnv.enable = true;
+    enable = true;
+    enableBashIntegration = true; # see note on other shells below
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
   };
 
   xdg.enable = true;

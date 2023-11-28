@@ -6,15 +6,16 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-  
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 
 
-   # Enable OpenGL
+  # Enable OpenGL
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -22,7 +23,7 @@
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
 
@@ -45,7 +46,7 @@
     open = false;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+    # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
@@ -130,10 +131,10 @@
     isNormalUser = true;
     description = "Ryan Butler";
     extraGroups = [ "networkmanager" "wheel" ];
-	shell = pkgs.zsh;
+    shell = pkgs.zsh;
     packages = with pkgs; [
       firefox
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
@@ -143,15 +144,15 @@
   programs.zsh.enable = true;
   programs.steam = {
     enable = true;
-	remotePlay.openFirewall = true;
-	dedicatedServer.openFirewall = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

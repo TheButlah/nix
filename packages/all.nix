@@ -1,4 +1,4 @@
-{ pkgs, ... }: [
+{ pkgs, isWork ? true, ... }: [
   # bootstrap
   # Service that provides nix caches
   pkgs.cachix
@@ -66,4 +66,6 @@
   # Devops
   pkgs.docker
   pkgs.awscli
+] ++ pkgs.lib.optionals (!isWork) [
+  # pkgs.discord
 ]

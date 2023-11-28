@@ -42,7 +42,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.ryan = import ./home.nix;
-            home-manager.extraSpecialArgs = { pkgs = nixpkgs.legacyPackages.${system}; };
+            home-manager.extraSpecialArgs = { pkgs = nixpkgs.legacyPackages.${system}; isWork = false; };
           }
         ];
       };
