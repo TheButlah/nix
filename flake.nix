@@ -33,10 +33,10 @@
         ];
       };
       nixos = nixpkgs.lib.nixosSystem rec {
-        system = "aarch64-linux";
+        system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          ./machines/ryan-orbstack/configuration.nix
+          ./machines/nixos/configuration.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
