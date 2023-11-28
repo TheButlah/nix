@@ -12,6 +12,8 @@
   
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
+
+
    # Enable OpenGL
   hardware.opengl = {
     enable = true;
@@ -118,7 +120,10 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  programs.zsh.enable = true;
+  # https://github.com/NixOS/nixpkgs/issues/40157#issuecomment-387269306
+  security.sudo.extraConfig = ''
+    Defaults	timestamp_timeout=60
+  '';
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ryan = {
@@ -134,6 +139,13 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  programs.zsh.enable = true;
+  programs.steam = {
+    enable = true;
+	remotePlay.openFirewall = true;
+	dedicatedServer.openFirewall = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
