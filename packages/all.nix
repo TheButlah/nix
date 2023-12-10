@@ -46,6 +46,7 @@
   pkgs.picocom
   pkgs.asciinema
   pkgs.shellcheck
+  pkgs.gh
 
   # Build tools
   # rustToolchain
@@ -62,6 +63,7 @@
   pkgs.python312
   pkgs.go
   pkgs.android-tools
+  pkgs.cmake
 
   # Devops
   pkgs.docker
