@@ -64,6 +64,7 @@
   pkgs.go
   pkgs.android-tools
   pkgs.cmake
+  pkgs.ninja
 
   # Devops
   pkgs.docker
