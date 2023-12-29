@@ -12,6 +12,8 @@
   pkgs.wget
   # Macos has an old/weird tar
   pkgs.gnutar
+  # Some distros don't have unzip
+  pkgs.unzip
   # MacOS uses BSD coreutils, this improves compatibility
   pkgs.coreutils
 
