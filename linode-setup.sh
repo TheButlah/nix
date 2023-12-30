@@ -4,12 +4,9 @@ apt-get update
 apt-get install -y zsh git
 
 adduser \
-	--system \
 	--shell $(which zsh) \
 	--gecos 'Ryan Butler' \
-	--group \
 	--disabled-password \
-	--home /home/ryan \
 	ryan
 
 usermod -a -G sudo ryan
@@ -20,7 +17,7 @@ install --owner=ryan --group=ryan --mode=700 -d /home/ryan/.ssh
 install --owner=ryan --group=ryan --mode=600 /root/.ssh/authorized_keys /home/ryan/.ssh/
 
 # Disable root login and ssh passwords
-rm /root/ssh/.authorized_keys
+rm /root/.ssh/authorized_keys
 sed -i '/^PermitRootLogin /s/ .*/ no/' /etc/ssh/sshd_config
 sed -i '/^PasswordAuthentication /s/ .*/ no/' /etc/ssh/sshd_config
 systemctl restart sshd
