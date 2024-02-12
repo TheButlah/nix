@@ -68,6 +68,7 @@
   pkgs.android-tools
   pkgs.cmake
   pkgs.ninja
+  pkgs.gnumake
 
   # Devops
   pkgs.docker
