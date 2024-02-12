@@ -49,6 +49,7 @@
   pkgs.asciinema
   pkgs.shellcheck
   pkgs.gh
+  pkgs.tree
 
   # Build tools
   # rustToolchain
