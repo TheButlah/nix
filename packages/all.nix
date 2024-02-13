@@ -50,6 +50,7 @@
   pkgs.shellcheck
   pkgs.gh
   pkgs.tree
+  pkgs.watch
 
   # Build tools
   # rustToolchain
