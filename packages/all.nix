@@ -51,6 +51,7 @@
   pkgs.gh
   pkgs.tree
   pkgs.watch
+  pkgs.zoxide
 
   # Build tools
   # rustToolchain
