@@ -75,6 +75,7 @@
   # Devops
   pkgs.docker
   pkgs.awscli
+  pkgs.gnupg
 ] ++ pkgs.lib.optionals (!isWork) [
   # pkgs.discord
 ]
