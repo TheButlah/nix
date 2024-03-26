@@ -21,6 +21,8 @@ echo 'set -o vi' >> ~/.zshrc
 echo 'set -o vi' >> ~/.bash_profile
 
 ln -sf ${HOME}/P/nix/starship.toml ${HOME}/.config/starship.toml
+ln -sf ${HOME}/P/nix/wezterm.lua ${HOME}/.config/wezterm/wezterm.lua
+ln -sf ${HOME}/P/nix/alacritty.toml ${HOME}/.config/alacritty/alacritty.toml
 
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --no-confirm
 . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
