@@ -11,6 +11,9 @@ if [[ "${USER}" == "root" ]]; then
 	return 1
 fi
 
+git config --global user.name "Ryan Butler"
+git config --global user.email "thebutlah@gmail.com"
+
 mkdir -p ~/.config/nix
 echo 'experimental-features = nix-command flakes' >> ~/.config/nix/nix.conf
 echo 'eval "$(starship init zsh)"' >> ~/.zshrc
