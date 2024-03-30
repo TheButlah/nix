@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-set -eux
+
+set -o errexit   # abort on nonzero exitstatus
+set -o errtrace  # pass ERR trap down to functions, substitutions, etc
+set -o nounset   # abort on unbound variable
+set -o pipefail  # don't hide errors within pipes
 
 if [[ "${SHELL}" != *"zsh" ]]; then
 	echo "Expected zsh shell."
@@ -11,8 +15,11 @@ if [[ "${USER}" == "root" ]]; then
 	return 1
 fi
 
-git config --global user.name "Ryan Butler"
-git config --global user.email "thebutlah@gmail.com"
+if [[ "${USER}" == "ryan" ]]; then
+	git config --global user.name "Ryan Butler"
+	git config --global user.email "thebutlah@gmail.com"
+fi
+
 
 mkdir -p ~/.config/nix
 echo 'experimental-features = nix-command flakes' >> ~/.config/nix/nix.conf
