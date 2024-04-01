@@ -2,7 +2,7 @@
   description = "TheButlah's personal dev environment";
   inputs = {
     # Worlds largest repository of linux software
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     # Provides eachDefaultSystem and other utility functions
     utils.url = "github:numtide/flake-utils";
     # Replacement for rustup
