@@ -32,6 +32,10 @@ in
     enable = true;
     settings = lib.trivial.importTOML ./starship.toml;
   };
+  programs.alacritty = {
+    enable = true;
+    settings = lib.trivial.importTOML ./alacritty.toml;
+  };
   programs.wezterm = {
     enable = true;
     extraConfig = builtins.readFile ./wezterm.lua;

@@ -70,13 +70,12 @@
     let
       pkgs = nixpkgs.legacyPackages.${system};
       allPackages = import ./packages/all.nix { inherit pkgs; };
+      mkApp = (name: { type = "app"; program = "${pkgs.${name}}/bin/${name}"; });
     in
     # See https://nixos.wiki/wiki/Flakes#Output_schema
     {
-      apps."home-manager" = {
-        type = "app";
-        program = "${pkgs.home-manager}/bin/home-manager";
-      };
+      apps."home-manager" = mkApp "home-manager";
+      apps."alacritty" = mkApp "alacritty";
       # This formats the nix files, not the rest of the repo.
       formatter = pkgs.nixpkgs-fmt;
     }
