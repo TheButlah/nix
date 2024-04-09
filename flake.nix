@@ -48,16 +48,19 @@
       };
     };
     homeConfigurations."ryan@ryan-laptop" = home-manager.lib.homeManagerConfiguration {
-
       pkgs = nixpkgs.legacyPackages."aarch64-darwin";
-
-      # Specify your home configuration modules here, for example,
-      # the path to your home.nix.
       modules = [ ./home.nix ];
-
-      # Optionally use extraSpecialArgs
-      # to pass through arguments to home.nix
       extraSpecialArgs = { isWork = false; };
+    };
+    homeConfigurations."ryan@ryan-worldcoin-asahi" = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages."aarch64-linux";
+      modules = [ ./home.nix ];
+      extraSpecialArgs = { isWork = true; };
+    };
+    homeConfigurations."ryan@ryan-worldcoin" = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages."aarch64-darwin";
+      modules = [ ./home.nix ];
+      extraSpecialArgs = { isWork = true; };
     };
   } //
   # This helper function is used to more easily abstract
