@@ -1,7 +1,11 @@
-{ pkgs, lib, isWork ? true, ... }: {
+{ pkgs, lib, isWork ? true, ... }:
+let
+  inherit (pkgs.stdenv) isDarwin;
+in
+{
   home = {
     username = "ryan";
-    homeDirectory = "/home/ryan";
+    homeDirectory = if isDarwin then "/Users/ryan" else "/home/ryan";
     packages = import ./packages/all.nix { inherit pkgs isWork; };
     sessionVariables = {
       EDITOR = "nvim";
@@ -13,7 +17,7 @@
   programs.git = {
     enable = true;
     userName = "Ryan Butler";
-    userEmail = "thebutlah" + /* This is done to avoid spam */ "@gmail.com";
+    userEmail = "thebutlah@gmail.com";
     lfs.enable = true;
   };
   programs.zsh = {
@@ -49,7 +53,7 @@
     "nvim" = {
       source = pkgs.fetchgit {
         url = "https://github.com/thebutlah/init.lua";
-        sha256 = "sha256-0Hea7q2OaB6Gld5n5MztxIE4wJapCAjSPD4Cz7+Z044=";
+        sha256 = "sha256-VQEjADyq3K/xBPnXktahLkE0psCgENyHNYxC5fxc2OI=";
       };
     };
   };

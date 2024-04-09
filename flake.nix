@@ -11,7 +11,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -47,6 +47,18 @@
         ];
       };
     };
+    homeConfigurations."ryan@ryan-laptop" = home-manager.lib.homeManagerConfiguration {
+
+      pkgs = nixpkgs.legacyPackages."aarch64-darwin";
+
+      # Specify your home configuration modules here, for example,
+      # the path to your home.nix.
+      modules = [ ./home.nix ];
+
+      # Optionally use extraSpecialArgs
+      # to pass through arguments to home.nix
+      extraSpecialArgs = { isWork = false; };
+    };
   } //
   # This helper function is used to more easily abstract
   # over the host platform.
@@ -54,27 +66,14 @@
   utils.lib.eachDefaultSystem (system:
     let
       pkgs = nixpkgs.legacyPackages.${system};
-      # Gets the same rust toolchain that rustup would have used.
-      # Note: You don't *have* to do the build with `nix build`,
-      # you can still `cargo zigbuild`.
-      rustToolchain = fenix.packages.${system}.fromToolchainFile {
-        file = ./rust-toolchain.toml;
-        sha256 = "R0F0Risbr74xg9mEYydyebx/z0Wu6HI0/KWwrV30vZo=";
-      };
       allPackages = import ./packages/all.nix { inherit pkgs; };
     in
     # See https://nixos.wiki/wiki/Flakes#Output_schema
     {
-      # I'm using this as a replacement for brew
-      packages.default = pkgs.buildEnv {
-        name = "my-packages";
-        paths = allPackages;
+      apps."home-manager" = {
+        type = "app";
+        program = "${pkgs.home-manager}/bin/home-manager";
       };
-      devShells.default = pkgs.mkShell
-        {
-          name = "my-dev-shell";
-          buildInputs = allPackages;
-        };
       # This formats the nix files, not the rest of the repo.
       formatter = pkgs.nixpkgs-fmt;
     }
