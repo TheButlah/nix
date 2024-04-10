@@ -1,4 +1,4 @@
-{ pkgs, lib, isWork ? true, alacritty ? pkgs.alacritty, ... }:
+{ pkgs, lib, isWork ? true, isWayland ? false, alacritty ? pkgs.alacritty, ... }:
 let
   inherit (pkgs.stdenv) isDarwin;
 in
@@ -6,7 +6,7 @@ in
   home = {
     username = "ryan";
     homeDirectory = if isDarwin then "/Users/ryan" else "/home/ryan";
-    packages = import ./packages/all.nix { inherit pkgs isWork; };
+    packages = import ./packages/all.nix { inherit pkgs isWork isWayland; };
     sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";

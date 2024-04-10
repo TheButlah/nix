@@ -88,7 +88,7 @@
       homeConfigurations."ryan@ryan-worldcoin-asahi" = home-manager.lib.homeManagerConfiguration {
         pkgs = s."aarch64-linux".pkgs;
         modules = [ ./home.nix ];
-        extraSpecialArgs = { isWork = true; alacritty = s."aarch64-linux".alacritty; };
+        extraSpecialArgs = { isWork = true; alacritty = s."aarch64-linux".alacritty; isWayland = true; };
       };
       homeConfigurations."ryan@ryan-worldcoin" = home-manager.lib.homeManagerConfiguration {
         pkgs = s."aarch64-darwin".pkgs;

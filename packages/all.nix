@@ -1,4 +1,4 @@
-{ pkgs, isWork ? true, ... }: [
+{ pkgs, isWork ? true, isWayland ? false, ... }: [
   # bootstrap
   # Service that provides nix caches
   pkgs.cachix
@@ -80,4 +80,8 @@
   pkgs.gnupg
 ] ++ pkgs.lib.optionals (!isWork) [
   # pkgs.discord
+] ++ pkgs.lib.optionals (pkgs.stdenv.isDarwin) [
+  pkgs.pbcopy
+] ++ pkgs.lib.optionals (pkgs.stdenv.isLinux) [
+  (if isWayland then pkgs.wl-clipboard else pkgs.xclip)
 ]
