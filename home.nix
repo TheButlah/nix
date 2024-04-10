@@ -1,4 +1,4 @@
-{ pkgs, lib, isWork ? true, ... }:
+{ pkgs, lib, isWork ? true, alacritty ? pkgs.alacritty, ... }:
 let
   inherit (pkgs.stdenv) isDarwin;
 in
@@ -34,6 +34,7 @@ in
   };
   programs.alacritty = {
     enable = true;
+    package = alacritty;
     settings = lib.trivial.importTOML ./alacritty.toml;
   };
   programs.wezterm = {
@@ -61,6 +62,15 @@ in
       };
     };
   };
+  xdg.desktopEntries = {
+    alacritty = {
+      name = "Alacritty";
+      genericName = "Terminal";
+      exec = "alacritty";
+      terminal = false;
+      categories = [ "System" "TerminalEmulator" ];
+    };
+  };
 
   fonts.fontconfig.enable = true;
 
@@ -68,5 +78,5 @@ in
   systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "23.05";
+  home.stateVersion = "23.11";
 }

@@ -26,10 +26,32 @@
         inherit system;
         overlays = [ nixgl.overlay ];
       });
+      # All system-specific variables
+      forSystem = (system:
+        let
+          pkgs = mkPkgs system;
+          nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl-wrapper" { } ''
+            		    mkdir $out
+                        ln -s ${pkg}/* $out
+                        rm $out/bin
+                        mkdir $out/bin
+                        for bin in ${pkg}/bin/*; do
+                        wrapped_bin=$out/bin/$(basename $bin)
+                        echo "exec ${pkgs.lib.getExe pkgs.nixgl.nixGLMesa} $bin \$@" > $wrapped_bin
+                        chmod +x $wrapped_bin
+            			done
+          '';
+        in
+        {
+          inherit pkgs;
+          alacritty = nixGLWrap pkgs.alacritty;
+        }
+      );
+      inherit (flake-utils.lib.eachDefaultSystem (system: { s = forSystem system; })) s;
     in
     {
       nixosConfigurations = {
-        ryan-mac-utm = (mkPkgs "aarch64-linux").lib.nixosSystem rec {
+        ryan-mac-utm = s."aarch64-linux".pkgs.lib.nixosSystem rec {
           system = "aarch64-linux";
           specialArgs = { inherit inputs; };
           modules = [
@@ -39,11 +61,11 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.ryan = import ./home.nix;
-              home-manager.extraSpecialArgs = { pkgs = (mkPkgs system); };
+              home-manager.extraSpecialArgs = { pkgs = s.${system}.pkgs; };
             }
           ];
         };
-        nixos = (mkPkgs "x86_64-linux").lib.nixosSystem rec {
+        nixos = s."x86_64-linux".pkgs.lib.nixosSystem rec {
           system = "x86_64-linux";
           specialArgs = { inherit inputs; };
           modules = [
@@ -53,23 +75,23 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.ryan = import ./home.nix;
-              home-manager.extraSpecialArgs = { pkgs = (mkPkgs system); isWork = false; };
+              home-manager.extraSpecialArgs = { pkgs = s.${system}.pkgs; isWork = false; };
             }
           ];
         };
       };
       homeConfigurations."ryan@ryan-laptop" = home-manager.lib.homeManagerConfiguration {
-        pkgs = (mkPkgs "aarch64-darwin");
+        pkgs = s."aarch64-darwin".pkgs;
         modules = [ ./home.nix ];
         extraSpecialArgs = { isWork = false; };
       };
       homeConfigurations."ryan@ryan-worldcoin-asahi" = home-manager.lib.homeManagerConfiguration {
-        pkgs = (mkPkgs "aarch64-linux");
+        pkgs = s."aarch64-linux".pkgs;
         modules = [ ./home.nix ];
-        extraSpecialArgs = { isWork = true; };
+        extraSpecialArgs = { isWork = true; alacritty = s."aarch64-linux".alacritty; };
       };
       homeConfigurations."ryan@ryan-worldcoin" = home-manager.lib.homeManagerConfiguration {
-        pkgs = (mkPkgs "aarch64-darwin");
+        pkgs = s."aarch64-darwin".pkgs;
         modules = [ ./home.nix ];
         extraSpecialArgs = { isWork = true; };
       };
@@ -79,27 +101,14 @@
     # See https://github.com/numtide/flake-utils#eachdefaultsystem--system---attrs
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = (mkPkgs system);
-        allPackages = import ./packages/all.nix { inherit pkgs; };
+        inherit (s.${system}) pkgs alacritty;
         mkApp = (name: { type = "app"; program = "${pkgs.${name}}/bin/${name}"; });
-        nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl-wrapper" { } ''
-          mkdir $out
-          ln -s ${pkg}/* $out
-          rm $out/bin
-          mkdir $out/bin
-          for bin in ${pkg}/bin/*; do
-           wrapped_bin=$out/bin/$(basename $bin)
-           echo "exec ${pkgs.lib.getExe pkgs.nixgl.nixGLIntel} $bin \$@" > $wrapped_bin
-           chmod +x $wrapped_bin
-          done
-        '';
-        alacritty = nixGLWrap pkgs.alacritty;
       in
       # See https://nixos.wiki/wiki/Flakes#Output_schema
       {
         apps."home-manager" = mkApp "home-manager";
         # apps."alacritty" = mkApp "alacritty";
-        apps."alacritty" = { type = "app"; program = "${pkgs.alacritty}/bin/alacritty"; };
+        apps."alacritty" = { type = "app"; program = "${alacritty}/bin/alacritty"; };
         # This formats the nix files, not the rest of the repo.
         formatter = pkgs.nixpkgs-fmt;
       }

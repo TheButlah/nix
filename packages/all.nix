@@ -31,8 +31,8 @@
   # GUI
   # ~blazingly fast~ terminal in wgpu
   pkgs.wezterm
-  pkgs.alacritty
-  pkgs.nixgl
+  # pkgs.alacritty # handled by home-manager
+  pkgs.nixgl.nixGLMesa
   (pkgs.nerdfonts.override { fonts = [ "Meslo" "RobotoMono" ]; })
 
   # CLI
