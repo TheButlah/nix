@@ -16,11 +16,15 @@
     };
     nixgl = {
       url = "github:nix-community/nixGL";
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+	};
   };
 
-  outputs = inputs@{ self, nixpkgs, nixgl, flake-utils, fenix, home-manager }:
+  outputs = inputs@{ self, nixpkgs, nixgl, flake-utils, fenix, home-manager, nix-darwin }:
     let
       mkPkgs = (system: import nixpkgs {
         inherit system;
@@ -52,6 +56,10 @@
       inherit (flake-utils.lib.eachDefaultSystem (system: { s = forSystem system; })) s;
     in
     {
+	  darwinConfigurations."ryan-laptop" = nix-darwin.lib.darwinSystem {
+        modules = [ ./machines/ryan-laptop/configuration.nix ];
+        specialArgs = { inherit inputs; };
+      };
       nixosConfigurations = {
         ryan-mac-utm = s."aarch64-linux".pkgs.lib.nixosSystem rec {
           system = "aarch64-linux";
