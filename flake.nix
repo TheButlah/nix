@@ -21,7 +21,7 @@
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
-	};
+    };
   };
 
   outputs = inputs@{ self, nixpkgs, nixgl, flake-utils, fenix, home-manager, nix-darwin }:
@@ -56,9 +56,29 @@
       inherit (flake-utils.lib.eachDefaultSystem (system: { s = forSystem system; })) s;
     in
     {
-	  darwinConfigurations."ryan-laptop" = nix-darwin.lib.darwinSystem {
-        modules = [ ./machines/ryan-laptop/configuration.nix ];
+      darwinConfigurations."ryan-laptop" = nix-darwin.lib.darwinSystem rec {
+        system = "aarch64-darwin";
         specialArgs = { inherit inputs; };
+        modules = [
+          ./machines/ryan-laptop/configuration.nix
+          # setup home-manager
+          home-manager.darwinModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              # include the home-manager module
+              users.ryan = import ./home.nix;
+              extraSpecialArgs = rec {
+                pkgs = s.${system}.pkgs;
+                isWork = false;
+                inherit (pkgs) alacritty;
+              };
+            };
+            # https://github.com/nix-community/home-manager/issues/4026
+            users.users.ryan.home = s.${system}.pkgs.lib.mkForce "/Users/ryan";
+          }
+        ];
       };
       nixosConfigurations = {
         ryan-mac-utm = s."aarch64-linux".pkgs.lib.nixosSystem rec {
