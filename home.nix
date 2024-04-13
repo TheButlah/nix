@@ -1,6 +1,7 @@
 { pkgs, lib, isWork ? true, isWayland ? false, alacritty ? pkgs.alacritty, ... }:
 let
   inherit (pkgs.stdenv) isDarwin;
+  inherit (pkgs.stdenv) isLinux;
 in
 {
   home = {
@@ -62,15 +63,6 @@ in
       };
     };
   };
-  xdg.desktopEntries = {
-    alacritty = {
-      name = "Alacritty";
-      genericName = "Terminal";
-      exec = "alacritty";
-      terminal = false;
-      categories = [ "System" "TerminalEmulator" ];
-    };
-  };
 
   fonts.fontconfig.enable = true;
 
@@ -80,3 +72,15 @@ in
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.11";
 }
+
+
+# } // (if isLinux then {
+#   xdg.desktopEntries = {
+#     alacritty = {
+#       name = "Alacritty";
+#       genericName = "Terminal";
+#       exec = "alacritty";
+#       terminal = false;
+#       categories = [ "System" "TerminalEmulator" ];
+#     };
+#   };

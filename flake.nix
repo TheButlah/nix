@@ -30,6 +30,8 @@
       forSystem = (system:
         let
           pkgs = mkPkgs system;
+          isLinux = pkgs.stdenv.isLinux;
+          isDarwin = pkgs.stdenv.isDarwin;
           nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl-wrapper" { } ''
             		    mkdir $out
                         ln -s ${pkg}/* $out
@@ -37,14 +39,14 @@
                         mkdir $out/bin
                         for bin in ${pkg}/bin/*; do
                         wrapped_bin=$out/bin/$(basename $bin)
-                        echo "exec ${pkgs.lib.getExe pkgs.nixgl.nixGLMesa} $bin \$@" > $wrapped_bin
+                        echo "exec ${pkgs.lib.getExe pkgs.nixgl.auto.nixGLDefault} $bin \$@" > $wrapped_bin
                         chmod +x $wrapped_bin
             			done
           '';
         in
         {
           inherit pkgs;
-          alacritty = nixGLWrap pkgs.alacritty;
+          alacritty = if isLinux then (nixGLWrap pkgs.alacritty) else pkgs.alacritty;
         }
       );
       inherit (flake-utils.lib.eachDefaultSystem (system: { s = forSystem system; })) s;
@@ -83,17 +85,17 @@
       homeConfigurations."ryan@ryan-laptop" = home-manager.lib.homeManagerConfiguration {
         pkgs = s."aarch64-darwin".pkgs;
         modules = [ ./home.nix ];
-        extraSpecialArgs = { isWork = false; };
+        extraSpecialArgs = { isWork = false; inherit (s."aarch64-darwin") alacritty; };
       };
       homeConfigurations."ryan@ryan-worldcoin-asahi" = home-manager.lib.homeManagerConfiguration {
         pkgs = s."aarch64-linux".pkgs;
         modules = [ ./home.nix ];
-        extraSpecialArgs = { isWork = true; alacritty = s."aarch64-linux".alacritty; isWayland = true; };
+        extraSpecialArgs = { isWork = true; isWayland = true; inherit (s."aarch64-darwin") alacritty; };
       };
       homeConfigurations."ryan@ryan-worldcoin" = home-manager.lib.homeManagerConfiguration {
         pkgs = s."aarch64-darwin".pkgs;
         modules = [ ./home.nix ];
-        extraSpecialArgs = { isWork = true; };
+        extraSpecialArgs = { isWork = true; inherit (s."aarch64-darwin") alacritty; };
       };
     } //
     # This helper function is used to more easily abstract

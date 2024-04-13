@@ -32,7 +32,6 @@
   # ~blazingly fast~ terminal in wgpu
   pkgs.wezterm
   # pkgs.alacritty # handled by home-manager
-  pkgs.nixgl.nixGLMesa
   (pkgs.nerdfonts.override { fonts = [ "Meslo" "RobotoMono" ]; })
 
   # CLI
@@ -81,7 +80,7 @@
 ] ++ pkgs.lib.optionals (!isWork) [
   # pkgs.discord
 ] ++ pkgs.lib.optionals (pkgs.stdenv.isDarwin) [
-  pkgs.pbcopy
 ] ++ pkgs.lib.optionals (pkgs.stdenv.isLinux) [
   (if isWayland then pkgs.wl-clipboard else pkgs.xclip)
+  pkgs.nixgl.auto.nixGLDefault
 ]
