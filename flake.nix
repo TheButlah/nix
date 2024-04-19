@@ -120,10 +120,10 @@
         modules = [ ./home.nix ];
         extraSpecialArgs = { isWork = true; isWayland = true; inherit (s."aarch64-linux") alacritty; };
       };
-      homeConfigurations."ryan@ryan-worldcoin" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."ryan.butler@ryan-worldcoin" = home-manager.lib.homeManagerConfiguration {
         pkgs = s."aarch64-darwin".pkgs;
         modules = [ ./home.nix ];
-        extraSpecialArgs = { isWork = true; inherit (s."aarch64-darwin") alacritty; };
+        extraSpecialArgs = { isWork = true; username = "ryan.butler"; inherit (s."aarch64-darwin") alacritty; };
       };
     } //
     # This helper function is used to more easily abstract
