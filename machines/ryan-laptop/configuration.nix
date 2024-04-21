@@ -25,4 +25,9 @@ in
   environment.systemPackages = [
     pkgs.home-manager
   ];
+
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToControl = true;
+  };
 }
