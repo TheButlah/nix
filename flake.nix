@@ -67,7 +67,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               # include the home-manager module
-              users.ryan = import ./home.nix;
+              users.${username} = import ./home.nix;
               extraSpecialArgs = rec {
                 pkgs = s.${system}.pkgs;
                 inherit isWork username;
@@ -75,7 +75,7 @@
               };
             };
             # https://github.com/nix-community/home-manager/issues/4026
-            users.users.ryan.home = s.${system}.pkgs.lib.mkForce "/Users/${username}";
+            users.users.${username}.home = s.${system}.pkgs.lib.mkForce "/Users/${username}";
           }
         ];
       };

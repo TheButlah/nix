@@ -11,7 +11,7 @@ nix run ~/P/nix#home-manager -- init --impure --switch ~/P/nix
 ```
 ### For nix-darwin
 ```
-darwin-rebuild switch --flake ~/P/nix
+nix run nix-darwin -- switch --flake ~/P/nix
 ```
 
 ## License
