@@ -124,12 +124,12 @@
       homeConfigurations."ryan@ryan-laptop" = home-manager.lib.homeManagerConfiguration {
         pkgs = s."aarch64-darwin".pkgs;
         modules = [ ./home.nix ];
-        extraSpecialArgs = { isWork = false; inherit (s."aarch64-darwin") alacritty; };
+        extraSpecialArgs = { isWork = false; username = "ryan"; inherit (s."aarch64-darwin") alacritty; };
       };
       homeConfigurations."ryan@ryan-worldcoin-asahi" = home-manager.lib.homeManagerConfiguration {
         pkgs = s."aarch64-linux".pkgs;
         modules = [ ./home.nix ];
-        extraSpecialArgs = { isWork = true; isWayland = true; inherit (s."aarch64-linux") alacritty; };
+        extraSpecialArgs = { isWork = true; username = "ryan"; isWayland = true; inherit (s."aarch64-linux") alacritty; };
       };
       homeConfigurations."ryan.butler@ryan-worldcoin" = home-manager.lib.homeManagerConfiguration {
         pkgs = s."aarch64-darwin".pkgs;
