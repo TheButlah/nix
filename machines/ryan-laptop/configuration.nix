@@ -1,5 +1,5 @@
 # nix-darwin config
-{ pkgs, lib, inputs, ... }:
+{ pkgs, lib, inputs, hostname, ... }:
 let
   inherit (inputs) self;
 in
@@ -30,4 +30,5 @@ in
     enableKeyMapping = true;
     remapCapsLockToControl = true;
   };
+  networking.hostName = "${hostname}";
 }

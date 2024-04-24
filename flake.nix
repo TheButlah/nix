@@ -55,9 +55,9 @@
       );
       inherit (flake-utils.lib.eachDefaultSystem (system: { s = forSystem system; })) s;
 
-      darwinConfig = { modulePath, username, isWork }: nix-darwin.lib.darwinSystem rec {
+      darwinConfig = { modulePath, username, isWork, hostname, }: nix-darwin.lib.darwinSystem rec {
         system = "aarch64-darwin";
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs hostname; };
         modules = [
           modulePath
           # setup home-manager
@@ -85,11 +85,13 @@
         username = "ryan";
         isWork = false;
         modulePath = ./machines/ryan-laptop/configuration.nix;
+        hostname = "ryan-laptop";
       };
       darwinConfigurations."ryan-worldcoin" = darwinConfig {
         username = "ryan.butler";
         isWork = true;
         modulePath = ./machines/ryan-laptop/configuration.nix;
+        hostname = "ryan-worldcoin";
       };
       nixosConfigurations = {
         ryan-mac-utm = s."aarch64-linux".pkgs.lib.nixosSystem rec {
