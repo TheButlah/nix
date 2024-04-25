@@ -31,4 +31,11 @@ in
     remapCapsLockToControl = true;
   };
   networking.hostName = "${hostname}";
+
+  # TODO: For some reason these don't do anything on my work laptop
+  system.defaults.NSGlobalDomain = {
+    # Use fn keys as regular keys.
+    "com.apple.keyboard.fnState" = true;
+    AppleICUForce24HourTime = true;
+  };
 }
