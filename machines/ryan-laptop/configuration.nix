@@ -48,6 +48,8 @@ in
     autohide-delay = 0.0;
     autohide-time-modifier = 0.2;
   };
+  system.defaults.finder.AppleShowAllFiles = true;
+  system.defaults.screensaver.askForPassword = true;
 
   # keyboard customization system for macos.
   # currently we just use it for disabling the builting keeb when corne is
