@@ -43,13 +43,15 @@
   zellij
   # Speedy grep replacement
   ripgrep
+  asciinema
   bat
   eza
-  htop
-  picocom
-  asciinema
-  shellcheck
   gh
+  glow
+  htop
+  mods
+  picocom
+  shellcheck
   tree
   watch
   zoxide
@@ -77,6 +79,9 @@
   docker
   awscli
   gnupg
+
+  # security
+  _1password
 ] ++ lib.optionals (!isWork) [
   # discord
 ] ++ lib.optionals (pkgs.stdenv.isDarwin) [

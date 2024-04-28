@@ -26,8 +26,11 @@ in
     enableAutosuggestions = true;
     oh-my-zsh.enable = true;
     initExtra = ''
-      		set -o vi
-      	'';
+      set -o vi
+    '';
+    envExtra = ''
+      export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read "op://Personal/API Credential/credential")"}"
+    '';
   };
   programs.starship = {
     enable = true;
