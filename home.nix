@@ -62,6 +62,9 @@ in
         sha256 = "sha256-VQEjADyq3K/xBPnXktahLkE0psCgENyHNYxC5fxc2OI=";
       };
     };
+    "karabiner/karabiner.json" = {
+      source = ./karabiner.json;
+    };
   };
 
   fonts.fontconfig.enable = true;

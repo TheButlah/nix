@@ -38,4 +38,7 @@ in
     "com.apple.keyboard.fnState" = true;
     AppleICUForce24HourTime = true;
   };
+
+  # keyboard customization system for macos.
+  services.karabiner-elements.enable = true;
 }
