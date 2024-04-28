@@ -38,9 +38,20 @@ in
     "com.apple.keyboard.fnState" = true;
     AppleInterfaceStyleSwitchesAutomatically = true;
     AppleICUForce24HourTime = true;
+    # Whether to enable “Natural” scrolling direction
+    "com.apple.swipescrolldirection" = false;
+  };
+  # default dock animation when autohiding is trash.
+  # make it a lot snappier.
+  system.defaults.dock = {
+    autohide = true;
+    autohide-delay = 0.0;
+    autohide-time-modifier = 0.2;
   };
 
   # keyboard customization system for macos.
+  # currently we just use it for disabling the builting keeb when corne is
+  # connected
   services.karabiner-elements.enable = true;
 
   homebrew.enable = true;
