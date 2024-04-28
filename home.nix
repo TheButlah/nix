@@ -68,6 +68,9 @@ in
     "karabiner/karabiner.json" = {
       source = ./karabiner.json;
     };
+    "mods/mods.yml" = {
+      source = ./mods.yml;
+    };
   };
 
   fonts.fontconfig.enable = true;

@@ -49,7 +49,6 @@
   gh
   glow
   htop
-  mods
   picocom
   shellcheck
   tree
@@ -82,6 +81,10 @@
 
   # security
   _1password
+
+  # AI
+  mods
+  ollama
 ] ++ lib.optionals (!isWork) [
   # discord
 ] ++ lib.optionals (pkgs.stdenv.isDarwin) [
