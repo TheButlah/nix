@@ -36,9 +36,15 @@ in
   system.defaults.NSGlobalDomain = {
     # Use fn keys as regular keys.
     "com.apple.keyboard.fnState" = true;
+    AppleInterfaceStyleSwitchesAutomatically = true;
     AppleICUForce24HourTime = true;
   };
 
   # keyboard customization system for macos.
   services.karabiner-elements.enable = true;
+
+  homebrew.enable = true;
+  homebrew.casks = [
+    "sol"
+  ];
 }
