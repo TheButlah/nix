@@ -1,86 +1,86 @@
-{ pkgs, isWork ? true, isWayland ? false, ... }: [
+{ pkgs, isWork ? true, isWayland ? false, ... }: with pkgs; [
   # bootstrap
   # Service that provides nix caches
-  pkgs.cachix
-  pkgs.zsh
+  cachix
+  zsh
   # Macos has an old bash
-  pkgs.bash
-  pkgs.git
+  bash
+  git
   # Used for storing large files in git
-  pkgs.git-lfs
-  pkgs.curl
-  pkgs.wget
+  git-lfs
+  curl
+  wget
   # Macos has an old/weird tar
-  pkgs.gnutar
+  gnutar
   # Some distros don't have unzip
-  pkgs.unzip
+  unzip
   # MacOS uses BSD coreutils, this improves compatibility
-  pkgs.coreutils
+  coreutils
 
   # Shell
   # ZSH package manager
-  pkgs.oh-my-zsh
+  oh-my-zsh
   # Nice autosuggestions
-  pkgs.zsh-autosuggestions
+  zsh-autosuggestions
   # Makes activating project-specific stuff easy
-  pkgs.direnv
+  direnv
   # This is missing on mac m1 nix, for some reason. You need it to compile.
   # awesome prompt
-  pkgs.starship
+  starship
 
   # GUI
   # ~blazingly fast~ terminal in wgpu
-  pkgs.wezterm
-  # pkgs.alacritty # handled by home-manager
-  (pkgs.nerdfonts.override { fonts = [ "Meslo" "RobotoMono" ]; })
+  wezterm
+  # alacritty # handled by home-manager
+  (nerdfonts.override { fonts = [ "Meslo" "RobotoMono" ]; })
 
   # CLI
   # best editor
-  pkgs.neovim
+  neovim
   # Useful for json manipulation
-  pkgs.jq
+  jq
   # Better than tmux, also rust
-  pkgs.zellij
+  zellij
   # Speedy grep replacement
-  pkgs.ripgrep
-  pkgs.bat
-  pkgs.eza
-  pkgs.htop
-  pkgs.picocom
-  pkgs.asciinema
-  pkgs.shellcheck
-  pkgs.gh
-  pkgs.tree
-  pkgs.watch
-  pkgs.zoxide
+  ripgrep
+  bat
+  eza
+  htop
+  picocom
+  asciinema
+  shellcheck
+  gh
+  tree
+  watch
+  zoxide
 
   # Build tools
   # rustToolchain
-  pkgs.rustup
-  pkgs.cargo-zigbuild
-  pkgs.cargo-expand
-  pkgs.probe-rs
-  pkgs.cargo-binutils
-  pkgs.zig
+  rustup
+  cargo-zigbuild
+  cargo-expand
+  probe-rs
+  cargo-binutils
+  zig
   # If I need to do soy development, at least it wont be with shit tools
-  pkgs.fnm
+  fnm
   # see https://stackoverflow.com/a/69732679
-  pkgs.libiconv
-  pkgs.python312
-  pkgs.go
-  pkgs.android-tools
-  pkgs.cmake
-  pkgs.ninja
-  pkgs.gnumake
+  libiconv
+  python312
+  go
+  android-tools
+  cmake
+  ninja
+  gnumake
 
   # Devops
-  pkgs.docker
-  pkgs.awscli
-  pkgs.gnupg
-] ++ pkgs.lib.optionals (!isWork) [
-  # pkgs.discord
-] ++ pkgs.lib.optionals (pkgs.stdenv.isDarwin) [
-] ++ pkgs.lib.optionals (pkgs.stdenv.isLinux) [
-  (if isWayland then pkgs.wl-clipboard else pkgs.xclip)
-  pkgs.nixgl.auto.nixGLDefault
+  docker
+  awscli
+  gnupg
+] ++ lib.optionals (!isWork) [
+  # discord
+] ++ lib.optionals (pkgs.stdenv.isDarwin) [
+] ++ lib.optionals (pkgs.stdenv.isLinux) [
+  (if isWayland then wl-clipboard else pkgs.xclip)
+  nixgl.auto.nixGLDefault
 ]
