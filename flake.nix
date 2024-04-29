@@ -93,11 +93,11 @@
         modulePath = ./machines/ryan-laptop/configuration.nix;
         hostname = "ryan-laptop";
       };
-      darwinConfigurations."ryan-worldcoin" = darwinConfig {
+      darwinConfigurations."Ryan-Butler" = darwinConfig {
         username = "ryan.butler";
         isWork = true;
         modulePath = ./machines/ryan-laptop/configuration.nix;
-        hostname = "ryan-worldcoin";
+        hostname = "Ryan-Butler";
       };
       nixosConfigurations = {
         ryan-mac-utm = s."aarch64-linux".pkgs.lib.nixosSystem rec {
