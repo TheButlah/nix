@@ -60,9 +60,11 @@ in
   xdg.enable = true;
   xdg.configFile = {
     "nvim" = {
-      source = pkgs.fetchgit {
-        url = "https://github.com/thebutlah/init.lua";
-        sha256 = "sha256-VQEjADyq3K/xBPnXktahLkE0psCgENyHNYxC5fxc2OI=";
+      source = pkgs.fetchFromGitHub {
+        owner = "thebutlah";
+        repo = "init.lua";
+        rev = "ea6cc4e6f98cd99e7ab26dd1a750d34919adc454";
+        hash = "sha256-P6rhEBTOuXf28L+0EYtdyt3q0bxSKnNFFmuykPpFrQ0=";
       };
     };
     "karabiner/karabiner.json" = {

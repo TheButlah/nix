@@ -28,7 +28,10 @@
     let
       mkPkgs = (system: import nixpkgs {
         inherit system;
-        overlays = [ nixgl.overlay ];
+        overlays = [
+          nixgl.overlay
+          # (import overlays/mods.nix)
+        ];
         config = {
           allowUnfree = true;
         };
