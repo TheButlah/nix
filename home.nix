@@ -34,16 +34,16 @@ in
   };
   programs.starship = {
     enable = true;
-    settings = lib.trivial.importTOML ./starship.toml;
+    settings = lib.trivial.importTOML ./xdg/starship.toml;
   };
   programs.alacritty = {
     enable = true;
     package = alacritty;
-    settings = lib.trivial.importTOML ./alacritty.toml;
+    settings = lib.trivial.importTOML ./xdg/alacritty.toml;
   };
   programs.wezterm = {
     enable = true;
-    extraConfig = builtins.readFile ./wezterm.lua;
+    extraConfig = builtins.readFile ./xdg/wezterm.lua;
   };
   programs.zellij = {
     enable = true;
@@ -68,10 +68,10 @@ in
       };
     };
     "karabiner/karabiner.json" = {
-      source = ./karabiner.json;
+      source = ./xdg/karabiner.json;
     };
     "mods/mods.yml" = {
-      source = ./mods.yml;
+      source = ./xdg/mods.yml;
     };
   };
 
