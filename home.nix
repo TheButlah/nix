@@ -80,10 +80,39 @@ in
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
+  programs.ssh.enable = true;
+  programs.ssh.matchBlocks =
+    let
+      defaults = isTrusted: {
+        forwardAgent = isTrusted;
+        forwardX11 = true;
+        forwardX11Trusted = isTrusted;
+      };
+    in
+    {
+      "hug" = defaults true // {
+        hostname = "huggable.us";
+        user = "ryan";
+        port = 22;
+      };
+      "deck" = defaults true // {
+        hostname = "deck";
+        user = "deck";
+      };
+      "li-ubuntu-us-east" = defaults true // {
+        hostname = "li-ubuntu-us-east.servers.thebutlah.com";
+        user = "ryan";
+      };
+      "hil" = defaults true // {
+        hostname = "ryan-worldcoin-hil.servers.thebutlah.com";
+        port = 222;
+        user = "ryan";
+      };
+    };
+
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.11";
 }
-
 
 # } // (if isLinux then {
 #   xdg.desktopEntries = {
