@@ -85,9 +85,9 @@
           }
         ];
       };
-      nixosConfig = { modulePath, username, isWork, hostname, system, }: s.${system}.pkgs.lib.nixosSystem rec {
+      nixosConfig = { modulePath, system, username, hostname, isWork, isWayland, }: nixpkgs.lib.nixosSystem rec {
         inherit system;
-        specialArgs = { inherit inputs hostname; };
+        specialArgs = { inherit inputs username hostname isWork isWayland; };
         modules = [
           modulePath
           # setup home-manager
@@ -100,7 +100,7 @@
               users.${username} = import ./home.nix;
               extraSpecialArgs = rec {
                 pkgs = s.${system}.pkgs;
-                inherit isWork username;
+                inherit username isWork isWayland;
                 inherit (pkgs) alacritty;
               };
             };
@@ -111,6 +111,7 @@
       };
     in
     {
+
       darwinConfigurations."ryan-laptop" = darwinConfig {
         username = "ryan";
         isWork = false;
@@ -153,10 +154,11 @@
       };
       nixosConfigurations."ryan-worldcoin-hil" = nixosConfig {
         system = "x86_64-linux";
-        username = "ryan.butler";
+        username = "ryan";
         isWork = true;
         modulePath = ./machines/ryan-worldcoin-hil/configuration.nix;
         hostname = "ryan-worldcoin-hil";
+        isWayland = false;
       };
       homeConfigurations."ryan@ryan-laptop" = home-manager.lib.homeManagerConfiguration {
         pkgs = s."aarch64-darwin".pkgs;

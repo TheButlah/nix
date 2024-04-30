@@ -2,12 +2,6 @@
 let
   inherit (pkgs.stdenv) isDarwin;
   inherit (pkgs.stdenv) isLinux;
-  initExtra = ''
-    set -o vi
-  '';
-  envExtra = ''
-    export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Personal/OpenAI API Key/credential")"}"
-  '';
 in
 {
   home = {
@@ -29,16 +23,17 @@ in
   };
 
   # shell stuff
-  programs.bash = {
-    enable = true;
-	bashrcExtra = envExtra;
-    inherit initExtra;
-  };
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
+    enableCompletion = true;
     oh-my-zsh.enable = true;
-    inherit envExtra initExtra;
+    initExtra = ''
+      set -o vi
+    '';
+    envExtra = ''
+      export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Personal/OpenAI API Key/credential")"}"
+    '';
   };
   programs.starship = {
     enable = true;

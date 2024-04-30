@@ -9,15 +9,15 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../nixos-common.nix
     ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  networking.hostName = "ryan-worldcoin-hil";
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "ryan-worldcoin-hil"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -88,7 +88,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       firefox
-      kate
       #  thunderbird
     ];
   };

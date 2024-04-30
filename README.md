@@ -13,6 +13,10 @@ nix run ~/P/nix#home-manager -- init --impure --switch ~/P/nix
 ```
 nix run nix-darwin -- switch --flake ~/P/nix
 ```
+### For NixOS
+```
+sudo nixos-rebuild switch --flake ~/P/nix --impure
+```
 
 ## License
 Licensed under [BSD 2-Clause Plus Patent](LICENSE-BSD)
