@@ -85,6 +85,30 @@
           }
         ];
       };
+      nixosConfig = { modulePath, username, isWork, hostname, system, }: s.${system}.pkgs.lib.nixosSystem rec {
+        inherit system;
+        specialArgs = { inherit inputs hostname; };
+        modules = [
+          modulePath
+          # setup home-manager
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              # include the home-manager module
+              users.${username} = import ./home.nix;
+              extraSpecialArgs = rec {
+                pkgs = s.${system}.pkgs;
+                inherit isWork username;
+                inherit (pkgs) alacritty;
+              };
+            };
+            # https://github.com/nix-community/home-manager/issues/4026
+            # users.users.${username}.home = s.${system}.pkgs.lib.mkForce "/Users/${username}";
+          }
+        ];
+      };
     in
     {
       darwinConfigurations."ryan-laptop" = darwinConfig {
@@ -99,35 +123,40 @@
         modulePath = ./machines/ryan-laptop/configuration.nix;
         hostname = "Ryan-Butler";
       };
-      nixosConfigurations = {
-        ryan-mac-utm = s."aarch64-linux".pkgs.lib.nixosSystem rec {
-          system = "aarch64-linux";
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./machines/ryan-mac-utm/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.ryan = import ./home.nix;
-              home-manager.extraSpecialArgs = { pkgs = s.${system}.pkgs; };
-            }
-          ];
-        };
-        nixos = s."x86_64-linux".pkgs.lib.nixosSystem rec {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./machines/nixos/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.ryan = import ./home.nix;
-              home-manager.extraSpecialArgs = { pkgs = s.${system}.pkgs; isWork = false; };
-            }
-          ];
-        };
+      nixosConfigurations."ryan-mac-utm" = s."aarch64-linux".pkgs.lib.nixosSystem rec {
+        system = "aarch64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./machines/ryan-mac-utm/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.ryan = import ./home.nix;
+            home-manager.extraSpecialArgs = { pkgs = s.${system}.pkgs; };
+          }
+        ];
+      };
+      nixosConfigurations."nixos" = s."x86_64-linux".pkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./machines/nixos/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.ryan = import ./home.nix;
+            home-manager.extraSpecialArgs = { pkgs = s.${system}.pkgs; isWork = false; };
+          }
+        ];
+      };
+      nixosConfigurations."ryan-worldcoin-hil" = nixosConfig {
+        system = "x86_64-linux";
+        username = "ryan.butler";
+        isWork = true;
+        modulePath = ./machines/ryan-worldcoin-hil/configuration.nix;
+        hostname = "ryan-worldcoin-hil";
       };
       homeConfigurations."ryan@ryan-laptop" = home-manager.lib.homeManagerConfiguration {
         pkgs = s."aarch64-darwin".pkgs;
@@ -143,6 +172,11 @@
         pkgs = s."aarch64-darwin".pkgs;
         modules = [ ./home.nix ];
         extraSpecialArgs = { isWork = true; username = "ryan.butler"; inherit (s."aarch64-darwin") alacritty; };
+      };
+      homeConfigurations."ryan@ryan-worldcoin-hil" = home-manager.lib.homeManagerConfiguration {
+        pkgs = s."x86_64-linux".pkgs;
+        modules = [ ./home.nix ];
+        extraSpecialArgs = { isWork = true; username = "ryan"; isWayland = false; inherit (s."x86_64-linux") alacritty; };
       };
     } //
     # This helper function is used to more easily abstract
