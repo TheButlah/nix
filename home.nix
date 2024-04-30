@@ -2,6 +2,12 @@
 let
   inherit (pkgs.stdenv) isDarwin;
   inherit (pkgs.stdenv) isLinux;
+  initExtra = ''
+    set -o vi
+  '';
+  envExtra = ''
+    export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Personal/OpenAI API Key/credential")"}"
+  '';
 in
 {
   home = {
@@ -21,21 +27,25 @@ in
     userEmail = "thebutlah@gmail.com";
     lfs.enable = true;
   };
+
+  # shell stuff
+  programs.bash = {
+    enable = true;
+	bashrcExtra = envExtra;
+    inherit initExtra;
+  };
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
     oh-my-zsh.enable = true;
-    initExtra = ''
-      set -o vi
-    '';
-    envExtra = ''
-      export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Personal/OpenAI API Key/credential")"}"
-    '';
+    inherit envExtra initExtra;
   };
   programs.starship = {
     enable = true;
     settings = lib.trivial.importTOML ./xdg/starship.toml;
   };
+
+  # terminal emulators
   programs.alacritty = {
     enable = true;
     package = alacritty;
@@ -50,6 +60,7 @@ in
     enableZshIntegration = true;
     enableBashIntegration = true;
   };
+
   programs.direnv = {
     enable = true;
     enableBashIntegration = true; # see note on other shells below
