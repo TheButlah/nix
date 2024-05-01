@@ -35,24 +35,21 @@
   (nerdfonts.override { fonts = [ "Meslo" "RobotoMono" ]; })
 
   # CLI
-  # best editor
-  neovim
-  # Useful for json manipulation
-  jq
-  # Better than tmux, also rust
-  zellij
-  # Speedy grep replacement
-  ripgrep
   asciinema
   bat
   eza
   gh
   glow
+  graphite-cli
   htop
+  jq
+  neovim
   picocom
+  ripgrep
   shellcheck
   tree
   watch
+  zellij
   zoxide
 
   # Build tools
