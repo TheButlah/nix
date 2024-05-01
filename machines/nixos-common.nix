@@ -4,10 +4,18 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
+  users.groups = {
+    plugdev = {};
+  };
   users.users."${username}" = {
     isNormalUser = true;
     description = "Ryan Butler";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "plugdev"
+      "dialout"
+    ];
     shell = pkgs.zsh;
     packages = with pkgs; [
       firefox
@@ -25,6 +33,14 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  # USB stuff
+  services.udev = {
+    enable = true;
+    extraRules = ''
+      SUBSYSTEM=="usb", MODE="0660", GROUP="plugdev"
+    '';
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

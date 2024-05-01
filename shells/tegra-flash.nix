@@ -1,0 +1,18 @@
+# source this with nix-shell ~/P/nix/shells/tegra-flash.nix
+# provides the necessary dependencies for flashing.
+{ pkgs ? import <nixpkgs> { } }:
+let
+  pythonShell = (ps: with ps; [
+    pyyaml
+  ]);
+in
+(pkgs.buildFHSEnv {
+  name = "tegra-env";
+  targetPkgs = pkgs: (with pkgs; [
+    (python3.withPackages pythonShell)
+    udev
+    perl
+    lz4
+  ]);
+  runScript = "bash";
+}).env 
