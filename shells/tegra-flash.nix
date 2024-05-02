@@ -4,8 +4,13 @@
 let
   pythonShell = (ps: with ps; [
     pyyaml
-	pyserial # just for convenience
-	pyftdi
+    pyserial # just for convenience
+    pyftdi # for controlling UART adapter
+
+    # for jtag debugger
+    pyocd
+    cmsis-pack-manager
+    cffi
   ]);
 in
 (pkgs.buildFHSEnv {

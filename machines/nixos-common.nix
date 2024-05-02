@@ -4,13 +4,14 @@ let
   pythonShell = (ps: with ps; [
     # add here
   ]);
-in{
+in
+{
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
 
   users.groups = {
-    plugdev = {};
+    plugdev = { };
   };
   users.users."${username}" = {
     isNormalUser = true;
