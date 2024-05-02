@@ -58,6 +58,5 @@ in
 
   homebrew.enable = true;
   homebrew.casks = [
-    "sol"
   ];
 }
