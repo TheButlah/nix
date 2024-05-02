@@ -4,6 +4,8 @@
 let
   pythonShell = (ps: with ps; [
     pyyaml
+	pyserial # just for convenience
+	pyftdi
   ]);
 in
 (pkgs.buildFHSEnv {

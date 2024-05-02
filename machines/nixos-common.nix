@@ -1,5 +1,10 @@
 # Common nixos settings shared across machines
-{ pkgs, lib, isWayland ? false, username ? "ryan", isWork ? true, ... }: {
+{ pkgs, lib, isWayland ? false, username ? "ryan", isWork ? true, ... }:
+let
+  pythonShell = (ps: with ps; [
+    # add here
+  ]);
+in{
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
@@ -19,7 +24,7 @@
     shell = pkgs.zsh;
     packages = with pkgs; [
       firefox
-      #  thunderbird
+      (python3.withPackages pythonShell)
     ];
   };
 
@@ -29,6 +34,7 @@
     neovim
     vim
     zellij
+    (python3.withPackages pythonShell)
   ];
 
   # Enable the OpenSSH daemon.
