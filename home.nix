@@ -79,6 +79,9 @@ in
     "mods/mods.yml" = {
       source = ./xdg/mods.yml;
     };
+    "zellij/config.kdl" = {
+      source = ./xdg/zellij.kdl;
+    };
   };
 
   fonts.fontconfig.enable = true;
