@@ -44,6 +44,11 @@ in
 	enableBashIntegration = true;
 	enableZshIntegration = true;
   };
+  programs.atuin = {
+    enable = true;
+	enableBashIntegration = true;
+	enableZshIntegration = true;
+  };
 
   # terminal emulators
   programs.alacritty = {
@@ -86,6 +91,9 @@ in
     };
     "zellij/config.kdl" = {
       source = ./xdg/zellij.kdl;
+    };
+    "atuin/config.toml" = {
+      source = ./xdg/atuin.toml;
     };
   };
 
