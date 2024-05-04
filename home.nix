@@ -39,6 +39,11 @@ in
     enable = true;
     settings = lib.trivial.importTOML ./xdg/starship.toml;
   };
+  programs.zoxide = {
+    enable = true;
+	enableBashIntegration = true;
+	enableZshIntegration = true;
+  };
 
   # terminal emulators
   programs.alacritty = {
