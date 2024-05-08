@@ -17,9 +17,9 @@ in
   name = "tegra-env";
   targetPkgs = pkgs: (with pkgs; [
     (python3.withPackages pythonShell)
-    udev
-    perl
     lz4
+    perl
+    udev
   ]);
   runScript = "bash";
 }).env 
