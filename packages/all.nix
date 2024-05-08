@@ -74,7 +74,7 @@
 
   # Devops
   docker
-  awscli
+  awscli2
   gnupg
 
   # security

@@ -17,6 +17,7 @@ in
   name = "tegra-env";
   targetPkgs = pkgs: (with pkgs; [
     (python3.withPackages pythonShell)
+    awscli2
     lz4
     perl
     udev

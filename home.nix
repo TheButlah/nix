@@ -41,13 +41,13 @@ in
   };
   programs.zoxide = {
     enable = true;
-	enableBashIntegration = true;
-	enableZshIntegration = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
   };
   programs.atuin = {
     enable = true;
-	enableBashIntegration = true;
-	enableZshIntegration = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
   };
 
   # terminal emulators
