@@ -38,6 +38,7 @@
   asciinema
   bat
   eza
+  file
   gh
   glow
   graphite-cli
