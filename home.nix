@@ -20,6 +20,11 @@ in
     userName = "Ryan Butler";
     userEmail = "thebutlah@gmail.com";
     lfs.enable = true;
+	extraConfig = {
+	  rebase = {
+	    updateRefs = true;
+	  };
+	};
   };
 
   # shell stuff
