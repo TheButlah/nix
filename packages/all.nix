@@ -76,6 +76,7 @@
   docker
   awscli2
   gnupg
+  graphite-cli
 
   # security
   _1password
