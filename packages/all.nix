@@ -1,38 +1,26 @@
 { pkgs, isWork ? true, isWayland ? false, ... }: with pkgs; [
   # bootstrap
-  # Service that provides nix caches
-  cachix
-  zsh
-  # Macos has an old bash
-  bash
-  git
-  # Used for storing large files in git
-  git-lfs
+  bash # Macos has an old bash
+  cachix # Service that provides nix caches
+  coreutils # MacOS uses BSD coreutils, use gnu instead
   curl
-  wget
-  # Macos has an old/weird tar
-  gnutar
-  # Some distros don't have unzip
+  git
+  git-lfs
+  gnutar # Macos has an old/weird tar
   unzip
-  # MacOS uses BSD coreutils, this improves compatibility
-  coreutils
+  wget
+  zsh
 
-  # Shell
-  # ZSH package manager
-  oh-my-zsh
-  # Nice autosuggestions
-  zsh-autosuggestions
-  # Makes activating project-specific stuff easy
-  direnv
-  # This is missing on mac m1 nix, for some reason. You need it to compile.
-  # awesome prompt
-  starship
+  # Shell 
+  direnv # Makes activating project-specific stuff easy
+  oh-my-zsh # ZSH package manager
+  starship # awesome prompt
+  zsh-autosuggestions # Nice autosuggestions
 
   # GUI
-  # ~blazingly fast~ terminal in wgpu
-  wezterm
   # alacritty # handled by home-manager
   (nerdfonts.override { fonts = [ "Meslo" "RobotoMono" ]; })
+  wezterm # ~blazingly fast~ terminal in wgpu
 
   # CLI
   asciinema
@@ -41,7 +29,6 @@
   file
   gh
   glow
-  graphite-cli
   htop
   jq
   neovim
@@ -49,34 +36,31 @@
   ripgrep
   shellcheck
   tree
+  unstable.zellij
   watch
-  zellij
   zoxide
 
   # Build tools
-  # rustToolchain
-  rustup
-  cargo-zigbuild
-  cargo-expand
-  probe-rs
-  cargo-binutils
-  zig
-  # If I need to do soy development, at least it wont be with shit tools
-  fnm
-  # see https://stackoverflow.com/a/69732679
-  libiconv
-  python312
-  go
   android-tools
+  cargo-binutils
+  cargo-expand
+  cargo-zigbuild
   cmake
-  ninja
+  fnm # If I need to do soy development, at least it wont be with shit tools
   gnumake
+  go
+  libiconv # see https://stackoverflow.com/a/69732679
+  ninja
+  probe-rs
+  python312
+  rustup
+  zig
 
   # Devops
-  docker
   awscli2
+  docker
   gnupg
-  graphite-cli
+  unstable.graphite-cli
 
   # security
   _1password

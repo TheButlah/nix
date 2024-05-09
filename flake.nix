@@ -3,6 +3,7 @@
   inputs = {
     # Worlds largest repository of linux software
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     # Provides eachDefaultSystem and other utility functions
     flake-utils.url = "github:numtide/flake-utils";
     # Replacement for rustup
@@ -24,13 +25,14 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixgl, flake-utils, fenix, home-manager, nix-darwin }:
+  outputs = inputs@{ self, nixpkgs, nixgl, flake-utils, fenix, home-manager, nix-darwin, ... }:
     let
       mkPkgs = (system: import nixpkgs {
         inherit system;
         overlays = [
           nixgl.overlay
           # (import overlays/mods.nix)
+          ((import overlays/unstable.nix) { inherit inputs; })
         ];
         config = {
           allowUnfree = true;
