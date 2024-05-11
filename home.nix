@@ -20,11 +20,11 @@ in
     userName = "Ryan Butler";
     userEmail = "thebutlah@gmail.com";
     lfs.enable = true;
-	extraConfig = {
-	  rebase = {
-	    updateRefs = true;
-	  };
-	};
+    extraConfig = {
+      rebase = {
+        updateRefs = true;
+      };
+    };
   };
 
   # shell stuff
@@ -137,6 +137,10 @@ in
         user = "ryan";
       };
     };
+  programs.keychain = {
+    enable = true;
+    keys = [ "id_ed25519" ];
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.11";
