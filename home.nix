@@ -53,6 +53,7 @@ in
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
+    package = pkgs.unstable.atuin;
   };
 
   # terminal emulators
