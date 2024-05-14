@@ -3,6 +3,7 @@
 history_filter = [
   "MEMFAULT_AUTH_TOKEN=",
   "CACHIX_AUTH_TOKEN=",
+  "cachix authtoken",
   "GITHUB_TOKEN=",
   "OPENAI_API_KEY=",
   "export AWS_(ACCESS_KEY_ID|SECRET_ACCESS_KEY|SESSION_TOKEN)=",
