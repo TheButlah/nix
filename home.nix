@@ -48,13 +48,18 @@ in
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
-	options = [ "--cmd cd" ];
+    options = [ "--cmd cd" ];
   };
   programs.atuin = {
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
     package = pkgs.unstable.atuin;
+  };
+  programs.yazi = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
   };
 
   # terminal emulators
