@@ -66,7 +66,7 @@
   _1password
 
   # AI
-  mods
+  unstable.mods
   ollama
 ] ++ lib.optionals (!isWork) [
   # discord
