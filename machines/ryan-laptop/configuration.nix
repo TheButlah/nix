@@ -1,5 +1,5 @@
 # nix-darwin config
-{ pkgs, lib, inputs, hostname, ... }:
+{ pkgs, lib, inputs, hostname, username, ... }:
 let
   inherit (inputs) self;
 in
@@ -11,6 +11,11 @@ in
     settings = {
       "experimental-features" = [ "nix-command" "flakes" "repl-flake" ];
       "max-jobs" = "auto";
+      trusted-users = [
+        "root"
+        "@admin"
+        username
+      ];
     };
   };
   # Used for backwards compatibility, please read the changelog before changing.

@@ -7,7 +7,18 @@ let
 in
 {
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    package = pkgs.nix;
+    settings = {
+      "experimental-features" = [ "nix-command" "flakes" "repl-flake" ];
+      "max-jobs" = "auto";
+      trusted-users = [
+        "root"
+        "@wheel"
+        username
+      ];
+    };
+  };
   nixpkgs.config.allowUnfree = true;
 
   users.groups = {

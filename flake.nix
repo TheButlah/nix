@@ -65,7 +65,7 @@
 
       darwinConfig = { modulePath, username, isWork, hostname, }: nix-darwin.lib.darwinSystem rec {
         system = "aarch64-darwin";
-        specialArgs = { inherit inputs hostname; };
+        specialArgs = { inherit inputs hostname username; };
         modules = [
           modulePath
           # setup home-manager
