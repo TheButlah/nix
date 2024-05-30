@@ -21,6 +21,7 @@
   # alacritty # handled by home-manager
   (nerdfonts.override { fonts = [ "Meslo" "RobotoMono" ]; })
   wezterm # ~blazingly fast~ terminal in wgpu
+  vscodium
 
   # CLI
   asciinema
