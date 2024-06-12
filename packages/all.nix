@@ -75,4 +75,5 @@
 ] ++ lib.optionals (pkgs.stdenv.isLinux) [
   (if isWayland then wl-clipboard else pkgs.xclip)
   nixgl.auto.nixGLDefault
-]
+] ++ (import ./custom_scripts.nix { pkgs = pkgs; })
+
