@@ -12,6 +12,14 @@ in
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
+    shellAliases = {
+      cz = "cargo-zigbuild";
+      czb = "cargo zigbuild";
+      czc = "cargo-zigbuild check";
+      czcl = "cargo-zigbuild clippy";
+      a64 = "echo aarch64-unknown-linux-gnu";
+      x86 = "echo x86_64-unknown-linux-gnu";
+    };
   };
 
   programs.home-manager.enable = true;
