@@ -6,6 +6,8 @@ history_filter = [
   "MEMFAULT_AUTH_TOKEN=",
   "MY_SECRET=",
   "OPENAI_API_KEY=",
+  "ORB_MANAGER_INTERNAL_TOKEN=",
+  "TOKEN=",
   "cachix authtoken",
   "export AWS_(ACCESS_KEY_ID|SECRET_ACCESS_KEY|SESSION_TOKEN)=",
   "gt auth --token",
