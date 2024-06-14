@@ -64,7 +64,7 @@
           wezterm = if isLinux then (nixGLWrap pkgs.wezterm) else pkgs.wezterm;
           tsh13 = pkgs.nixpkgs-23_11.teleport_13;
           tsh15 = pkgs.teleport_15;
-		  darwin-rebuild = inputs.nix-darwin.outputs.packages.${system}.darwin-rebuild;
+          darwin-rebuild = inputs.nix-darwin.outputs.packages.${system}.darwin-rebuild;
         }
       );
       inherit (flake-utils.lib.eachDefaultSystem (system: { s = forSystem system; })) s;

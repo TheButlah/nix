@@ -1,8 +1,11 @@
 { pkgs }:
 let
   # see https://ertt.ca/nix/shell-scripts/
-  script = name: path: (pkgs.writeScriptBin name (builtins.readFile path));
+  fromFile = name: path: (pkgs.writeScriptBin name (builtins.readFile path));
+  fromStr = name: str: (pkgs.writeScriptBin name str);
 in
 [
-  (script "tid" ../scripts/tid.sh)
+  (fromStr "tsh13" "${pkgs.nixpkgs-23_11.teleport_13}/bin/tsh")
+  (fromStr "tsh15" "${pkgs.teleport_15}/bin/tsh")
+  (fromFile "tid" ../scripts/tid.sh)
 ]
