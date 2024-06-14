@@ -2,8 +2,9 @@
   description = "TheButlah's personal dev environment";
   inputs = {
     # Worlds largest repository of linux software
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
     # Provides eachDefaultSystem and other utility functions
     flake-utils.url = "github:numtide/flake-utils";
     # Replacement for rustup
@@ -12,7 +13,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixgl = {
@@ -33,6 +34,7 @@
           nixgl.overlay
           # (import overlays/mods.nix)
           ((import overlays/unstable.nix) { inherit inputs; })
+          ((import overlays/nixpkgs-23_11.nix) { inherit inputs; })
         ];
         config = {
           allowUnfree = true;
@@ -59,6 +61,10 @@
         {
           inherit pkgs;
           alacritty = if isLinux then (nixGLWrap pkgs.alacritty) else pkgs.alacritty;
+          wezterm = if isLinux then (nixGLWrap pkgs.wezterm) else pkgs.wezterm;
+          tsh13 = pkgs.nixpkgs-23_11.teleport_13;
+          tsh15 = pkgs.teleport_15;
+		  darwin-rebuild = inputs.nix-darwin.outputs.packages.${system}.darwin-rebuild;
         }
       );
       inherit (flake-utils.lib.eachDefaultSystem (system: { s = forSystem system; })) s;
@@ -188,14 +194,23 @@
     # See https://github.com/numtide/flake-utils#eachdefaultsystem--system---attrs
     flake-utils.lib.eachDefaultSystem (system:
       let
-        inherit (s.${system}) pkgs alacritty;
-        mkApp = (name: { type = "app"; program = "${pkgs.${name}}/bin/${name}"; });
+        inherit (s.${system}) pkgs alacritty wezterm tsh13 tsh15 darwin-rebuild;
+        mkApp = ({ pkg, bin ? null }:
+          let
+            b = if bin == null then pkg.name else bin;
+          in
+          { program = "${pkg}/bin/${b}"; type = "app"; });
       in
       # See https://nixos.wiki/wiki/Flakes#Output_schema
       {
-        apps."home-manager" = mkApp "home-manager";
-        # apps."alacritty" = mkApp "alacritty";
-        apps."alacritty" = { type = "app"; program = "${alacritty}/bin/alacritty"; };
+        apps."home-manager" = mkApp { pkg = pkgs.home-manager; bin = "home-manager"; };
+        apps."darwin-rebuild" = mkApp { pkg = darwin-rebuild; bin = "darwin-rebuild"; };
+        # apps."tsh13" = mkApp { program = "${tsh13}/bin/tsh"; };
+        apps."tsh13" = mkApp { pkg = tsh13; bin = "tsh"; };
+        apps."tsh15" = mkApp { pkg = tsh15; bin = "tsh"; };
+        apps."alacritty" = mkApp { pkg = alacritty; bin = "alacritty"; };
+        apps."wezterm" = mkApp { pkg = wezterm; bin = "wezterm"; };
+
         # This formats the nix files, not the rest of the repo.
         formatter = pkgs.nixpkgs-fmt;
       }

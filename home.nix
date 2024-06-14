@@ -20,6 +20,7 @@ in
 
       a64 = "echo aarch64-unknown-linux-gnu";
       x86 = "echo x86_64-unknown-linux-gnu";
+
     };
   };
 
@@ -39,7 +40,7 @@ in
   # shell stuff
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     oh-my-zsh.enable = true;
     initExtra = ''
