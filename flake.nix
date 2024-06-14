@@ -205,9 +205,10 @@
       {
         apps."home-manager" = mkApp { pkg = pkgs.home-manager; bin = "home-manager"; };
         apps."darwin-rebuild" = mkApp { pkg = darwin-rebuild; bin = "darwin-rebuild"; };
-        # apps."tsh13" = mkApp { program = "${tsh13}/bin/tsh"; };
         apps."tsh13" = mkApp { pkg = tsh13; bin = "tsh"; };
+        packages.tsh13 = tsh13;
         apps."tsh15" = mkApp { pkg = tsh15; bin = "tsh"; };
+        packages.tsh15 = tsh15;
         apps."alacritty" = mkApp { pkg = alacritty; bin = "alacritty"; };
         apps."wezterm" = mkApp { pkg = wezterm; bin = "wezterm"; };
 
