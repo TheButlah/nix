@@ -4,3 +4,6 @@ size = 16
 
 [window]
 option_as_alt = "Both"
+
+[keyboard]
+bindings = [ { key = "F20", action = "None" } ]
