@@ -63,5 +63,6 @@ in
 
   homebrew.enable = true;
   homebrew.casks = [
+    "tidal"
   ];
 }
