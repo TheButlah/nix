@@ -114,4 +114,10 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  services.teleport = {
+    enable = true;
+    # Currently, the internal cluster requires no newer than v12
+    package = pkgs.nixpkgs-23_11.teleport_12;
+  };
+
 }

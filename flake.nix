@@ -95,7 +95,7 @@
       };
       nixosConfig = { modulePath, system, username, hostname, isWork, isWayland, }: nixpkgs.lib.nixosSystem rec {
         inherit system;
-        specialArgs = { inherit inputs username hostname isWork isWayland; };
+        specialArgs = { inherit inputs username hostname isWork isWayland; pkgs = s.${system}.pkgs; };
         modules = [
           modulePath
           # setup home-manager
