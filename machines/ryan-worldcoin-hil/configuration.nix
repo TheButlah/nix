@@ -120,4 +120,12 @@
     package = pkgs.nixpkgs-23_11.teleport_12;
   };
 
+  services.github-runners = {
+    ryan-worldcoin-hil = {
+      enable = true;
+      name = "ryan-worldcoin-hil";
+      url = "https://github.com/worldcoin/orb-os";
+      tokenFile = "/etc/worldcoin/secrets/gh-runner-token";
+    };
+  };
 }
