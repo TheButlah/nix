@@ -126,6 +126,7 @@
       name = "ryan-worldcoin-hil";
       url = "https://github.com/worldcoin/orb-os";
       tokenFile = "/etc/worldcoin/secrets/gh-runner-token";
+      extraLabels = [ "nixos" "flashing-hil" ];
     };
   };
 }
