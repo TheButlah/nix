@@ -33,12 +33,19 @@ in
       "plugdev"
       "dialout"
     ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLmHbuCMFpOKYvzMOpTOF+iMX9rrY6Y0naarcbWUV8G ryan@ryan-laptop.local"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEoVo3BKge5tQuYpDuWKJaypdpfUuw4cq3/BYRFNovtj ryan.butler@Ryan-Butler.local"
+    ];
+
     shell = pkgs.zsh;
     packages = with pkgs; [
       firefox
       (python3.withPackages pythonShell)
     ];
   };
+  users.mutableUsers = false;
+  security.sudo.wheelNeedsPassword = false;
 
   programs.zsh.enable = true;
   programs.nix-ld.enable = true;
@@ -51,7 +58,10 @@ in
   ];
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    passwordAuthentication = false;
+  };
 
   # USB stuff
   services.udev = {
