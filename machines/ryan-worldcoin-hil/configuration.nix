@@ -3,7 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let
+  ghRunnerUser = "gh-runner-user";
+in
 {
   imports =
     [
@@ -91,6 +93,15 @@
       #  thunderbird
     ];
   };
+  users.users.worldcoin = {
+    isNormalUser = true;
+    description = "Worldcoin";
+    extraGroups = [ "wheel" ];
+  };
+  users.users.${ghRunnerUser} = {
+    isNormalUser = true;
+    description = "User for github actions runner";
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -127,6 +138,8 @@
       url = "https://github.com/worldcoin/orb-os";
       tokenFile = "/etc/worldcoin/secrets/gh-runner-token";
       extraLabels = [ "nixos" "flashing-hil" ];
+      replace = true;
+      user = ghRunnerUser;
     };
   };
 }
