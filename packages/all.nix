@@ -59,6 +59,7 @@
 
   # Devops
   awscli2
+  cloudflared
   docker
   gnupg
   unstable.graphite-cli
