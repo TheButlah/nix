@@ -97,9 +97,6 @@
         inherit system;
         specialArgs = { inherit inputs username hostname isWork isWayland; pkgs = s.${system}.pkgs; modulesPath = "${nixpkgs}/nixos/modules"; };
         modules = [
-          # Bootable iso
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-
           modulePath
           # setup home-manager
           home-manager.nixosModules.home-manager
@@ -135,20 +132,6 @@
         modulePath = ./machines/ryan-laptop/configuration.nix;
         hostname = "Ryan-Butler";
       };
-      nixosConfigurations."ryan-mac-utm" = s."aarch64-linux".pkgs.lib.nixosSystem rec {
-        system = "aarch64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./machines/ryan-mac-utm/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.ryan = import ./home.nix;
-            home-manager.extraSpecialArgs = { pkgs = s.${system}.pkgs; };
-          }
-        ];
-      };
       nixosConfigurations."nixos" = s."x86_64-linux".pkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
@@ -169,6 +152,14 @@
         isWork = true;
         modulePath = ./machines/ryan-worldcoin-hil/configuration.nix;
         hostname = "ryan-worldcoin-hil";
+        isWayland = false;
+      };
+      nixosConfigurations."worldcoin-hil-munich-0" = nixosConfig {
+        system = "x86_64-linux";
+        username = "ryan.butler";
+        isWork = true;
+        modulePath = ./machines/worldcoin-hil-munich-0/configuration.nix;
+        hostname = "worldcoin-hil-munich-0";
         isWayland = false;
       };
       homeConfigurations."ryan@ryan-laptop" = home-manager.lib.homeManagerConfiguration {

@@ -1,5 +1,5 @@
 # Common nixos settings shared across machines
-{ pkgs, lib, isWayland ? false, username ? "ryan", isWork ? true, ... }:
+{ pkgs, lib, hostname, isWayland ? false, username ? "ryan", isWork ? true, ... }:
 let
   pythonShell = (ps: with ps; [
     # add here
@@ -85,6 +85,7 @@ in
   # Enable networking
   networking.networkmanager.enable = true;
   networking.wireless.enable = false;
+  networking.hostName = hostname;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

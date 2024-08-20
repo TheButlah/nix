@@ -14,8 +14,6 @@ in
       ../nixos-common.nix
     ];
 
-  networking.hostName = "ryan-worldcoin-hil";
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -120,9 +118,9 @@ in
   };
 
   services.github-runners = {
-    ryan-worldcoin-hil = {
+    worldcoin-hil-munich-0 = {
       enable = true;
-      name = "ryan-worldcoin-hil";
+      name = "worldcoin-hil-munich-0";
       url = "https://github.com/worldcoin/orb-os";
       tokenFile = "/etc/worldcoin/secrets/gh-runner-token";
       extraLabels = [ "nixos" "flashing-hil" ];
