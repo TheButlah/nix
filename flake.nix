@@ -95,8 +95,11 @@
       };
       nixosConfig = { modulePath, system, username, hostname, isWork, isWayland, }: nixpkgs.lib.nixosSystem rec {
         inherit system;
-        specialArgs = { inherit inputs username hostname isWork isWayland; pkgs = s.${system}.pkgs; };
+        specialArgs = { inherit inputs username hostname isWork isWayland; pkgs = s.${system}.pkgs; modulesPath = "${nixpkgs}/nixos/modules"; };
         modules = [
+          # Bootable iso
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+
           modulePath
           # setup home-manager
           home-manager.nixosModules.home-manager

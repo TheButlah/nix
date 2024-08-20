@@ -77,6 +77,15 @@ in
     dnsovertls = "opportunistic";
   };
 
+  # use the latest Linux kernel
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Needed for https://github.com/NixOS/nixpkgs/issues/58959
+  boot.supportedFilesystems = lib.mkForce [ "btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs" ];
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+  networking.wireless.enable = false;
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
