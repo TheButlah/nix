@@ -132,20 +132,6 @@
         modulePath = ./machines/ryan-laptop/configuration.nix;
         hostname = "Ryan-Butler";
       };
-      nixosConfigurations."nixos" = s."x86_64-linux".pkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./machines/nixos/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.ryan = import ./home.nix;
-            home-manager.extraSpecialArgs = { pkgs = s.${system}.pkgs; isWork = false; };
-          }
-        ];
-      };
       nixosConfigurations."ryan-worldcoin-hil" = nixosConfig {
         system = "x86_64-linux";
         username = "ryan";
@@ -160,6 +146,14 @@
         isWork = true;
         modulePath = ./machines/worldcoin-hil-munich-0/configuration.nix;
         hostname = "worldcoin-hil-munich-0";
+        isWayland = false;
+      };
+      nixosConfigurations."worldcoin-hil-munich-1" = nixosConfig {
+        system = "x86_64-linux";
+        username = "ryan.butler";
+        isWork = true;
+        modulePath = ./machines/worldcoin-hil-munich-1/configuration.nix;
+        hostname = "worldcoin-hil-munich-1";
         isWayland = false;
       };
       homeConfigurations."ryan@ryan-laptop" = home-manager.lib.homeManagerConfiguration {
