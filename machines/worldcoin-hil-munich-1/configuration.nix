@@ -81,11 +81,6 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  users.users.worldcoin = {
-    isNormalUser = true;
-    description = "Worldcoin";
-    extraGroups = [ "wheel" "plugdev" "dialout" ];
-  };
   users.users.${ghRunnerUser} = {
     isNormalUser = true;
     description = "User for github actions runner";

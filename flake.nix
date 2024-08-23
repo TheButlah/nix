@@ -93,7 +93,7 @@
           }
         ];
       };
-      nixosConfig = { modulePath, system, username, hostname, isWork, isWayland, }: nixpkgs.lib.nixosSystem rec {
+      nixosConfig = { modulePath, system, username, hostname, isWork, isWayland, homeManagerCfg ? ./home.nix }: nixpkgs.lib.nixosSystem rec {
         inherit system;
         specialArgs = { inherit inputs username hostname isWork isWayland; pkgs = s.${system}.pkgs; modulesPath = "${nixpkgs}/nixos/modules"; };
         modules = [
@@ -105,7 +105,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               # include the home-manager module
-              users.${username} = import ./home.nix;
+              users.${username} = import homeManagerCfg;
               extraSpecialArgs = rec {
                 pkgs = s.${system}.pkgs;
                 inherit username isWork isWayland;
@@ -116,6 +116,15 @@
             # users.users.${username}.home = s.${system}.pkgs.lib.mkForce "/Users/${username}";
           }
         ];
+      };
+      hilConfig = { hostname }: nixosConfig {
+        system = "x86_64-linux";
+        username = "worldcoin";
+        isWork = true;
+        modulePath = ./machines/${hostname}/configuration.nix;
+        hostname = "${hostname}";
+        isWayland = false;
+        homeManagerCfg = ./home-hil.nix;
       };
     in
     {
@@ -140,21 +149,11 @@
         hostname = "ryan-worldcoin-hil";
         isWayland = false;
       };
-      nixosConfigurations."worldcoin-hil-munich-0" = nixosConfig {
-        system = "x86_64-linux";
-        username = "ryan.butler";
-        isWork = true;
-        modulePath = ./machines/worldcoin-hil-munich-0/configuration.nix;
+      nixosConfigurations."worldcoin-hil-munich-0" = hilConfig {
         hostname = "worldcoin-hil-munich-0";
-        isWayland = false;
       };
-      nixosConfigurations."worldcoin-hil-munich-1" = nixosConfig {
-        system = "x86_64-linux";
-        username = "ryan.butler";
-        isWork = true;
-        modulePath = ./machines/worldcoin-hil-munich-1/configuration.nix;
+      nixosConfigurations."worldcoin-hil-munich-1" = hilConfig {
         hostname = "worldcoin-hil-munich-1";
-        isWayland = false;
       };
       homeConfigurations."ryan@ryan-laptop" = home-manager.lib.homeManagerConfiguration {
         pkgs = s."aarch64-darwin".pkgs;

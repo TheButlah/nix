@@ -26,7 +26,7 @@ in
   };
   users.users."${username}" = {
     isNormalUser = true;
-    description = "Ryan Butler";
+    description = "${username}";
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -51,13 +51,11 @@ in
   programs.nix-ld.enable = true;
 
   environment.systemPackages = with pkgs; [
-    awscli2
     git
     neovim
-    picocom
+    parted
     usbutils
     vim
-    zellij
     (python3.withPackages pythonShell)
   ];
 

@@ -11,12 +11,6 @@
   wget
   zsh
 
-  # Shell 
-  direnv # Makes activating project-specific stuff easy
-  oh-my-zsh # ZSH package manager
-  starship # awesome prompt
-  zsh-autosuggestions # Nice autosuggestions
-
   # GUI
   # alacritty # handled by home-manager
   (nerdfonts.override { fonts = [ "Meslo" "RobotoMono" ]; })
