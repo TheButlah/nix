@@ -51,6 +51,7 @@ in
   programs.nix-ld.enable = true;
 
   environment.systemPackages = with pkgs; [
+    awscli2 # todo: remove this when hil can be consumed via flake
     git
     neovim
     parted
