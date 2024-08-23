@@ -14,7 +14,7 @@
     };
   };
 
-  programs. home-manager. enable = true;
+  programs.home-manager.enable = true;
   # shell stuff
   programs.zsh = {
     enable = true;
