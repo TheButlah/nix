@@ -51,7 +51,11 @@ in
   programs.nix-ld.enable = true;
 
   environment.systemPackages = with pkgs; [
+    awscli2
+    git
     neovim
+    picocom
+    usbutils
     vim
     zellij
     (python3.withPackages pythonShell)
