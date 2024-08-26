@@ -52,6 +52,7 @@ in
 
   environment.systemPackages = with pkgs; [
     awscli2 # todo: remove this when hil can be consumed via flake
+    gh
     git
     neovim
     parted
