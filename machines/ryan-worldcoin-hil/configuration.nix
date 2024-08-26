@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   ghRunnerUser = "gh-runner-user";
 in
@@ -88,11 +88,11 @@ in
     description = "Worldcoin";
     extraGroups = [ "wheel" "plugdev" "dialout" ];
   };
-  # users.users.${ghRunnerUser} = {
-  #   isNormalUser = true;
-  #   description = "User for github actions runner";
-  #   extraGroups = [ "wheel" "plugdev" "dialout" ];
-  # };
+  users.users.${ghRunnerUser} = {
+    isNormalUser = true;
+    description = "User for github actions runner";
+    extraGroups = [ "wheel" "plugdev" "dialout" ];
+  };
   #
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -119,15 +119,32 @@ in
     package = pkgs.nixpkgs-23_11.teleport_12;
   };
 
-  # services.github-runners = {
-  #   ryan-worldcoin-hil = {
-  #     enable = true;
-  #     name = "ryan-worldcoin-hil";
-  #     url = "https://github.com/worldcoin/orb-os";
-  #     tokenFile = "/etc/worldcoin/secrets/gh-runner-token";
-  #     extraLabels = [ "nixos" "flashing-hil" ];
-  #     replace = true;
-  #     user = ghRunnerUser;
-  #   };
-  # };
+  services.github-runners = {
+    ryan-worldcoin-hil = {
+      enable = true;
+      name = "ryan-worldcoin-hil";
+      url = "https://github.com/worldcoin/orb-os";
+      tokenFile = "/etc/worldcoin/secrets/gh-runner-token";
+      extraLabels = [ "nixos" "flashing-hil" ];
+      replace = true;
+      user = ghRunnerUser;
+      serviceOverrides = {
+        DynamicUser = lib.mkForce false;
+        PrivateTmp = false;
+        PrivateMounts = false;
+        PrivateDevices = false;
+        ProtectClock = false;
+        ProtectControlGroups = false;
+        ProtectHome = false;
+        ProtectHostname = false;
+        ProtectKernelLogs = false;
+        ProtectKernelModules = false;
+        ProtectKernelTunables = false;
+        ProtectProc = "default";
+        ProtectSystem = "";
+        RestrictNamespaces = false;
+        SystemCallFilter = lib.mkForce [ ];
+      };
+    };
+  };
 }

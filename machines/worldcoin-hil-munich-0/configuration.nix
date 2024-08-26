@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   ghRunnerUser = "gh-runner-user";
 in
@@ -121,6 +121,23 @@ in
       extraLabels = [ "nixos" "flashing-hil" ];
       replace = true;
       user = ghRunnerUser;
+      serviceOverrides = {
+        DynamicUser = lib.mkForce false;
+        PrivateTmp = false;
+        PrivateMounts = false;
+        PrivateDevices = false;
+        ProtectClock = false;
+        ProtectControlGroups = false;
+        ProtectHome = false;
+        ProtectHostname = false;
+        ProtectKernelLogs = false;
+        ProtectKernelModules = false;
+        ProtectKernelTunables = false;
+        ProtectProc = "default";
+        ProtectSystem = "";
+        RestrictNamespaces = false;
+        SystemCallFilter = lib.mkForce [ ];
+      };
     };
   };
 }
