@@ -88,12 +88,12 @@ in
     description = "Worldcoin";
     extraGroups = [ "wheel" "plugdev" "dialout" ];
   };
-  users.users.${ghRunnerUser} = {
-    isNormalUser = true;
-    description = "User for github actions runner";
-    extraGroups = [ "wheel" "plugdev" "dialout" ];
-  };
-
+  # users.users.${ghRunnerUser} = {
+  #   isNormalUser = true;
+  #   description = "User for github actions runner";
+  #   extraGroups = [ "wheel" "plugdev" "dialout" ];
+  # };
+  #
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -119,15 +119,15 @@ in
     package = pkgs.nixpkgs-23_11.teleport_12;
   };
 
-  services.github-runners = {
-    ryan-worldcoin-hil = {
-      enable = true;
-      name = "ryan-worldcoin-hil";
-      url = "https://github.com/worldcoin/orb-os";
-      tokenFile = "/etc/worldcoin/secrets/gh-runner-token";
-      extraLabels = [ "nixos" "flashing-hil" ];
-      replace = true;
-      user = ghRunnerUser;
-    };
-  };
+  # services.github-runners = {
+  #   ryan-worldcoin-hil = {
+  #     enable = true;
+  #     name = "ryan-worldcoin-hil";
+  #     url = "https://github.com/worldcoin/orb-os";
+  #     tokenFile = "/etc/worldcoin/secrets/gh-runner-token";
+  #     extraLabels = [ "nixos" "flashing-hil" ];
+  #     replace = true;
+  #     user = ghRunnerUser;
+  #   };
+  # };
 }
