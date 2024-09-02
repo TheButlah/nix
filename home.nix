@@ -45,6 +45,7 @@ in
     oh-my-zsh.enable = true;
     initExtra = ''
       set -o vi
+      eval "$(fnm env --use-on-cd --shell zsh)"
     '';
     envExtra = ''
       export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Private/OpenAI API Key/credential")"}"
