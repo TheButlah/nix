@@ -1,5 +1,5 @@
 # Common nixos settings shared across machines
-{ pkgs, lib, hostname, isWayland ? false, username ? "ryan", isWork ? true, ... }:
+{ pkgs, lib, hostname, username, isWayland ? false, isWork ? true, ... }:
 let
   pythonShell = (ps: with ps; [
     # add here

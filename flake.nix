@@ -141,13 +141,8 @@
         modulePath = ./machines/ryan-laptop/configuration.nix;
         hostname = "Ryan-Butler";
       };
-      nixosConfigurations."ryan-worldcoin-hil" = nixosConfig {
-        system = "x86_64-linux";
-        username = "ryan";
-        isWork = true;
-        modulePath = ./machines/ryan-worldcoin-hil/configuration.nix;
+      nixosConfigurations."ryan-worldcoin-hil" = hilConfig {
         hostname = "ryan-worldcoin-hil";
-        isWayland = false;
       };
       nixosConfigurations."worldcoin-hil-munich-0" = hilConfig {
         hostname = "worldcoin-hil-munich-0";
