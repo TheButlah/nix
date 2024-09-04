@@ -152,7 +152,7 @@ in
       "hil" = defaults true // {
         hostname = "ryan-worldcoin-hil.servers.thebutlah.com";
         port = 222;
-        user = "ryan";
+        user = "worldcoin";
       };
     };
   # programs.keychain = {
