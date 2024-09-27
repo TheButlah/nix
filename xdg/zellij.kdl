@@ -1,3 +1,4 @@
+scroll_buffer_size 100000
 keybinds {
 	unbind "Ctrl q"
 	session {
