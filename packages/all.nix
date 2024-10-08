@@ -39,7 +39,7 @@
   android-tools
   cargo-binutils
   cargo-expand
-  cargo-zigbuild
+  unstable.cargo-zigbuild
   cmake
   fnm # If I need to do soy development, at least it wont be with shit tools
   gnumake
@@ -56,7 +56,7 @@
   cloudflared
   docker
   gnupg
-  unstable.graphite-cli
+  podman
 
   # security
   _1password
