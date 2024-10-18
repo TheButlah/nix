@@ -1,49 +1,85 @@
 {
   description = "TheButlah's personal dev environment";
   inputs = {
-    # Worlds largest repository of linux software
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
+    # For the absolute best possible caching, we use nixos-* on linux and 
+    # nixpkgs-*-darwin on mac. This makes the flake inputs section a *LOT* more
+    # verbose, but it is worth the hassle to not have to recompile LLVM.
+    #
+    # Read more here:
+    # https://discourse.nixos.org/t/which-nixpkgs-stable-tag-for-nixos-and-darwin-together/32796/3
+
+    # For Linux
+    nixos-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixos-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # For MacOS
+    nixpkgs-24_05-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.05-darwin";
+    nixpkgs-23_11-darwin.url = "github:NixOS/nixpkgs/nixpkgs-23.11-darwin";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
     # Provides eachDefaultSystem and other utility functions
     flake-utils.url = "github:numtide/flake-utils";
+
     # Replacement for rustup
-    fenix = {
+    fenix-linux = {
       url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixos-24_05";
     };
-    home-manager = {
+    fenix-darwin = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs-24_05-darwin";
+    };
+
+    # Manages user settings
+    home-manager-linux = {
       url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixos-24_05";
     };
+    home-manager-darwin = {
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs-24_05-darwin";
+    };
+
+    # Provides better GPU support
     nixgl = {
       url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixos-24_05";
     };
+
+    # Like NixOS, but for darwin
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-24_05-darwin";
     };
+
+    # Builds nix system images
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixos-24_05";
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixgl, flake-utils, fenix, home-manager, nix-darwin, nixos-generators, ... }:
+  outputs = inputs-raw:
     let
-      mkPkgs = (system: import nixpkgs {
-        inherit system;
-        overlays = [
-          nixgl.overlay
-          # (import overlays/mods.nix)
-          ((import overlays/unstable.nix) { inherit inputs; })
-          ((import overlays/nixpkgs-23_11.nix) { inherit inputs; })
-        ];
-        config = {
-          allowUnfree = true;
-        };
-      });
+      mkInputs = (system: import ./inputs.nix { inherit inputs-raw system; });
+    in
+    let
+      mkPkgs = (system:
+        let
+          inputs = mkInputs system;
+        in
+        import inputs.nixpkgs {
+          inherit system;
+          overlays = [
+            inputs.nixgl.overlay
+            # (import overlays/mods.nix)
+            ((import overlays/unstable.nix) { inherit inputs; })
+            ((import overlays/nixpkgs-23_11.nix) { inherit inputs; })
+          ];
+          config = {
+            allowUnfree = true;
+          };
+        });
       # All system-specific variables
       forSystem = (system:
         let
@@ -62,65 +98,80 @@
             done
           '';
         in
+        # These are instantiated once per-system. So anything that should be per-system
+          # should go here, for later reuse.
+          # This is more efficient than instantiating it ad-hoc.
         {
           inherit pkgs;
           alacritty = if isLinux then (nixGLWrap pkgs.alacritty) else pkgs.alacritty;
           wezterm = if isLinux then (nixGLWrap pkgs.wezterm) else pkgs.wezterm;
           tsh13 = pkgs.nixpkgs-23_11.teleport_13;
           tsh15 = pkgs.teleport_15;
-          darwin-rebuild = inputs.nix-darwin.outputs.packages.${system}.darwin-rebuild;
+          darwin-rebuild = inputs-raw.nix-darwin.outputs.packages.${system}.darwin-rebuild;
+          inputs = mkInputs system;
         }
       );
-      inherit (flake-utils.lib.eachDefaultSystem (system: { s = forSystem system; })) s;
+      inherit (inputs-raw.flake-utils.lib.eachDefaultSystem (system: { s = forSystem system; })) s;
 
-      darwinConfig = { modulePath, username, isWork, hostname, }: nix-darwin.lib.darwinSystem rec {
-        system = "aarch64-darwin";
-        specialArgs = { inherit inputs hostname username; };
-        modules = [
-          modulePath
-          # setup home-manager
-          home-manager.darwinModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              # include the home-manager module
-              users.${username} = import ./home.nix;
-              extraSpecialArgs = rec {
-                pkgs = s.${system}.pkgs;
-                inherit isWork username;
-                inherit (pkgs) alacritty;
+      darwinConfig = { modulePath, username, isWork, hostname, }: (
+        let
+          system = "aarch64-darwin";
+          inputs = s.${system}.inputs;
+          pkgs = s.${system}.pkgs;
+        in
+        inputs.nix-darwin.lib.darwinSystem rec {
+          inherit system;
+          specialArgs = { inherit hostname username inputs; };
+          modules = [
+            modulePath
+            # setup home-manager
+            inputs.home-manager.darwinModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                # include the home-manager module
+                users.${username} = import ./home.nix;
+                extraSpecialArgs = rec {
+                  inherit isWork username pkgs;
+                  inherit (pkgs) alacritty;
+                };
               };
-            };
-            # https://github.com/nix-community/home-manager/issues/4026
-            users.users.${username}.home = s.${system}.pkgs.lib.mkForce "/Users/${username}";
-          }
-        ];
-      };
-      nixosConfig = { modulePath, system, username, hostname, isWork, isWayland, homeManagerCfg ? ./home.nix }: nixpkgs.lib.nixosSystem rec {
-        inherit system;
-        specialArgs = { inherit inputs username hostname isWork isWayland; pkgs = s.${system}.pkgs; modulesPath = "${nixpkgs}/nixos/modules"; };
-        modules = [
-          modulePath
-          # setup home-manager
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              # include the home-manager module
-              users.${username} = import homeManagerCfg;
-              extraSpecialArgs = rec {
-                pkgs = s.${system}.pkgs;
-                inherit username isWork isWayland;
-                inherit (pkgs) alacritty;
+              # https://github.com/nix-community/home-manager/issues/4026
+              users.users.${username}.home = pkgs.lib.mkForce "/Users/${username}";
+            }
+          ];
+        }
+      );
+      nixosConfig = { modulePath, system, username, hostname, isWork, isWayland, homeManagerCfg ? ./home.nix }: (
+        let
+          inputs = s.${system}.inputs;
+          pkgs = s.${system}.pkgs;
+        in
+        inputs.nixpkgs.lib.nixosSystem rec {
+          inherit system;
+          specialArgs = { inherit username hostname isWork isWayland inputs pkgs; modulesPath = "${inputs.nixpkgs}/nixos/modules"; };
+          modules = [
+            modulePath
+            # setup home-manager
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                # include the home-manager module
+                users.${username} = import homeManagerCfg;
+                extraSpecialArgs = rec {
+                  inherit username isWork isWayland pkgs;
+                  inherit (pkgs) alacritty;
+                };
               };
-            };
-            # https://github.com/nix-community/home-manager/issues/4026
-            # users.users.${username}.home = s.${system}.pkgs.lib.mkForce "/Users/${username}";
-          }
-        ];
-      };
+              # https://github.com/nix-community/home-manager/issues/4026
+              # users.users.${username}.home = s.${system}.pkgs.lib.mkForce "/Users/${username}";
+            }
+          ];
+        }
+      );
       hilConfig = { hostname }: nixosConfig {
         system = "x86_64-linux";
         username = "worldcoin";
@@ -153,22 +204,22 @@
       nixosConfigurations."worldcoin-hil-munich-1" = hilConfig {
         hostname = "worldcoin-hil-munich-1";
       };
-      homeConfigurations."ryan@ryan-laptop" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."ryan@ryan-laptop" = inputs-raw.home-manager-darwin.lib.homeManagerConfiguration {
         pkgs = s."aarch64-darwin".pkgs;
         modules = [ ./home.nix ];
         extraSpecialArgs = { isWork = false; username = "ryan"; inherit (s."aarch64-darwin") alacritty; };
       };
-      homeConfigurations."ryan@ryan-worldcoin-asahi" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."ryan@ryan-worldcoin-asahi" = inputs-raw.home-manager-linux.lib.homeManagerConfiguration {
         pkgs = s."aarch64-linux".pkgs;
         modules = [ ./home.nix ];
         extraSpecialArgs = { isWork = true; username = "ryan"; isWayland = true; inherit (s."aarch64-linux") alacritty; };
       };
-      homeConfigurations."ryan.butler@ryan-worldcoin" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."ryan.butler@ryan-worldcoin" = inputs-raw.home-manager-darwin.lib.homeManagerConfiguration {
         pkgs = s."aarch64-darwin".pkgs;
         modules = [ ./home.nix ];
         extraSpecialArgs = { isWork = true; username = "ryan.butler"; inherit (s."aarch64-darwin") alacritty; };
       };
-      homeConfigurations."ryan@ryan-worldcoin-hil" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations."ryan@ryan-worldcoin-hil" = inputs-raw.home-manager-linux.lib.homeManagerConfiguration {
         pkgs = s."x86_64-linux".pkgs;
         modules = [ ./home.nix ];
         extraSpecialArgs = { isWork = true; username = "ryan"; isWayland = false; inherit (s."x86_64-linux") alacritty; };
@@ -177,7 +228,7 @@
     # This helper function is used to more easily abstract
     # over the host platform.
     # See https://github.com/numtide/flake-utils#eachdefaultsystem--system---attrs
-    flake-utils.lib.eachDefaultSystem (system:
+    inputs-raw.flake-utils.lib.eachDefaultSystem (system:
       let
         inherit (s.${system}) pkgs alacritty wezterm tsh13 tsh15 darwin-rebuild;
         mkApp = ({ pkg, bin ? null }:
@@ -188,7 +239,7 @@
       in
       # See https://nixos.wiki/wiki/Flakes#Output_schema
       {
-        packages.linode = nixos-generators.nixosGenerate {
+        packages.linode = inputs-raw.nixos-generators.nixosGenerate {
           system = "x86_64-linux";
           modules = [
             ./machines/us-east-linode-1/configuration.nix
