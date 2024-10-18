@@ -8,6 +8,8 @@ in
   services.nix-daemon.enable = true;
   nix = {
     package = pkgs.nix;
+    channel.enable = false;
+    nixPath = lib.mkForce [ "nixpkgs=flake:nixpkgs" ];
     settings = {
       "experimental-features" = [ "nix-command" "flakes" "repl-flake" ];
       "max-jobs" = "auto";
@@ -17,6 +19,10 @@ in
         username
       ];
     };
+  };
+  nixpkgs.flake = {
+    setFlakeRegistry = true;
+    setNixPath = true;
   };
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
