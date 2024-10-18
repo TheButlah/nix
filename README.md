@@ -19,6 +19,6 @@ sudo nixos-rebuild switch --flake ~/P/nix --impure
 ```
 
 ## License
-Licensed under [BSD 2-Clause Plus Patent](LICENSE-BSD)
+Licensed under the [MIT-0 License](LICENSE-MIT-0).
 
 ![it is 7:30 am](https://i.kym-cdn.com/photos/images/original/001/718/138/147.jpg)
