@@ -24,9 +24,13 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixgl, flake-utils, fenix, home-manager, nix-darwin, ... }:
+  outputs = inputs@{ self, nixpkgs, nixgl, flake-utils, fenix, home-manager, nix-darwin, nixos-generators, ... }:
     let
       mkPkgs = (system: import nixpkgs {
         inherit system;
@@ -128,7 +132,6 @@
       };
     in
     {
-
       darwinConfigurations."ryan-laptop" = darwinConfig {
         username = "ryan";
         isWork = false;
@@ -185,6 +188,13 @@
       in
       # See https://nixos.wiki/wiki/Flakes#Output_schema
       {
+        packages.linode = nixos-generators.nixosGenerate {
+          system = "x86_64-linux";
+          modules = [
+            ./machines/us-east-linode-1/configuration.nix
+          ];
+          format = "linode";
+        };
         apps."home-manager" = mkApp { pkg = pkgs.home-manager; bin = "home-manager"; };
         apps."darwin-rebuild" = mkApp { pkg = darwin-rebuild; bin = "darwin-rebuild"; };
         apps."tsh13" = mkApp { pkg = tsh13; bin = "tsh"; };
