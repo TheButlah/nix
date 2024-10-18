@@ -1,12 +1,6 @@
 # Nix
 My nix configs that I use for development.
 
-## Secrets
-
-Some machines require secrets to be set up. For `ryan-worldcoin-hil`, you must
-set up a github runner token. See the configuration.nix for the file path that
-is expected.
-
 ## Installation
 The `--impure` is necessary due to the use of nixGL's auto detection. This should be
 fixed in the future by avoiding auto and directly specifying the host's drivers.

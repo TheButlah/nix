@@ -83,6 +83,7 @@
       # All system-specific variables
       forSystem = (system:
         let
+          inputs = mkInputs system;
           pkgs = mkPkgs system;
           isLinux = pkgs.stdenv.isLinux;
           isDarwin = pkgs.stdenv.isDarwin;
@@ -102,13 +103,12 @@
           # should go here, for later reuse.
           # This is more efficient than instantiating it ad-hoc.
         {
-          inherit pkgs;
+          inherit pkgs inputs;
           alacritty = if isLinux then (nixGLWrap pkgs.alacritty) else pkgs.alacritty;
           wezterm = if isLinux then (nixGLWrap pkgs.wezterm) else pkgs.wezterm;
           tsh13 = pkgs.nixpkgs-23_11.teleport_13;
           tsh15 = pkgs.teleport_15;
-          darwin-rebuild = inputs-raw.nix-darwin.outputs.packages.${system}.darwin-rebuild;
-          inputs = mkInputs system;
+          darwin-rebuild = inputs.nix-darwin.outputs.packages.${system}.darwin-rebuild;
         }
       );
       inherit (inputs-raw.flake-utils.lib.eachDefaultSystem (system: { s = forSystem system; })) s;
@@ -172,15 +172,17 @@
           ];
         }
       );
-      hilConfig = { hostname }: nixosConfig {
-        system = "x86_64-linux";
-        username = "worldcoin";
-        isWork = true;
-        modulePath = ./machines/${hostname}/configuration.nix;
-        hostname = "${hostname}";
-        isWayland = false;
-        homeManagerCfg = ./home-hil.nix;
-      };
+      homeManagerConfig = { username, system, isWork }: (
+        let
+          inputs = s.${system}.inputs;
+          pkgs = s.${system}.pkgs;
+        in
+        inputs.home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./home.nix ];
+          extraSpecialArgs = { isWork = false; username = "ryan"; inherit (s.${system}) alacritty; };
+        }
+      );
     in
     {
       darwinConfigurations."ryan-laptop" = darwinConfig {
@@ -195,34 +197,25 @@
         modulePath = ./machines/ryan-laptop/configuration.nix;
         hostname = "Ryan-Butler";
       };
-      nixosConfigurations."ryan-worldcoin-hil" = hilConfig {
-        hostname = "ryan-worldcoin-hil";
+      homeConfigurations."ryan@ryan-laptop" = homeManagerConfig {
+        username = "ryan";
+        system = "aarch64-darwin";
+        isWork = false;
       };
-      nixosConfigurations."worldcoin-hil-munich-0" = hilConfig {
-        hostname = "worldcoin-hil-munich-0";
+      homeConfigurations."ryan@ryan-laptop-asahi" = homeManagerConfig {
+        username = "ryan";
+        system = "aarch64-linux";
+        isWork = false;
       };
-      nixosConfigurations."worldcoin-hil-munich-1" = hilConfig {
-        hostname = "worldcoin-hil-munich-1";
+      homeConfigurations."ryan.butler@ryan-worldcoin" = homeManagerConfig {
+        username = "ryan.butler";
+        system = "aarch64-darwin";
+        isWork = true;
       };
-      homeConfigurations."ryan@ryan-laptop" = inputs-raw.home-manager-darwin.lib.homeManagerConfiguration {
-        pkgs = s."aarch64-darwin".pkgs;
-        modules = [ ./home.nix ];
-        extraSpecialArgs = { isWork = false; username = "ryan"; inherit (s."aarch64-darwin") alacritty; };
-      };
-      homeConfigurations."ryan@ryan-worldcoin-asahi" = inputs-raw.home-manager-linux.lib.homeManagerConfiguration {
-        pkgs = s."aarch64-linux".pkgs;
-        modules = [ ./home.nix ];
-        extraSpecialArgs = { isWork = true; username = "ryan"; isWayland = true; inherit (s."aarch64-linux") alacritty; };
-      };
-      homeConfigurations."ryan.butler@ryan-worldcoin" = inputs-raw.home-manager-darwin.lib.homeManagerConfiguration {
-        pkgs = s."aarch64-darwin".pkgs;
-        modules = [ ./home.nix ];
-        extraSpecialArgs = { isWork = true; username = "ryan.butler"; inherit (s."aarch64-darwin") alacritty; };
-      };
-      homeConfigurations."ryan@ryan-worldcoin-hil" = inputs-raw.home-manager-linux.lib.homeManagerConfiguration {
-        pkgs = s."x86_64-linux".pkgs;
-        modules = [ ./home.nix ];
-        extraSpecialArgs = { isWork = true; username = "ryan"; isWayland = false; inherit (s."x86_64-linux") alacritty; };
+      homeConfigurations."ryan@ryan-worldcoin-asahi" = homeManagerConfig {
+        username = "ryan";
+        system = "aarch64-linux";
+        isWork = true;
       };
     } //
     # This helper function is used to more easily abstract
@@ -230,7 +223,7 @@
     # See https://github.com/numtide/flake-utils#eachdefaultsystem--system---attrs
     inputs-raw.flake-utils.lib.eachDefaultSystem (system:
       let
-        inherit (s.${system}) pkgs alacritty wezterm tsh13 tsh15 darwin-rebuild;
+        inherit (s.${system}) inputs pkgs alacritty wezterm tsh13 tsh15 darwin-rebuild;
         mkApp = ({ pkg, bin ? null }:
           let
             b = if bin == null then pkg.name else bin;
@@ -239,7 +232,7 @@
       in
       # See https://nixos.wiki/wiki/Flakes#Output_schema
       {
-        packages.linode = inputs-raw.nixos-generators.nixosGenerate {
+        packages.linode = inputs.nixos-generators.nixosGenerate {
           system = "x86_64-linux";
           modules = [
             ./machines/us-east-linode-1/configuration.nix
