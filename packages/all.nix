@@ -44,6 +44,7 @@
   fnm # If I need to do soy development, at least it wont be with shit tools
   gnumake
   go
+  just
   libiconv # see https://stackoverflow.com/a/69732679
   ninja
   probe-rs
