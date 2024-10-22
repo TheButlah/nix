@@ -58,6 +58,7 @@
   docker
   gnupg
   podman
+  terraform
 
   # security
   _1password
