@@ -239,14 +239,16 @@
           ];
           format = "linode";
         };
-        apps."home-manager" = mkApp { pkg = pkgs.home-manager; bin = "home-manager"; };
-        apps."darwin-rebuild" = mkApp { pkg = darwin-rebuild; bin = "darwin-rebuild"; };
-        apps."tsh13" = mkApp { pkg = tsh13; bin = "tsh"; };
-        packages.tsh13 = tsh13;
-        apps."tsh15" = mkApp { pkg = tsh15; bin = "tsh"; };
-        packages.tsh15 = tsh15;
+        packages."nvim" = pkgs.unstable.neovim;
+
         apps."alacritty" = mkApp { pkg = alacritty; bin = "alacritty"; };
+        apps."darwin-rebuild" = mkApp { pkg = darwin-rebuild; bin = "darwin-rebuild"; };
+        apps."home-manager" = mkApp { pkg = pkgs.home-manager; bin = "home-manager"; };
+        apps."tsh13" = mkApp { pkg = tsh13; bin = "tsh"; };
+        apps."tsh15" = mkApp { pkg = tsh15; bin = "tsh"; };
         apps."wezterm" = mkApp { pkg = wezterm; bin = "wezterm"; };
+        packages.tsh13 = tsh13;
+        packages.tsh15 = tsh15;
 
         # This formats the nix files, not the rest of the repo.
         formatter = pkgs.nixpkgs-fmt;
