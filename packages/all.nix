@@ -65,7 +65,7 @@
 
   # AI
   unstable.mods
-  ollama
+  unstable.ollama
 ] ++ lib.optionals (!isWork) [
   # discord
 ] ++ lib.optionals (pkgs.stdenv.isDarwin) [
