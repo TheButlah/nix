@@ -239,7 +239,6 @@
           ];
           format = "linode";
         };
-        packages."nvim" = pkgs.unstable.neovim;
 
         apps."alacritty" = mkApp { pkg = alacritty; bin = "alacritty"; };
         apps."darwin-rebuild" = mkApp { pkg = darwin-rebuild; bin = "darwin-rebuild"; };

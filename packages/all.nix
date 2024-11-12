@@ -26,7 +26,7 @@
   glow
   htop
   jq
-  neovim
+  unstable.neovim
   picocom
   ripgrep
   shellcheck
