@@ -39,7 +39,6 @@
   android-tools
   cargo-binutils
   cargo-expand
-  unstable.cargo-zigbuild
   cmake
   fnm # If I need to do soy development, at least it wont be with shit tools
   gnumake
@@ -47,9 +46,11 @@
   just
   libiconv # see https://stackoverflow.com/a/69732679
   ninja
+  nixpkgs-fmt # formats nix files
   probe-rs
   python312
   rustup
+  unstable.cargo-zigbuild
   zig
 
   # Devops
