@@ -148,7 +148,7 @@ in
       };
       "li-ubuntu-us-east" = defaults true // {
         hostname = "li-ubuntu-us-east.servers.thebutlah.com";
-        user = "ryan";
+        user = "admin";
       };
       "hil" = defaults true // {
         hostname = "ryan-worldcoin-hil.servers.thebutlah.com";
