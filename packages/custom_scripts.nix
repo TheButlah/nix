@@ -2,7 +2,9 @@
 let
   # see https://ertt.ca/nix/shell-scripts/
   fromFile = name: path: (pkgs.writeScriptBin name (builtins.readFile path));
-  fromStr = name: str: (pkgs.writeScriptBin name str);
+  fromStr = name: str:
+    (pkgs.writeScriptBin name
+      ("#!/bin/sh \n" + str + " $@"));
 in
 [
   (fromStr "tsh13" "${pkgs.nixpkgs-23_11.teleport_13}/bin/tsh")
