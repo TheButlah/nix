@@ -58,6 +58,7 @@
   cloudflared
   docker
   gnupg
+  ngrok
   podman
   terraform
 
