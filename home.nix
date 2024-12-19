@@ -104,8 +104,8 @@ in
       source = pkgs.fetchFromGitHub {
         owner = "thebutlah";
         repo = "init.lua";
-        rev = "1576bf7fc161e4790b35387daacd70256e78bd95";
-        hash = "sha256-6tnHtj8/KHpGVGct2EVhTUWopQv9vVBta2Q9KTkZkW0=";
+        rev = "7b392cf8d250f65a9ebf5196b68870a775c06d23";
+        hash = "sha256-l7TL8sJrzLiAtOuppnDRMKl+qqHm8T2E1HdCuehhC8k=";
       };
     };
     "karabiner/karabiner.json" = {
