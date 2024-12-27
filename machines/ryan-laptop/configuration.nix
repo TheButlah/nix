@@ -67,8 +67,12 @@ in
   # connected
   services.karabiner-elements.enable = true;
 
-  homebrew.enable = true;
-  homebrew.casks = [
-    "tidal"
-  ];
+  homebrew = {
+    enable = true;
+    brews = [ "sunshine-beta" ];
+    casks = [
+      "tidal"
+    ];
+    taps = [ "LizardByte/homebrew" ];
+  };
 }
