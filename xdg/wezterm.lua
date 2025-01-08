@@ -18,6 +18,7 @@ end
 config.window_decorations = "RESIZE | INTEGRATED_BUTTONS"
 config.window_padding = { left = 0, right = 0, top = "0.2cell", bottom = "0.2cell" }
 config.font_size = 17.0
+config.audible_bell = "Disabled"
 
 config.keys = {
 	-- Currently, F20 appears to be bugged, so this config doesn't take affect.
