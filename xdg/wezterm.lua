@@ -26,6 +26,10 @@ config.keys = {
 		key = 'F20',
 		action = wezterm.action.Nop,
 	},
+	{
+		key = 'F10',
+		action = wezterm.action.Nop,
+	},
 }
 
 -- and finally, return the configuration to wezterm
