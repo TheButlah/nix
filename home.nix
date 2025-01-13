@@ -46,8 +46,8 @@ in
     initExtra = ''
       set -o vi
       eval "$(fnm env --use-on-cd --shell zsh)"
-      export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Private/OpenAI API Key/credential")"}"
-      export ANTHROPIC_API_KEY="''${ANTHROPIC_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Private/Anthropic API Key/credential")"}"
+      export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Terminal Secrets/OpenAI API Key/credential")"}"
+      export ANTHROPIC_API_KEY="''${ANTHROPIC_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Terminal Secrets/Anthropic API Key/credential")"}"
     '' + (lib.optionalString pkgs.stdenv.isDarwin ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
     '');
