@@ -2,11 +2,12 @@
 let
   inherit (pkgs.stdenv) isDarwin;
   inherit (pkgs.stdenv) isLinux;
+  homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
 in
 {
   home = {
+    inherit homeDirectory;
     username = "${username}";
-    homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
     packages = import ./packages/all.nix { inherit pkgs isWork isWayland; };
     sessionVariables = {
       EDITOR = "nvim";
@@ -46,6 +47,7 @@ in
     initExtra = ''
       set -o vi
       eval "$(fnm env --use-on-cd --shell zsh)"
+      export PATH="$PATH:${homeDirectory}/.dotnet/tools"
       export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Terminal Secrets/OpenAI API Key/credential")"}"
       export ANTHROPIC_API_KEY="''${ANTHROPIC_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Terminal Secrets/Anthropic API Key/credential")"}"
     '' + (lib.optionalString pkgs.stdenv.isDarwin ''
