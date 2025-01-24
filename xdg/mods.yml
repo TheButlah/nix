@@ -24,8 +24,15 @@ apis:
     base-url: http://localhost:11434/api
     models: # https://ollama.com/library
       "llama3.2:3b":
-        aliases: ["llama3.2", "llama3.2_3b", "local"]
+        aliases: ["llama3.2", "llama3.2_3b"]
         max-input-chars: 650000
+      "deepseek-r1:14b":
+        aliases: ["r1_14b", "r1", "local"]
+        max-input-chars: 650000
+      "deepseek-r1:7b":
+        aliases: ["r1_7b"]
+        max-input-chars: 650000
+
 # Default model (gpt-3.5-turbo, gpt-4, ggml-gpt4all-j...).
 default-model: local
 # Default character limit on input to model.
