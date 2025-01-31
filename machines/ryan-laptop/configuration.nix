@@ -67,6 +67,10 @@ in
   # connected
   services.karabiner-elements.enable = true;
 
+  security.sudo.extraConfig = ''
+    Defaults timestamp_timeout=60
+  '';
+
   homebrew = {
     enable = true;
     brews = [ "sunshine-beta" ];
