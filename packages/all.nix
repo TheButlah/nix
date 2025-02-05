@@ -68,6 +68,8 @@
   # AI
   unstable.mods
   unstable.ollama
+  unstable.openai-whisper
+  unstable.openai-whisper-cpp
 ] ++ lib.optionals (!isWork) [
   # discord
 ] ++ lib.optionals (pkgs.stdenv.isDarwin) [
