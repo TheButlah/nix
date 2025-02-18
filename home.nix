@@ -46,8 +46,14 @@ in
     oh-my-zsh.enable = true;
     initExtra = ''
       set -o vi
+
       eval "$(fnm env --use-on-cd --shell zsh)"
+
+      export BUN_INSTALL="$HOME/.bun"
+      export PATH="$BUN_INSTALL/bin:$PATH"
+
       export PATH="$PATH:${homeDirectory}/.dotnet/tools"
+
       export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Terminal Secrets/OpenAI API Key/credential")"}"
       export ANTHROPIC_API_KEY="''${ANTHROPIC_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Terminal Secrets/Anthropic API Key/credential")"}"
     '' + (lib.optionalString pkgs.stdenv.isDarwin ''
