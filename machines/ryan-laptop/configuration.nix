@@ -19,6 +19,27 @@ in
         username
       ];
     };
+    linux-builder = {
+      enable = true;
+      # Clears builder filesystem on restart, to avoid state accumulation
+      ephemeral = true;
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+
+      # NOTE: For some reason we can't set `config` if we want things to work the first
+      # try. It seems to be stateful??
+      # config = {
+      #   virtualisation = {
+      #     darwin-builder = {
+      #       diskSize = 40 * 1024;
+      #       memorySize = 8 * 1024;
+      #     };
+      #     cores = 6;
+      #   };
+      # };
+    };
   };
   nixpkgs.flake = {
     setFlakeRegistry = true;
