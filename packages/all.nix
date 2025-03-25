@@ -56,7 +56,6 @@
   # Devops
   awscli2
   cloudflared
-  docker
   gnupg
   ngrok
   podman
