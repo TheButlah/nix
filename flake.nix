@@ -172,7 +172,7 @@
           ];
         }
       );
-      homeManagerConfig = { username, system, isWork }: (
+      homeManagerConfig = { username, system, isWork, isWayland ? false }: (
         let
           inputs = s.${system}.inputs;
           pkgs = s.${system}.pkgs;
@@ -180,7 +180,7 @@
         inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [ ./home.nix ];
-          extraSpecialArgs = { isWork = false; username = "ryan"; inherit (s.${system}) alacritty; };
+          extraSpecialArgs = { inherit username isWayland; isWork = false; inherit (s.${system}) alacritty; };
         }
       );
     in
@@ -216,6 +216,12 @@
         username = "ryan";
         system = "aarch64-linux";
         isWork = true;
+      };
+      homeConfigurations."ryan.butler@ryan-wld-darter" = homeManagerConfig {
+        username = "ryan.butler";
+        system = "x86_64-linux";
+        isWork = true;
+        isWayland = true;
       };
     } //
     # This helper function is used to more easily abstract

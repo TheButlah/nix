@@ -74,6 +74,6 @@
   # discord
 ] ++ lib.optionals (pkgs.stdenv.isDarwin) [
 ] ++ lib.optionals (pkgs.stdenv.isLinux) [
-  (if isWayland then wl-clipboard else pkgs.xclip)
+  (if isWayland then wl-clipboard else xclip)
   nixgl.auto.nixGLDefault
 ] ++ (import ./custom_scripts.nix { pkgs = pkgs; })
