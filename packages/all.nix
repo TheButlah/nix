@@ -58,11 +58,7 @@
   cloudflared
   gnupg
   ngrok
-  podman
   terraform
-
-  # security
-  _1password
 
   # AI
   unstable.mods
