@@ -61,6 +61,8 @@
   terraform
 
   # AI
+  unstable.claude-code
+  # unstable.codex
   unstable.mods
   unstable.ollama
   unstable.openai-whisper

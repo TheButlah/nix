@@ -9,11 +9,11 @@
     # https://discourse.nixos.org/t/which-nixpkgs-stable-tag-for-nixos-and-darwin-together/32796/3
 
     # For Linux
-    nixos-24_05.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixos-24_11.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixos-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     # For MacOS
-    nixpkgs-24_05-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.05-darwin";
+    nixpkgs-24_11-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
     nixpkgs-23_11-darwin.url = "github:NixOS/nixpkgs/nixpkgs-23.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
@@ -23,39 +23,39 @@
     # Replacement for rustup
     fenix-linux = {
       url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixos-24_05";
+      inputs.nixpkgs.follows = "nixos-24_11";
     };
     fenix-darwin = {
       url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs-24_05-darwin";
+      inputs.nixpkgs.follows = "nixpkgs-24_11-darwin";
     };
 
     # Manages user settings
     home-manager-linux = {
-      url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixos-24_05";
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixos-24_11";
     };
     home-manager-darwin = {
-      url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs-24_05-darwin";
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs-24_11-darwin";
     };
 
     # Provides better GPU support
     nixgl = {
       url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixos-24_05";
+      inputs.nixpkgs.follows = "nixos-24_11";
     };
 
     # Like NixOS, but for darwin
     nix-darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs-24_05-darwin";
+      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+      inputs.nixpkgs.follows = "nixpkgs-24_11-darwin";
     };
 
     # Builds nix system images
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixos-24_05";
+      inputs.nixpkgs.follows = "nixos-24_11";
     };
   };
 

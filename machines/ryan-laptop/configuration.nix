@@ -11,7 +11,7 @@ in
     channel.enable = false;
     nixPath = lib.mkForce [ "nixpkgs=flake:nixpkgs" ];
     settings = {
-      "experimental-features" = [ "nix-command" "flakes" "repl-flake" ];
+      "experimental-features" = [ "nix-command" "flakes" ];
       "max-jobs" = "auto";
       trusted-users = [
         "root"
