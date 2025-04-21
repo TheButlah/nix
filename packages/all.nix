@@ -54,6 +54,7 @@
   zig
 
   # Devops
+  _1password-cli
   awscli2
   cloudflared
   gnupg

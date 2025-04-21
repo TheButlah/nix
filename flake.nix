@@ -75,6 +75,7 @@
             # (import overlays/mods.nix)
             ((import overlays/unstable.nix) { inherit inputs; })
             ((import overlays/nixpkgs-23_11.nix) { inherit inputs; })
+            (import overlays/karabiner-14.nix)
           ];
           config = {
             allowUnfree = true;

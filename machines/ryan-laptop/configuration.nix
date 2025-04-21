@@ -5,11 +5,12 @@ let
 in
 {
   # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
+  services.nix-daemon.enable = false; # maybe incompatible with determinate nix
   nix = {
+    enable = false; # managed by determinate
     package = pkgs.nix;
     channel.enable = false;
-    nixPath = lib.mkForce [ "nixpkgs=flake:nixpkgs" ];
+    # nixPath = lib.mkForce [ "nixpkgs=flake:nixpkgs" ];
     settings = {
       "experimental-features" = [ "nix-command" "flakes" ];
       "max-jobs" = "auto";
@@ -20,7 +21,7 @@ in
       ];
     };
     linux-builder = {
-      enable = true;
+      enable = false; # incompatible with determinate
       # Clears builder filesystem on restart, to avoid state accumulation
       ephemeral = true;
       systems = [
@@ -42,8 +43,8 @@ in
     };
   };
   nixpkgs.flake = {
-    setFlakeRegistry = true;
-    setNixPath = true;
+    setFlakeRegistry = false; # incompatible with determinate
+    setNixPath = false; # incompatible with determinate
   };
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -86,7 +87,9 @@ in
   # keyboard customization system for macos.
   # currently we just use it for disabling the builting keeb when corne is
   # connected
-  services.karabiner-elements.enable = true;
+  # currently disabled due to bug, we get it from brew instead:
+  # https://github.com/nix-darwin/nix-darwin/issues/1041
+  services.karabiner-elements.enable = false;
 
   security.sudo.extraConfig = ''
     Defaults timestamp_timeout=60
@@ -96,6 +99,8 @@ in
     enable = true;
     brews = [ "sunshine-beta" ];
     casks = [
+      "karabiner-elements"
+      "mullvadvpn"
       "tidal"
     ];
     taps = [ "LizardByte/homebrew" ];
