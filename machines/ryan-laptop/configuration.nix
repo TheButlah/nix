@@ -101,6 +101,7 @@ in
     casks = [
       "karabiner-elements"
       "mullvadvpn"
+      "spotify"
       "tidal"
     ];
     taps = [ "LizardByte/homebrew" ];
