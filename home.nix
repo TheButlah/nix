@@ -3,6 +3,28 @@ let
   inherit (pkgs.stdenv) isDarwin;
   inherit (pkgs.stdenv) isLinux;
   homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
+  op = rec {
+    acct = {
+      tfh = "72J3ELVKX5BTPKT44JPHXUD6AM";
+      me = "PJ5RFQLTJNBQDI3OMBJHR3LOZ4";
+    };
+    openaiApiKey =
+      if isWork then {
+        acct = acct.tfh;
+        url = "op://Engineering/Orb SW OpenAI API Key/credential";
+      } else {
+        acct = acct.me;
+        url = "op://Terminal Secrets/OpenAI API Key/credential";
+      };
+    anthropicApiKey =
+      if isWork then {
+        acct = acct.tfh;
+        url = "op://Engineering/Orb SW Anthropic API Key/credential";
+      } else {
+        acct = acct.me;
+        url = "op://Terminal Secrets/Anthropic API Key/credential";
+      };
+  };
 in
 {
   home = {
@@ -54,8 +76,8 @@ in
 
       export PATH="$PATH:${homeDirectory}/.dotnet/tools"
 
-      export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Terminal Secrets/OpenAI API Key/credential")"}"
-      export ANTHROPIC_API_KEY="''${ANTHROPIC_API_KEY:-"$(op read --account PJ5RFQLTJNBQDI3OMBJHR3LOZ4 "op://Terminal Secrets/Anthropic API Key/credential")"}"
+      export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account "${op.openaiApiKey.acct}" "${op.openaiApiKey.url}")"}"
+      export ANTHROPIC_API_KEY="''${ANTHROPIC_API_KEY:-"$(op read --account "${op.anthropicApiKey.acct}" "${op.anthropicApiKey.url}")"}"
     '' + (lib.optionalString pkgs.stdenv.isDarwin ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
     '');
