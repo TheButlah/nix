@@ -181,7 +181,7 @@
         inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [ ./home.nix ];
-          extraSpecialArgs = { inherit username isWayland; isWork = false; inherit (s.${system}) alacritty; };
+          extraSpecialArgs = { inherit username isWayland isWork; inherit (s.${system}) alacritty; };
         }
       );
     in
