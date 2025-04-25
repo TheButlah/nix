@@ -118,8 +118,8 @@ in
   };
   programs.zellij = {
     enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
+    # enableBashIntegration = true;
+    # enableZshIntegration = true;
     package = pkgs.unstable.zellij;
   };
 
