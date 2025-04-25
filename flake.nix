@@ -198,6 +198,11 @@
         modulePath = ./machines/ryan-laptop/configuration.nix;
         hostname = "Ryan-Butler";
       };
+      homeConfigurations."vscode@orb-core" = homeManagerConfig {
+        username = "vscode";
+        system = "aarch64-linux";
+        isWork = true;
+      };
       homeConfigurations."ryan@ryan-laptop" = homeManagerConfig {
         username = "ryan";
         system = "aarch64-darwin";
