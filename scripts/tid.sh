@@ -9,7 +9,7 @@ if [[ $# -ne 1 ]]; then
 fi
 
 set +Ee
-TSH_OUTPUT="$(tsh ls -v | rg $1)"
+TSH_OUTPUT="$(tsh13 ls -v | rg $1)"
 set -Ee
 
 if [ -z "${TSH_OUTPUT}" ]; then
