@@ -59,6 +59,7 @@
   cloudflared
   gnupg
   ngrok
+  ssm-session-manager-plugin
   terraform
 
   # AI

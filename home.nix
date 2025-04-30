@@ -187,6 +187,9 @@ in
         port = 222;
         user = "worldcoin";
       };
+      "i-* mi-*" = defaults true // {
+        proxyCommand = "sh -c \"aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'\"";
+      };
     };
   # programs.keychain = {
   #   enable = true;
@@ -196,14 +199,3 @@ in
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "24.11";
 }
-
-# } // (if isLinux then {
-#   xdg.desktopEntries = {
-#     alacritty = {
-#       name = "Alacritty";
-#       genericName = "Terminal";
-#       exec = "alacritty";
-#       terminal = false;
-#       categories = [ "System" "TerminalEmulator" ];
-#     };
-#   };
