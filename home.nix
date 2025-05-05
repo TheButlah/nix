@@ -66,7 +66,9 @@ in
     autosuggestion.enable = true;
     enableCompletion = true;
     oh-my-zsh.enable = true;
-    initExtra = ''
+    initExtra = (lib.optionalString pkgs.stdenv.isDarwin ''
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    '') + ''
       set -o vi
 
       eval "$(fnm env --use-on-cd --shell zsh)"
@@ -78,9 +80,7 @@ in
 
       export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account "${op.openaiApiKey.acct}" "${op.openaiApiKey.url}")"}"
       export ANTHROPIC_API_KEY="''${ANTHROPIC_API_KEY:-"$(op read --account "${op.anthropicApiKey.acct}" "${op.anthropicApiKey.url}")"}"
-    '' + (lib.optionalString pkgs.stdenv.isDarwin ''
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-    '');
+    '';
     envExtra = ''
     '';
   };
