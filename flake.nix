@@ -212,6 +212,7 @@
         username = "ryan";
         system = "aarch64-linux";
         isWork = false;
+        isWayland = true;
       };
       homeConfigurations."ryan.butler@ryan-worldcoin" = homeManagerConfig {
         username = "ryan.butler";
@@ -222,6 +223,7 @@
         username = "ryan";
         system = "aarch64-linux";
         isWork = true;
+        isWayland = true;
       };
       homeConfigurations."ryan.butler@ryan-wld-darter" = homeManagerConfig {
         username = "ryan.butler";
