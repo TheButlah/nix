@@ -208,7 +208,7 @@
         system = "aarch64-darwin";
         isWork = false;
       };
-      homeConfigurations."ryan@ryan-laptop-asahi" = homeManagerConfig {
+      homeConfigurations."ryan@ryan-asahi" = homeManagerConfig {
         username = "ryan";
         system = "aarch64-linux";
         isWork = false;
