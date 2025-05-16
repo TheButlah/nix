@@ -152,6 +152,9 @@ in
     "atuin/config.toml" = {
       source = ./xdg/atuin.toml;
     };
+    "niri/config.kdl" = {
+      source = ./xdg/niri.kdl;
+    };
   };
 
   fonts.fontconfig.enable = true;
@@ -195,6 +198,11 @@ in
   #   enable = true;
   #   keys = [ "id_ed25519" ];
   # };
+
+  programs.waybar = {
+    enable = isLinux;
+    systemd.enable = true;
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "24.11";
