@@ -67,8 +67,15 @@
       inputs.nixpkgs.follows = "nixos-unstable";
     };
 
+    # Rust animated wallpaper
     swww = {
       url = "github:LGFae/swww";
+      inputs.nixpkgs.follows = "nixos-unstable";
+    };
+
+    # Rust app launcher
+    anyrun = {
+      url = "github:anyrun-org/anyrun";
       inputs.nixpkgs.follows = "nixos-unstable";
     };
   };
@@ -148,7 +155,7 @@
                 # include the home-manager module
                 users.${username} = import ./home.nix;
                 extraSpecialArgs = rec {
-                  inherit isWork username pkgs;
+                  inherit isWork username pkgs inputs;
                   inherit (pkgs) alacritty;
                 };
               };
@@ -177,7 +184,7 @@
                 # include the home-manager module
                 users.${username} = import homeManagerCfg;
                 extraSpecialArgs = rec {
-                  inherit username isWork isWayland pkgs;
+                  inherit username isWork isWayland pkgs inputs;
                   inherit (pkgs) alacritty;
                 };
               };
@@ -228,8 +235,11 @@
         in
         inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./home.nix ];
-          extraSpecialArgs = { inherit username isWayland isWork; inherit (s.${system}) alacritty; };
+          modules = [
+            ./home.nix
+            inputs.anyrun.homeManagerModules.default
+          ];
+          extraSpecialArgs = { inherit username isWayland isWork inputs; inherit (s.${system}) alacritty; };
         }
       );
     in

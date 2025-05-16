@@ -1,6 +1,6 @@
 [font]
 normal = { family = "MesloLGM Nerd Font", style = "Regular" }
-size = 16
+size = 14
 
 [window]
 option_as_alt = "Both"
