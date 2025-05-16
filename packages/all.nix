@@ -16,6 +16,7 @@
   (nerdfonts.override { fonts = [ "Meslo" "RobotoMono" ]; })
   wezterm # ~blazingly fast~ terminal in wgpu
   vscodium
+  # legcord
 
   # CLI
   asciinema
@@ -26,11 +27,12 @@
   glow
   htop
   jq
-  unstable.neovim
+  neofetch
   picocom
   ripgrep
   shellcheck
   tree
+  unstable.neovim
   unstable.zellij
   watch
   zoxide
