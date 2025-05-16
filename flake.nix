@@ -194,6 +194,9 @@
           specialArgs = { inherit username hostname isWork isWayland inputs; modulesPath = "${inputs.nixpkgs-unstable}/nixos/modules"; };
           modules = [
             modulePath
+            {
+              nixpkgs.config.allowUnfree = true;
+            }
             # setup home-manager
             # inputs.home-manager-unstable.nixosModules.home-manager
             # {

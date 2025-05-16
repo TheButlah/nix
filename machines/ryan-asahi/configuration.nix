@@ -90,9 +90,16 @@ in
     ];
   };
   users.defaultUserShell = pkgs.zsh;
-  programs.zsh.enable = true;
 
-  programs.firefox.enable = true;
+  programs = {
+    zsh.enable = true;
+    firefox.enable = true;
+    _1password.enable = true;
+    _1password-gui = {
+      enable = true;
+      polkitPolicyOwners = [ "${username}" ];
+    };
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
