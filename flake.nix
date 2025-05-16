@@ -39,6 +39,10 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs-24_11-darwin";
     };
+    home-manager-linux-unstable = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixos-unstable";
+    };
 
     # Provides better GPU support
     nixgl = {
@@ -56,6 +60,11 @@
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixos-24_11";
+    };
+
+    nixos-apple-silicon = {
+      url = "github:tpwrules/nixos-apple-silicon";
+      inputs.nixpkgs.follows = "nixos-unstable";
     };
   };
 
@@ -173,6 +182,37 @@
           ];
         }
       );
+      nixosAsahiConfig = { modulePath, username, hostname, isWork, homeManagerCfg ? ./home.nix }: (
+        let
+          system = "aarch64-linux";
+          inputs = s.${system}.inputs;
+          pkgs = s.${system}.pkgs;
+          isWayland = true;
+        in
+        inputs.nixpkgs-unstable.lib.nixosSystem rec {
+          inherit system;
+          specialArgs = { inherit username hostname isWork isWayland inputs; modulesPath = "${inputs.nixpkgs-unstable}/nixos/modules"; };
+          modules = [
+            modulePath
+            # setup home-manager
+            # inputs.home-manager-unstable.nixosModules.home-manager
+            # {
+            #   home-manager = {
+            #     useGlobalPkgs = true;
+            #     useUserPackages = true;
+            #     # include the home-manager module
+            #     users.${username} = import homeManagerCfg;
+            #     extraSpecialArgs = rec {
+            #       inherit username isWork isWayland pkgs;
+            #       inherit (pkgs) alacritty;
+            #     };
+            #   };
+            #   # https://github.com/nix-community/home-manager/issues/4026
+            #   # users.users.${username}.home = s.${system}.pkgs.lib.mkForce "/Users/${username}";
+            # }
+          ];
+        }
+      );
       homeManagerConfig = { username, system, isWork, isWayland ? false }: (
         let
           inputs = s.${system}.inputs;
@@ -186,6 +226,12 @@
       );
     in
     {
+      nixosConfigurations."ryan-asahi" = nixosAsahiConfig {
+        username = "ryan";
+        isWork = false;
+        modulePath = ./machines/ryan-asahi/configuration.nix;
+        hostname = "ryan-asahi";
+      };
       darwinConfigurations."ryan-laptop" = darwinConfig {
         username = "ryan";
         isWork = false;

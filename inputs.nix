@@ -13,5 +13,7 @@ in
   flake-utils = inputs-raw.flake-utils;
   fenix = if isDarwin then inputs-raw.fenix-darwin else inputs-raw.fenix-linux;
   home-manager = if isDarwin then inputs-raw.home-manager-darwin else inputs-raw.home-manager-linux;
+  home-manager-unstable = if isDarwin then throw "unstable hm should only be used on asahi" else inputs-raw.home-manager-linux-unstable;
   nixos-generators = inputs-raw.nixos-generators;
+  nixos-apple-silicon = inputs-raw.nixos-apple-silicon;
 }
