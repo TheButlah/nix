@@ -66,6 +66,11 @@
       url = "github:tpwrules/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixos-unstable";
     };
+
+    swww = {
+      url = "github:LGFae/swww";
+      inputs.nixpkgs.follows = "nixos-unstable";
+    };
   };
 
   outputs = inputs-raw:

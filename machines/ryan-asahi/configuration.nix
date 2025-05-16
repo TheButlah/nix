@@ -114,6 +114,7 @@ in
     ripgrep
     neovim
     wezterm
+    swww
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
