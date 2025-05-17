@@ -46,20 +46,30 @@ in
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  # Enable the X11 windowing system.
+  # We don't enable x11
   services.xserver.enable = false;
   services.displayManager = {
+    # KDE login/display manager
     sddm = {
       enable = true;
       wayland.enable = true;
     };
-    defaultSession = "plasma";
+    # this is the desktop manager that gets launched
+    defaultSession = "niri";
   };
+  # KDE plasma window manager
   services.desktopManager = {
     plasma6 = {
       enable = true;
     };
   };
+  # tiling window manager
+  programs.niri = {
+    enable = true;
+  };
+  # https://nixos.wiki/wiki/Wayland
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
 
 
   # Configure keymap in X11
@@ -97,10 +107,8 @@ in
     _1password.enable = true;
     _1password-gui = {
       enable = true;
+      # cli needs this
       polkitPolicyOwners = [ "${username}" ];
-    };
-    niri = {
-      enable = true;
     };
   };
 
