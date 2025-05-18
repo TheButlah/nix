@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, username ? "ryan", isWork ? true, isWayland ? false, alacritty ? pkgs.alacritty, ... }:
+{ pkgs, lib, inputs, username, hostname, isWork ? true, isWayland ? false, alacritty ? pkgs.alacritty, ... }:
 let
   inherit (pkgs.stdenv) isDarwin;
   inherit (pkgs.stdenv) isLinux;
@@ -224,6 +224,11 @@ in
     extraCss = builtins.readFile ./xdg/anyrun.css;
   };
   services.mako = {
+    enable = isLinux;
+  };
+
+  # note: run `spotifyd authenticate` to login.
+  services.spotifyd = {
     enable = isLinux;
   };
 

@@ -161,7 +161,7 @@
                 # include the home-manager module
                 users.${username} = import ./home.nix;
                 extraSpecialArgs = rec {
-                  inherit isWork username pkgs inputs;
+                  inherit isWork username pkgs inputs hostname;
                   inherit (pkgs) alacritty;
                 };
               };
@@ -190,7 +190,7 @@
                 # include the home-manager module
                 users.${username} = import homeManagerCfg;
                 extraSpecialArgs = rec {
-                  inherit username isWork isWayland pkgs inputs;
+                  inherit username isWork isWayland pkgs inputs hostname;
                   inherit (pkgs) alacritty;
                 };
               };
@@ -234,7 +234,7 @@
           ];
         }
       );
-      homeManagerConfig = { username, system, isWork, isWayland ? false }: (
+      homeManagerConfig = { username, hostname, system, isWork, isWayland ? false }: (
         let
           inputs = s.${system}.inputs;
           pkgs = s.${system}.pkgs;
@@ -245,7 +245,10 @@
             ./home.nix
             inputs.anyrun.homeManagerModules.default
           ];
-          extraSpecialArgs = { inherit username isWayland isWork inputs; inherit (s.${system}) alacritty; };
+          extraSpecialArgs = {
+            inherit username isWayland isWork inputs hostname;
+            inherit (s.${system}) alacritty;
+          };
         }
       );
     in
@@ -272,34 +275,43 @@
         username = "vscode";
         system = "aarch64-linux";
         isWork = true;
+        hostname = "vscode@vscode"; # TODO: is this right?
       };
       homeConfigurations."ryan@ryan-laptop" = homeManagerConfig {
         username = "ryan";
         system = "aarch64-darwin";
         isWork = false;
+        isWayland = false;
+        hostname = "ryan-laptop";
       };
-      homeConfigurations."ryan@ryan-asahi" = homeManagerConfig {
-        username = "ryan";
-        system = "aarch64-linux";
-        isWork = false;
-        isWayland = true;
-      };
+      homeConfigurations."ryan@ryan-asahi" = homeManagerConfig
+        {
+          username = "ryan";
+          system = "aarch64-linux";
+          isWork = false;
+          isWayland = true;
+          hostname = "ryan-asahi";
+        };
       homeConfigurations."ryan.butler@ryan-worldcoin" = homeManagerConfig {
         username = "ryan.butler";
         system = "aarch64-darwin";
         isWork = true;
+        isWayland = false;
+        hostname = "ryan-worldcoin";
       };
       homeConfigurations."ryan@ryan-worldcoin-asahi" = homeManagerConfig {
         username = "ryan";
         system = "aarch64-linux";
         isWork = true;
         isWayland = true;
+        hostname = "ryan-worldcoin-asahi";
       };
       homeConfigurations."ryan.butler@ryan-wld-darter" = homeManagerConfig {
         username = "ryan.butler";
         system = "x86_64-linux";
         isWork = true;
         isWayland = true;
+        hostname = "ryan-wld-darter";
       };
     } //
     # This helper function is used to more easily abstract
