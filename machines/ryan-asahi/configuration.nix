@@ -78,7 +78,7 @@ in
   # https://nixos.wiki/wiki/Wayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-
+  programs.adb.enable = true;
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -101,7 +101,10 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ryan = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "adbusers"
+    ];
     packages = with pkgs; [
       legcord
       # tree
