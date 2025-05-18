@@ -16,7 +16,6 @@
   (nerdfonts.override { fonts = [ "Meslo" "RobotoMono" ]; })
   wezterm # ~blazingly fast~ terminal in wgpu
   vscodium
-  obs
   # legcord
 
   # CLI
