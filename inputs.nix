@@ -17,4 +17,5 @@ in
   nixos-generators = inputs-raw.nixos-generators;
   nixos-apple-silicon = inputs-raw.nixos-apple-silicon;
   anyrun = inputs-raw.anyrun;
+  xremap-flake = inputs-raw.xremap-flake;
 }

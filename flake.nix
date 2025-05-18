@@ -78,6 +78,12 @@
       url = "github:anyrun-org/anyrun";
       inputs.nixpkgs.follows = "nixos-unstable";
     };
+
+    # rust keyboard remapper via evdev and uinput
+    xremap-flake = {
+      url = "github:xremap/nix-flake";
+      inputs.nixpkgs.follows = "nixos-unstable";
+    };
   };
 
   outputs = inputs-raw:

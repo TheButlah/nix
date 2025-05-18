@@ -8,6 +8,7 @@ in
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
+      inputs.xremap-flake.nixosModules.default
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -45,6 +46,13 @@ in
   #   keyMap = "us";
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
+  services.xremap = {
+    enable = true;
+    userName = "${username}";
+    serviceMode = "user";
+    withWlroots = true;
+    yamlConfig = builtins.readFile ../../xdg/xremap.yaml;
+  };
 
   # We don't enable x11
   services.xserver.enable = false;
