@@ -155,6 +155,8 @@ in
     "niri/config.kdl" = {
       source = ./xdg/niri.kdl;
     };
+    "waybar/style.css".source = ./xdg/waybar.style.css;
+    "waybar/config.jsonc".source = ./xdg/waybar.config.jsonc;
   };
 
   fonts.fontconfig.enable = true;
