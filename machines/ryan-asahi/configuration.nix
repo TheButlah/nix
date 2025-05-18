@@ -11,6 +11,8 @@ in
       inputs.xremap-flake.nixosModules.default
     ];
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true; # true in asahi
   boot.loader.efi.canTouchEfiVariables = false; # Fale in asahi
@@ -30,14 +32,30 @@ in
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # Open ports in the firewall.
+  networking.firewall.allowedTCPPorts = [
+    57621 # spotify https://nixos.wiki/wiki/Spotify
+  ];
+  networking.firewall.allowedUDPPorts = [
+    5353 # spotify and google cast https://nixos.wiki/wiki/Spotify
+  ];
 
-  # Set your time zone.
-  time.timeZone = "America/New_York";
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Enable the OpenSSH daemon.
+  # services.openssh.enable = true;
+  programs.ssh.startAgent = true;
+
+
+  # Set your time zone.
+  time.timeZone = "America/New_York";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -143,18 +161,6 @@ in
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-  programs.ssh.startAgent = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
