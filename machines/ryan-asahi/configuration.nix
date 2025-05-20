@@ -107,6 +107,9 @@ in
   };
   # https://nixos.wiki/wiki/Wayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  # TODO: not working rn, I think I need to switch to niri-flake
+  programs.xwayland.enable = true;
+
 
   programs.adb.enable = true;
 
