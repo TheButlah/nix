@@ -1,6 +1,18 @@
 { pkgs, lib, inputs, hostname, username, ... }:
 let
   inherit (inputs) self;
+  my1p = pkgs._1password-gui.overrideAttrs (old: {
+    # see https://www.1password.community/discussions/1password/1password-window-blank-on-gnome-47-wayland--fedora-41/153548/replies/153967
+    # Also, this patches things to actually use ozone
+    preFixup = old.preFixup + ''\
+      makeShellWrapper $out/share/1password/1password $out/bin/1password \
+      "''${gappsWrapperArgs[@]}" \
+      --suffix PATH : ${lib.makeBinPath [ pkgs.xdg-utils ]} \
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.udev ]} \
+      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
+      --add-flags "--js-flags=--nodecommit_pooled_pages"
+    '';
+  });
 in
 {
   imports =
@@ -135,6 +147,7 @@ in
     firefox.enable = true;
     _1password.enable = true;
     _1password-gui = {
+      package = my1p;
       enable = true;
       # cli needs this
       polkitPolicyOwners = [ "${username}" ];
