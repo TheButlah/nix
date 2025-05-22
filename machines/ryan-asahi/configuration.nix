@@ -18,10 +18,8 @@ in
   imports =
     [
       # Include the results of the hardware scan.
-      ./hardware-configuration.nix
       inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
-      inputs.xremap-flake.nixosModules.default
-      inputs.niri-flake.nixosModules.niri
+      ./hardware-configuration.nix
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -42,94 +40,74 @@ in
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
-
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [
-    57621 # spotify https://nixos.wiki/wiki/Spotify
-  ];
-  networking.firewall.allowedUDPPorts = [
-    5353 # spotify and google cast https://nixos.wiki/wiki/Spotify
-  ];
-
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-  programs.ssh.startAgent = true;
-
-
+  # hardware.bluetooth.enable = true; # enables support for Bluetooth
+  # hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+  #
+  # # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [
+  #   57621 # spotify https://nixos.wiki/wiki/Spotify
+  # ];
+  # networking.firewall.allowedUDPPorts = [
+  #   5353 # spotify and google cast https://nixos.wiki/wiki/Spotify
+  # ];
+  #
+  # # networking.firewall.allowedTCPPorts = [ ... ];
+  # # networking.firewall.allowedUDPPorts = [ ... ];
+  # # Or disable the firewall altogether.
+  # # networking.firewall.enable = false;
+  #
+  # # Configure network proxy if necessary
+  # # networking.proxy.default = "http://user:password@proxy:port/";
+  # # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  #
+  # # Enable the OpenSSH daemon.
+  # # services.openssh.enable = true;
+  # programs.ssh.startAgent = true;
+  #
+  #
   # Set your time zone.
   time.timeZone = "America/New_York";
-
+  #
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
-  services.xremap = {
-    enable = true;
-    userName = "${username}";
-    serviceMode = "user";
-    withWlroots = true;
-    yamlConfig = builtins.readFile ../../xdg/xremap.yaml;
-  };
-
-  # We don't enable x11
-  services.xserver.enable = false;
-  services.displayManager = {
-    # KDE login/display manager
-    sddm = {
-      enable = true;
-      wayland.enable = true;
-    };
-    # this is the desktop manager that gets launched
-    defaultSession = "niri";
-  };
-  # KDE plasma window manager
-  services.desktopManager = {
-    plasma6 = {
-      enable = true;
-    };
-  };
-  # tiling window manager
-  programs.niri = {
-    enable = true;
-    package = pkgs.niri-stable;
-  };
-  niri-flake.cache.enable = false;
-  # https://nixos.wiki/wiki/Wayland
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  # TODO: not working rn, I think I need to switch to niri-flake
-  # programs.xwayland.enable = true;
-
-
-  programs.adb.enable = true;
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # services.pulseaudio.enable = true;
-  # OR
-  # services.pipewire = {
+  # services.xremap = {
   #   enable = true;
-  #   pulse.enable = true;
+  #   userName = "${username}";
+  #   serviceMode = "user";
+  #   withWlroots = true;
+  #   yamlConfig = builtins.readFile ../../xdg/xremap.yaml;
   # };
+
+  # # We don't enable x11
+  # services.xserver.enable = false;
+  # services.displayManager = {
+  #   # KDE login/display manager
+  #   sddm = {
+  #     enable = true;
+  #     wayland.enable = true;
+  #   };
+  #   # this is the desktop manager that gets launched
+  #   defaultSession = "niri";
+  # };
+  # # KDE plasma window manager
+  # # services.desktopManager = {
+  # #   plasma6 = {
+  # #     enable = true;
+  # #   };
+  # # };
+  # # tiling window manager
+  # programs.niri = {
+  #   enable = true;
+  #   package = pkgs.niri-stable;
+  # };
+  # niri-flake.cache.enable = false;
+  # # https://nixos.wiki/wiki/Wayland
+  # environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  # # TODO: not working rn, I think I need to switch to niri-flake
+  # # programs.xwayland.enable = true;
+
+
+  # programs.adb.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
@@ -142,22 +120,21 @@ in
       "adbusers"
     ];
     packages = with pkgs; [
-      legcord
-      # tree
+      # legcord
     ];
   };
   users.defaultUserShell = pkgs.zsh;
 
   programs = {
     zsh.enable = true;
-    firefox.enable = true;
-    _1password.enable = true;
-    _1password-gui = {
-      package = my1p;
-      enable = true;
-      # cli needs this
-      polkitPolicyOwners = [ "${username}" ];
-    };
+    # firefox.enable = true;
+    # _1password.enable = true;
+    # _1password-gui = {
+    #   package = my1p;
+    #   enable = true;
+    #   # cli needs this
+    #   polkitPolicyOwners = [ "${username}" ];
+    # };
   };
 
   # List packages installed in system profile. To search, run:
@@ -168,10 +145,10 @@ in
     curl
     git
     ripgrep
-    neovim
-    wezterm
-    swww
-    pkgs.xwayland-satellite-stable
+    # neovim
+    # wezterm
+    # swww
+    # pkgs.xwayland-satellite-stable
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
