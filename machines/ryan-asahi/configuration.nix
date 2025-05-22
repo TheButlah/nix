@@ -21,6 +21,7 @@ in
       ./hardware-configuration.nix
       inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
       inputs.xremap-flake.nixosModules.default
+      inputs.niri-flake.nixosModules.niri
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -104,11 +105,13 @@ in
   # tiling window manager
   programs.niri = {
     enable = true;
+    package = pkgs.niri-stable;
   };
+  niri-flake.cache.enable = false;
   # https://nixos.wiki/wiki/Wayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
   # TODO: not working rn, I think I need to switch to niri-flake
-  programs.xwayland.enable = true;
+  # programs.xwayland.enable = true;
 
 
   programs.adb.enable = true;
@@ -168,6 +171,7 @@ in
     neovim
     wezterm
     swww
+    pkgs.xwayland-satellite-stable
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

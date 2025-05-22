@@ -18,4 +18,5 @@ in
   nixos-apple-silicon = inputs-raw.nixos-apple-silicon;
   anyrun = inputs-raw.anyrun;
   xremap-flake = inputs-raw.xremap-flake;
+  niri-flake = inputs-raw.niri-flake;
 }

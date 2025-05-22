@@ -84,6 +84,12 @@
       url = "github:xremap/nix-flake";
       inputs.nixpkgs.follows = "nixos-unstable";
     };
+
+    niri-flake = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs-stable.follows = "nixos-24_11";
+    };
   };
 
   outputs = inputs-raw:
@@ -214,6 +220,7 @@
             modulePath
             {
               nixpkgs.config.allowUnfree = true;
+              nixpkgs.overlays = [ inputs.niri-flake.overlays.niri ];
             }
             # setup home-manager
             # inputs.home-manager-unstable.nixosModules.home-manager
@@ -317,36 +324,37 @@
     # This helper function is used to more easily abstract
     # over the host platform.
     # See https://github.com/numtide/flake-utils#eachdefaultsystem--system---attrs
-    inputs-raw.flake-utils.lib.eachDefaultSystem (system:
-      let
-        inherit (s.${system}) inputs pkgs alacritty wezterm tsh13 tsh15 darwin-rebuild;
-        mkApp = ({ pkg, bin ? null }:
-          let
-            b = if bin == null then pkg.name else bin;
-          in
-          { program = "${pkg}/bin/${b}"; type = "app"; });
-      in
-      # See https://nixos.wiki/wiki/Flakes#Output_schema
-      {
-        packages.linode = inputs.nixos-generators.nixosGenerate {
-          system = "x86_64-linux";
-          modules = [
-            ./machines/us-east-linode-1/configuration.nix
-          ];
-          format = "linode";
-        };
+    inputs-raw.flake-utils.lib.eachDefaultSystem
+      (system:
+        let
+          inherit (s.${system}) inputs pkgs alacritty wezterm tsh13 tsh15 darwin-rebuild;
+          mkApp = ({ pkg, bin ? null }:
+            let
+              b = if bin == null then pkg.name else bin;
+            in
+            { program = "${pkg}/bin/${b}"; type = "app"; });
+        in
+        # See https://nixos.wiki/wiki/Flakes#Output_schema
+        {
+          packages.linode = inputs.nixos-generators.nixosGenerate {
+            system = "x86_64-linux";
+            modules = [
+              ./machines/us-east-linode-1/configuration.nix
+            ];
+            format = "linode";
+          };
 
-        apps."alacritty" = mkApp { pkg = alacritty; bin = "alacritty"; };
-        apps."darwin-rebuild" = mkApp { pkg = darwin-rebuild; bin = "darwin-rebuild"; };
-        apps."home-manager" = mkApp { pkg = pkgs.home-manager; bin = "home-manager"; };
-        apps."tsh13" = mkApp { pkg = tsh13; bin = "tsh"; };
-        apps."tsh15" = mkApp { pkg = tsh15; bin = "tsh"; };
-        apps."wezterm" = mkApp { pkg = wezterm; bin = "wezterm"; };
-        packages.tsh13 = tsh13;
-        packages.tsh15 = tsh15;
+          apps."alacritty" = mkApp { pkg = alacritty; bin = "alacritty"; };
+          apps."darwin-rebuild" = mkApp { pkg = darwin-rebuild; bin = "darwin-rebuild"; };
+          apps."home-manager" = mkApp { pkg = pkgs.home-manager; bin = "home-manager"; };
+          apps."tsh13" = mkApp { pkg = tsh13; bin = "tsh"; };
+          apps."tsh15" = mkApp { pkg = tsh15; bin = "tsh"; };
+          apps."wezterm" = mkApp { pkg = wezterm; bin = "wezterm"; };
+          packages.tsh13 = tsh13;
+          packages.tsh15 = tsh15;
 
-        # This formats the nix files, not the rest of the repo.
-        formatter = pkgs.nixpkgs-fmt;
-      }
-    );
+          # This formats the nix files, not the rest of the repo.
+          formatter = pkgs.nixpkgs-fmt;
+        }
+      );
 }
