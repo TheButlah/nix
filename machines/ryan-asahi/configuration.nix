@@ -140,6 +140,7 @@ in
     extraGroups = [
       "wheel"
       "adbusers"
+      "plugdev"
     ];
     packages = with pkgs; [
       legcord
@@ -147,6 +148,9 @@ in
     ];
   };
   users.defaultUserShell = pkgs.zsh;
+  users.groups = {
+    plugdev = { };
+  };
 
   programs = {
     zsh.enable = true;
@@ -172,7 +176,29 @@ in
     wezterm
     swww
     pkgs.xwayland-satellite-stable
+    libnotify # notify-send
+    usbutils # lsusb
   ];
+
+  # USB stuff
+  services.udev = {
+    enable = true;
+    extraRules = ''
+      SUBSYSTEM=="usb", MODE="0660", GROUP="plugdev"
+      # SYMLINK also creates a .device with the path of the symlink, i.e. `dev-corne.device`
+      ACTION=="add", KERNEL=="event*", SUBSYSTEM=="input", ATTRS{id/vendor}=="1d50", ATTRS{id/product}=="615e", ATTRS{name}=="Corne Keyboard", SYMLINK+="corne", TAG+="systemd", ENV{SYSTEMD_WANTS}="wireless-keyboard.target"
+    '';
+    # ACTION=="remove", KERNEL=="event*", SUBSYSTEM=="input", ATTRS{id/vendor}=="1d50", ATTRS{id/product}=="615e", ATTRS{name}=="Corne Keyboard", SYMLINK+="corne", TAG+="systemd", ENV{SYSTEMD_ALIAS}="wireless-keyboard.device"
+  };
+
+  # Set up keyboard services
+  # This target just helps abstract over the particular name of the device, and its slightly
+  # more flexible than using udev directly.
+  # See also: https://pychao.com/2021/02/24/difference-between-partof-and-bindsto-in-a-systemd-unit
+  systemd.targets."wireless-keyboard" = {
+    after = [ "dev-corne.device" ];
+    bindsTo = [ "dev-corne.device" ]; # kills this unit when the device unit is stopped
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
