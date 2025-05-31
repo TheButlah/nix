@@ -19,4 +19,5 @@ in
   anyrun = inputs-raw.anyrun;
   xremap-flake = inputs-raw.xremap-flake;
   niri-flake = inputs-raw.niri-flake;
+  inhibitor = inputs-raw.inhibitor;
 }

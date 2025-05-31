@@ -178,6 +178,7 @@ in
     pkgs.xwayland-satellite-stable
     libnotify # notify-send
     usbutils # lsusb
+    inhibitor
   ];
 
   # USB stuff
@@ -204,13 +205,12 @@ in
     after = [ "wireless-keyboard.target" ];
     bindsTo = [ "wireless-keyboard.target" ];
     wantedBy = [ "wireless-keyboard.target" ];
-    path = with pkgs; [ bash ];
+    path = with pkgs; [ inhibitor ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = "yes";
-      # TODO: Make these actually disable the keyboard
-      ExecStart = "/usr/bin/env bash -c \"echo service started\"";
-      ExecStop = "/usr/bin/env bash -c \"echo service stopped\"";
+      ExecStart = "/usr/bin/env inhibitor disable --name \"Apple MTP keyboard\"";
+      ExecStop = "/usr/bin/env inhibitor enable --name \"Apple MTP keyboard\"";
     };
   };
 

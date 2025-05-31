@@ -90,6 +90,11 @@
       inputs.nixpkgs.follows = "nixos-unstable";
       inputs.nixpkgs-stable.follows = "nixos-24_11";
     };
+
+    inhibitor = {
+      url = "github:TheButlah/inhibitor";
+      inputs.nixpkgs.follows = "nixos-24_11";
+    };
   };
 
   outputs = inputs-raw:
@@ -105,6 +110,7 @@
           inherit system;
           overlays = [
             inputs.nixgl.overlay
+            inputs.inhibitor.overlays.${system}.default
             # (import overlays/mods.nix)
             ((import overlays/unstable.nix) { inherit inputs; })
             ((import overlays/nixpkgs-23_11.nix) { inherit inputs; })
@@ -220,7 +226,7 @@
             modulePath
             {
               nixpkgs.config.allowUnfree = true;
-              nixpkgs.overlays = [ inputs.niri-flake.overlays.niri ];
+              nixpkgs.overlays = [ inputs.niri-flake.overlays.niri inputs.inhibitor.overlays.${system}.default ];
             }
             # setup home-manager
             # inputs.home-manager-unstable.nixosModules.home-manager
