@@ -188,7 +188,6 @@ in
       # SYMLINK also creates a .device with the path of the symlink, i.e. `dev-corne.device`
       ACTION=="add", KERNEL=="event*", SUBSYSTEM=="input", ATTRS{id/vendor}=="1d50", ATTRS{id/product}=="615e", ATTRS{name}=="Corne Keyboard", SYMLINK+="corne", TAG+="systemd", ENV{SYSTEMD_WANTS}="wireless-keyboard.target"
     '';
-    # ACTION=="remove", KERNEL=="event*", SUBSYSTEM=="input", ATTRS{id/vendor}=="1d50", ATTRS{id/product}=="615e", ATTRS{name}=="Corne Keyboard", SYMLINK+="corne", TAG+="systemd", ENV{SYSTEMD_ALIAS}="wireless-keyboard.device"
   };
 
   # Set up keyboard services
@@ -196,8 +195,23 @@ in
   # more flexible than using udev directly.
   # See also: https://pychao.com/2021/02/24/difference-between-partof-and-bindsto-in-a-systemd-unit
   systemd.targets."wireless-keyboard" = {
+    description = "active when a wireless keyboard is connected";
     after = [ "dev-corne.device" ];
     bindsTo = [ "dev-corne.device" ]; # kills this unit when the device unit is stopped
+  };
+  systemd.services."builtin-keyboard-disable" = {
+    description = "disables built-in keyboard while active";
+    after = [ "wireless-keyboard.target" ];
+    bindsTo = [ "wireless-keyboard.target" ];
+    wantedBy = [ "wireless-keyboard.target" ];
+    path = with pkgs; [ bash ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = "yes";
+      # TODO: Make these actually disable the keyboard
+      ExecStart = "/usr/bin/env bash -c \"echo service started\"";
+      ExecStop = "/usr/bin/env bash -c \"echo service stopped\"";
+    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are
