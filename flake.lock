@@ -702,11 +702,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1748685519,
-        "narHash": "sha256-/PoJbz8RGbJGtFW0NO8r2l2AQu3znrxaFpltKQ1nQGY=",
+        "lastModified": 1748737632,
+        "narHash": "sha256-vdpYXeMAvcG9OPeeTouU0nsu2pb19kIJroHIq8cMXiw=",
         "owner": "TheButlah",
         "repo": "inhibitor",
-        "rev": "f80be03e4f49b285ee50e174143b4e2bc9ad5b9b",
+        "rev": "68d4245bb6fe15b2e2c7b38f4c8cc03f29842b78",
         "type": "github"
       },
       "original": {

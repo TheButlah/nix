@@ -226,7 +226,10 @@
             modulePath
             {
               nixpkgs.config.allowUnfree = true;
-              nixpkgs.overlays = [ inputs.niri-flake.overlays.niri inputs.inhibitor.overlays.${system}.default ];
+              nixpkgs.overlays = [
+                inputs.niri-flake.overlays.niri
+                inputs.inhibitor.overlays.${system}.default
+              ];
             }
             # setup home-manager
             # inputs.home-manager-unstable.nixosModules.home-manager
