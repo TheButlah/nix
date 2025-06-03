@@ -116,10 +116,6 @@ in
 
   programs.adb.enable = true;
 
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
@@ -212,6 +208,22 @@ in
       ExecStart = "/usr/bin/env inhibitor disable --name \"Apple MTP keyboard\"";
       ExecStop = "/usr/bin/env inhibitor enable --name \"Apple MTP keyboard\"";
     };
+  };
+
+  services.monado = {
+    enable = true;
+    # defaultRuntime = true; # Register as default OpenXR runtime
+  };
+  systemd.user.services.monado.environment = {
+    # STEAMVR_LH_ENABLE = "1";
+    XRT_COMPOSITOR_COMPUTE = "1";
+  };
+  services.wivrn = {
+    enable = true;
+    defaultRuntime = true; # Register as default OpenXR runtime
+    openFirewall = true;
+    # Run WiVRn as a systemd service on startup
+    autoStart = true;
   };
 
   # Some programs need SUID wrappers, can be configured further or are
