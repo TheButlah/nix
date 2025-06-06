@@ -113,7 +113,6 @@ in
   # TODO: not working rn, I think I need to switch to niri-flake
   # programs.xwayland.enable = true;
 
-
   programs.adb.enable = true;
 
   # Enable CUPS to print documents.
@@ -137,6 +136,7 @@ in
       "wheel"
       "adbusers"
       "plugdev"
+      "dialout"
     ];
     packages = with pkgs; [
       legcord
@@ -146,6 +146,7 @@ in
   users.defaultUserShell = pkgs.zsh;
   users.groups = {
     plugdev = { };
+    dialout = { };
   };
 
   programs = {
@@ -225,6 +226,16 @@ in
     # Run WiVRn as a systemd service on startup
     autoStart = true;
   };
+
+  programs.droidcam.enable = true;
+  # programs.obs-studio = {
+  #   enable = true;
+  #   enableVirtualCamera = true;
+  #   plugins = [
+  #     pkgs.obs-studio-plugins.droidcam-obs
+  #     # pkgs.obs-studio-plugins.wlrobs
+  #   ];
+  # };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
