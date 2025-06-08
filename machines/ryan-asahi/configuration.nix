@@ -30,18 +30,30 @@ in
   boot.loader.systemd-boot.enable = true; # true in asahi
   boot.loader.efi.canTouchEfiVariables = false; # Fale in asahi
 
-  # avoids impurity
   hardware.asahi = {
-    # peripheralFirmwareDirectory = ./firmware;
-    # or disable extraction and management of them completely.
-    # extractPeripheralFirmware = false;
+    # Ensures reproducibility of firmware
+    peripheralFirmwareDirectory = ./firmware;
     useExperimentalGPUDriver = true;
   };
 
   networking.hostName = hostname; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  networking.networkmanager = {
+    enable = true;
+    wifi.backend = "iwd";
+  };
+  networking.wireless.iwd = {
+    enable = true;
+    settings = {
+      IPv6 = {
+        Enabled = true;
+      };
+      Settings = {
+        AutoConnect = true;
+      };
+    };
+  };
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
 
@@ -133,10 +145,11 @@ in
   users.users.ryan = {
     isNormalUser = true;
     extraGroups = [
-      "wheel"
       "adbusers"
-      "plugdev"
       "dialout"
+      "networkmanager"
+      "plugdev"
+      "wheel"
     ];
     packages = with pkgs; [
       legcord
