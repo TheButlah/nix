@@ -14,7 +14,7 @@
         "sway/scratchpad"
     ],
     "modules-center": [
-        "sway/window"
+        "niri/window"
     ],
     "modules-right": [
         "mpris",
@@ -43,10 +43,8 @@
             "10": ""
         }
     },
-    "sway/window": {
+    "niri/window": {
         "format": "{title}",
-        "max-length": 40,
-        "all-outputs": true
     },
     "cava": {
 	//        "cava_config": "$XDG_CONFIG_HOME/cava/cava.conf",
