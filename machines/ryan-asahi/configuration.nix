@@ -188,7 +188,8 @@ in
     pkgs.xwayland-satellite-stable
     libnotify # notify-send
     usbutils # lsusb
-    inhibitor
+    inhibitor # disable built-in keeb and other input devices
+    brightnessctl # control screen brightness
   ];
 
   # USB stuff
