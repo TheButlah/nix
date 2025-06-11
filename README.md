@@ -7,7 +7,7 @@ fixed in the future by avoiding auto and directly specifying the host's drivers.
 
 ### For standalone home-manager:
 ```
-nix run ~/P/nix#home-manager -- init --impure --switch --flake ~/P/nix
+nix run ~/P/nix#home-manager -- switch --impure --flake ~/P/nix
 ```
 ### For nix-darwin
 ```
