@@ -154,7 +154,7 @@ in
     ];
     packages = with pkgs; [
       legcord
-      # tree
+      mpv # currently broken in: https://github.com/haasn/libplacebo/issues/333
     ];
   };
   users.defaultUserShell = pkgs.zsh;
@@ -192,6 +192,8 @@ in
     inhibitor # disable built-in keeb and other input devices
     brightnessctl # control screen brightness
     qpwgraph # control pipewire nodes using a GUI
+    vulkan-tools
+    glxinfo
   ];
 
   # USB stuff
