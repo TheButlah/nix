@@ -191,6 +191,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     alsa-utils # aplay, arecord, etc
+    asahi-bless
     brightnessctl # control screen brightness
     curl
     ffmpeg-full
