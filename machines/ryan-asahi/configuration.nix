@@ -134,9 +134,11 @@ in
   # services.pulseaudio.enable = true;
   # OR
   services.pipewire = {
-    enable = true;
+    enable = true; # redundant, here for clarity
     pulse.enable = lib.mkForce false;
   };
+  # redundant, here for clarity. This should be false when using sound servers
+  hardware.alsa.enable = false;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
