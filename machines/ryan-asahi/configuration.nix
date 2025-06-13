@@ -178,23 +178,24 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    curl
-    git
-    ripgrep
-    neovim
-    wezterm
-    swww
-    pkgs.xwayland-satellite-stable
-    libnotify # notify-send
-    usbutils # lsusb
-    inhibitor # disable built-in keeb and other input devices
     brightnessctl # control screen brightness
-    qpwgraph # control pipewire nodes using a GUI
-    vulkan-tools
+    curl
+    ffmpeg-full
+    git
     glxinfo
-    v4l-utils
+    inhibitor # disable built-in keeb and other input devices
+    libnotify # notify-send
+    neovim
+    pkgs.xwayland-satellite-stable
+    qpwgraph # control pipewire nodes using a GUI
+    ripgrep
+    swww
+    usbutils # lsusb
+    v4l-utils # v4l2-ctl
+    vim
+    vulkan-tools
+    wezterm
+    wget
   ];
 
   # USB stuff
