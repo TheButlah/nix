@@ -178,6 +178,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    alsa-utils # aplay, arecord, etc
     brightnessctl # control screen brightness
     curl
     ffmpeg-full
