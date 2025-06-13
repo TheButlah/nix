@@ -136,9 +136,19 @@ in
   services.pipewire = {
     enable = true; # redundant, here for clarity
     pulse.enable = lib.mkForce false;
+    wireplumber = {
+      enable = true; # redundant, here for clarify
+      configPackages = [
+        # (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/10-loopback-pro-audio.conf" (
+        #   builtins.readFile ../../xdg/wireplumber-pro-audio.conf
+        # ))
+      ];
+    };
   };
   # redundant, here for clarity. This should be false when using sound servers
   hardware.alsa.enable = false;
+
+
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
