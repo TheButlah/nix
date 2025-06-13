@@ -194,6 +194,7 @@ in
     qpwgraph # control pipewire nodes using a GUI
     vulkan-tools
     glxinfo
+    v4l-utils
   ];
 
   # USB stuff
