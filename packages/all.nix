@@ -21,6 +21,8 @@
   # CLI
   asciinema
   bat
+  bottom
+  dust
   eza
   file
   gh
