@@ -205,8 +205,20 @@ in
     enable = isLinux;
     systemd.enable = true;
   };
-  programs.anyrun = {
+  services.mako = {
     enable = isLinux;
+  };
+
+  # note: run `spotifyd authenticate` to login.
+  services.spotifyd = {
+    enable = isLinux;
+  };
+
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  home.stateVersion = "24.11";
+} // lib.optionalAttrs isLinux {
+  programs.anyrun = {
+    enable = true;
     config = {
       plugins = [
         # An array of all the plugins you want, which either can be paths to the .so files, or their packages
@@ -223,16 +235,4 @@ in
     # Styling from https://github.com/fufexan/dotfiles/blob/5d5631f475d892e1521c45356805bc9a2d40d6d1/home/programs/anyrun/default.nix
     extraCss = builtins.readFile ./xdg/anyrun.css;
   };
-  services.mako = {
-    enable = isLinux;
-  };
-
-  # note: run `spotifyd authenticate` to login.
-  services.spotifyd = {
-    enable = isLinux;
-  };
-
-
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "24.11";
 }
