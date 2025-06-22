@@ -1,9 +1,17 @@
 [font]
-normal = { family = "MesloLGM Nerd Font", style = "Regular" }
 size = 14
+[font.normal]
+family = "MesloLGM Nerd Font"
+style = "Regular"
+
+[[keyboard.bindings]]
+action = "None"
+key = "F20"
 
 [window]
 option_as_alt = "Both"
+opacity = 0.95
+blur = true
 
-[keyboard]
-bindings = [ { key = "F20", action = "None" } ]
+[colors]
+transparent_background_colors = true
