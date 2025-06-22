@@ -26,7 +26,11 @@ let
       };
   };
 in
+# See https://github.com/nix-community/home-manager/issues/414#issuecomment-427163925
 {
+
+  imports = [ ./home-linux.nix ];
+
   home = {
     inherit homeDirectory;
     username = "${username}";
@@ -152,11 +156,6 @@ in
     "atuin/config.toml" = {
       source = ./xdg/atuin.toml;
     };
-    "niri/config.kdl" = {
-      source = ./xdg/niri.kdl;
-    };
-    "waybar/style.css".source = ./xdg/waybar.style.css;
-    "waybar/config.jsonc".source = ./xdg/waybar.config.jsonc;
   };
 
   fonts.fontconfig.enable = true;
@@ -201,38 +200,6 @@ in
   #   keys = [ "id_ed25519" ];
   # };
 
-  programs.waybar = {
-    enable = isLinux;
-    systemd.enable = true;
-  };
-  services.mako = {
-    enable = isLinux;
-  };
-
-  # note: run `spotifyd authenticate` to login.
-  services.spotifyd = {
-    enable = isLinux;
-  };
-
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "24.11";
-} // lib.optionalAttrs isLinux {
-  programs.anyrun = {
-    enable = true;
-    config = {
-      plugins = [
-        # An array of all the plugins you want, which either can be paths to the .so files, or their packages
-        inputs.anyrun.packages.${pkgs.system}.applications
-      ];
-
-      # x = { fraction = 0.5; };
-      y = { fraction = 0.3; };
-      width = { fraction = 0.25; };
-      hideIcons = false;
-      closeOnClick = true;
-    };
-
-    # Styling from https://github.com/fufexan/dotfiles/blob/5d5631f475d892e1521c45356805bc9a2d40d6d1/home/programs/anyrun/default.nix
-    extraCss = builtins.readFile ./xdg/anyrun.css;
-  };
 }
