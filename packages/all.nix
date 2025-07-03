@@ -75,6 +75,8 @@
   unstable.openai-whisper-cpp
 ] ++ lib.optionals (!isWork) [
   # discord
+] ++ lib.optionals (isWork) [
+  cloudflare-warp
 ] ++ lib.optionals (pkgs.stdenv.isDarwin) [
 ] ++ lib.optionals (pkgs.stdenv.isLinux) [
   (if isWayland then wl-clipboard else xclip)
