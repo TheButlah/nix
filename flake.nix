@@ -1,7 +1,7 @@
 {
   description = "TheButlah's personal dev environment";
   inputs = {
-    # For the absolute best possible caching, we use nixos-* on linux and 
+    # For the absolute best possible caching, we use nixos-* on linux and
     # nixpkgs-*-darwin on mac. This makes the flake inputs section a *LOT* more
     # verbose, but it is worth the hassle to not have to recompile LLVM.
     #
@@ -148,6 +148,7 @@
           wezterm = if isLinux then (nixGLWrap pkgs.wezterm) else pkgs.wezterm;
           tsh13 = pkgs.nixpkgs-23_11.teleport_13;
           tsh15 = pkgs.teleport_15;
+          tsh17 = pkgs.teleport_17;
           darwin-rebuild = inputs.nix-darwin.outputs.packages.${system}.darwin-rebuild;
         }
       );
@@ -336,7 +337,7 @@
     inputs-raw.flake-utils.lib.eachDefaultSystem
       (system:
         let
-          inherit (s.${system}) inputs pkgs alacritty wezterm tsh13 tsh15 darwin-rebuild;
+          inherit (s.${system}) inputs pkgs alacritty wezterm tsh13 tsh15 tsh17 darwin-rebuild;
           mkApp = ({ pkg, bin ? null }:
             let
               b = if bin == null then pkg.name else bin;
@@ -358,9 +359,11 @@
           apps."home-manager" = mkApp { pkg = pkgs.home-manager; bin = "home-manager"; };
           apps."tsh13" = mkApp { pkg = tsh13; bin = "tsh"; };
           apps."tsh15" = mkApp { pkg = tsh15; bin = "tsh"; };
+          apps."tsh17" = mkApp { pkg = tsh17; bin = "tsh"; };
           apps."wezterm" = mkApp { pkg = wezterm; bin = "wezterm"; };
           packages.tsh13 = tsh13;
           packages.tsh15 = tsh15;
+          packages.tsh17 = tsh17;
 
           # This formats the nix files, not the rest of the repo.
           formatter = pkgs.nixpkgs-fmt;
