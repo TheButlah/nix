@@ -4,8 +4,6 @@ let
   inherit (inputs) self;
 in
 {
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = false; # maybe incompatible with determinate nix
   nix = {
     enable = false; # managed by determinate
     package = pkgs.nix;
@@ -49,6 +47,7 @@ in
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
+  system.primaryUser = "ryan";
 
   # Set Git commit hash for darwin-version.
   system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -97,7 +96,7 @@ in
 
   homebrew = {
     enable = true;
-    brews = [ "sunshine-beta" ];
+    brews = [ ];
     casks = [
       "karabiner-elements"
       "mullvadvpn"

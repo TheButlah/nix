@@ -12,7 +12,7 @@
     nixos-25_05.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     # For MacOS
-    nixpkgs-25_05-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs-25_05-darwin.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     # Provides eachDefaultSystem and other utility functions
