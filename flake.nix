@@ -103,8 +103,10 @@
         import inputs.nixpkgs {
           inherit system;
           overlays = [
+            inputs.niri-flake.overlays.niri
             inputs.nixgl.overlay
             inputs.inhibitor.overlays.${system}.default
+            inputs.nixos-apple-silicon.overlays.apple-silicon-overlay
             # (import overlays/mods.nix)
             ((import overlays/unstable.nix) { inherit inputs; })
             (import overlays/karabiner-14.nix)
@@ -176,54 +178,23 @@
           ];
         }
       );
-      nixosConfig = { modulePath, system, username, hostname, isWork, isWayland, homeManagerCfg ? ./home.nix }: (
+      nixosConfig = { modulePath, username, hostname, system, isWork, isWayland, readOnlyPkgs ? true, homeManagerCfg ? ./home.nix }: (
         let
           inputs = s.${system}.inputs;
           pkgs = s.${system}.pkgs;
+          lib = inputs.nixpkgs.lib;
         in
         inputs.nixpkgs.lib.nixosSystem rec {
-          inherit system;
-          specialArgs = { inherit username hostname isWork isWayland inputs pkgs; modulesPath = "${inputs.nixpkgs}/nixos/modules"; };
-          modules = [
-            modulePath
-            # setup home-manager
-            inputs.home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                # include the home-manager module
-                users.${username} = import homeManagerCfg;
-                extraSpecialArgs = rec {
-                  inherit username isWork isWayland pkgs inputs hostname;
-                  inherit (pkgs) alacritty;
-                };
-              };
-              # https://github.com/nix-community/home-manager/issues/4026
-              # users.users.${username}.home = s.${system}.pkgs.lib.mkForce "/Users/${username}";
-            }
-          ];
-        }
-      );
-      nixosAsahiConfig = { modulePath, username, hostname, isWork, homeManagerCfg ? ./home.nix }: (
-        let
-          system = "aarch64-linux";
-          inputs = s.${system}.inputs;
-          pkgs = s.${system}.pkgs;
-          isWayland = true;
-        in
-        inputs.nixpkgs.lib.nixosSystem rec {
-          inherit system;
           specialArgs = { inherit username hostname isWork isWayland inputs; modulesPath = "${inputs.nixpkgs}/nixos/modules"; };
           modules = [
-            modulePath
             {
-              nixpkgs.config.allowUnfree = true;
-              nixpkgs.overlays = [
-                inputs.niri-flake.overlays.niri
-                inputs.inhibitor.overlays.${system}.default
-              ];
+              nixpkgs = {
+                inherit pkgs;
+              };
             }
+
+            modulePath
+
             # setup home-manager
             inputs.home-manager.nixosModules.home-manager
             {
@@ -240,8 +211,13 @@
               # https://github.com/nix-community/home-manager/issues/4026
               # users.users.${username}.home = s.${system}.pkgs.lib.mkForce "/Users/${username}";
             }
-          ];
+          ] ++ (lib.optionals readOnlyPkgs [
+            inputs.nixpkgs.nixosModules.readOnlyPkgs
+          ]);
         }
+      );
+      nixosAsahiConfig = { modulePath, username, hostname, isWork, homeManagerCfg ? ./home.nix }: (
+        nixosConfig { inherit modulePath username hostname isWork homeManagerCfg; system = "aarch64-linux"; isWayland = true; readOnlyPkgs = false; }
       );
       homeManagerConfig = { username, hostname, system, isWork, isWayland ? false }: (
         let
