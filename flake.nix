@@ -9,12 +9,10 @@
     # https://discourse.nixos.org/t/which-nixpkgs-stable-tag-for-nixos-and-darwin-together/32796/3
 
     # For Linux
-    nixos-24_11.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixos-23_11.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixos-25_05.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     # For MacOS
-    nixpkgs-24_11-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
-    nixpkgs-23_11-darwin.url = "github:NixOS/nixpkgs/nixpkgs-23.11-darwin";
+    nixpkgs-25_05-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     # Provides eachDefaultSystem and other utility functions
@@ -23,77 +21,73 @@
     # Replacement for rustup
     fenix-linux = {
       url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixos-24_11";
+      inputs.nixpkgs.follows = "nixos-25_05";
     };
     fenix-darwin = {
       url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs-24_11-darwin";
+      inputs.nixpkgs.follows = "nixpkgs-25_05-darwin";
     };
 
     # Manages user settings
     home-manager-linux = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixos-24_11";
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixos-25_05";
     };
     home-manager-darwin = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs-24_11-darwin";
-    };
-    home-manager-linux-unstable = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixos-unstable";
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs-25_05-darwin";
     };
 
     # Provides better GPU support
     nixgl = {
       url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixos-24_11";
+      inputs.nixpkgs.follows = "nixos-25_05";
     };
 
     # Like NixOS, but for darwin
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
-      inputs.nixpkgs.follows = "nixpkgs-24_11-darwin";
+      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+      inputs.nixpkgs.follows = "nixpkgs-25_05-darwin";
     };
 
     # Builds nix system images
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixos-24_11";
+      inputs.nixpkgs.follows = "nixos-25_05";
     };
 
     nixos-apple-silicon = {
       url = "github:tpwrules/nixos-apple-silicon";
-      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs.follows = "nixos-25_05";
     };
 
     # Rust animated wallpaper
     swww = {
       url = "github:LGFae/swww";
-      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs.follows = "nixos-25_05";
     };
 
     # Rust app launcher
     anyrun = {
       url = "github:anyrun-org/anyrun";
-      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs.follows = "nixos-25_05";
     };
 
     # rust keyboard remapper via evdev and uinput
     xremap-flake = {
       url = "github:xremap/nix-flake";
-      inputs.nixpkgs.follows = "nixos-unstable";
+      inputs.nixpkgs.follows = "nixos-25_05";
     };
 
     niri-flake = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixos-unstable";
-      inputs.nixpkgs-stable.follows = "nixos-24_11";
+      inputs.nixpkgs-stable.follows = "nixos-25_05";
     };
 
     inhibitor = {
       url = "github:TheButlah/inhibitor";
-      inputs.nixpkgs.follows = "nixos-24_11";
+      inputs.nixpkgs.follows = "nixos-25_05";
     };
   };
 
@@ -113,12 +107,12 @@
             inputs.inhibitor.overlays.${system}.default
             # (import overlays/mods.nix)
             ((import overlays/unstable.nix) { inherit inputs; })
-            ((import overlays/nixpkgs-23_11.nix) { inherit inputs; })
             (import overlays/karabiner-14.nix)
           ];
           config = {
             allowUnfree = true;
           };
+          flake = abort "this should be specified in nixos modules, its inert here";
         });
       # All system-specific variables
       forSystem = (system:
@@ -146,8 +140,6 @@
           inherit pkgs inputs;
           alacritty = if isLinux then (nixGLWrap pkgs.alacritty) else pkgs.alacritty;
           wezterm = if isLinux then (nixGLWrap pkgs.wezterm) else pkgs.wezterm;
-          tsh13 = pkgs.nixpkgs-23_11.teleport_13;
-          tsh15 = pkgs.teleport_15;
           tsh17 = pkgs.teleport_17;
           darwin-rebuild = inputs.nix-darwin.outputs.packages.${system}.darwin-rebuild;
         }
@@ -220,9 +212,9 @@
           pkgs = s.${system}.pkgs;
           isWayland = true;
         in
-        inputs.nixpkgs-unstable.lib.nixosSystem rec {
+        inputs.nixpkgs.lib.nixosSystem rec {
           inherit system;
-          specialArgs = { inherit username hostname isWork isWayland inputs; modulesPath = "${inputs.nixpkgs-unstable}/nixos/modules"; };
+          specialArgs = { inherit username hostname isWork isWayland inputs; modulesPath = "${inputs.nixpkgs}/nixos/modules"; };
           modules = [
             modulePath
             {
@@ -233,21 +225,21 @@
               ];
             }
             # setup home-manager
-            # inputs.home-manager-unstable.nixosModules.home-manager
-            # {
-            #   home-manager = {
-            #     useGlobalPkgs = true;
-            #     useUserPackages = true;
-            #     # include the home-manager module
-            #     users.${username} = import homeManagerCfg;
-            #     extraSpecialArgs = rec {
-            #       inherit username isWork isWayland pkgs;
-            #       inherit (pkgs) alacritty;
-            #     };
-            #   };
-            #   # https://github.com/nix-community/home-manager/issues/4026
-            #   # users.users.${username}.home = s.${system}.pkgs.lib.mkForce "/Users/${username}";
-            # }
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                # include the home-manager module
+                users.${username} = import homeManagerCfg;
+                extraSpecialArgs = rec {
+                  inherit username isWork isWayland pkgs inputs;
+                  inherit (pkgs) alacritty;
+                };
+              };
+              # https://github.com/nix-community/home-manager/issues/4026
+              # users.users.${username}.home = s.${system}.pkgs.lib.mkForce "/Users/${username}";
+            }
           ];
         }
       );
@@ -337,7 +329,7 @@
     inputs-raw.flake-utils.lib.eachDefaultSystem
       (system:
         let
-          inherit (s.${system}) inputs pkgs alacritty wezterm tsh13 tsh15 tsh17 darwin-rebuild;
+          inherit (s.${system}) inputs pkgs alacritty wezterm tsh17 darwin-rebuild;
           mkApp = ({ pkg, bin ? null }:
             let
               b = if bin == null then pkg.name else bin;
@@ -357,12 +349,8 @@
           apps."alacritty" = mkApp { pkg = alacritty; bin = "alacritty"; };
           apps."darwin-rebuild" = mkApp { pkg = darwin-rebuild; bin = "darwin-rebuild"; };
           apps."home-manager" = mkApp { pkg = pkgs.home-manager; bin = "home-manager"; };
-          apps."tsh13" = mkApp { pkg = tsh13; bin = "tsh"; };
-          apps."tsh15" = mkApp { pkg = tsh15; bin = "tsh"; };
           apps."tsh17" = mkApp { pkg = tsh17; bin = "tsh"; };
           apps."wezterm" = mkApp { pkg = wezterm; bin = "wezterm"; };
-          packages.tsh13 = tsh13;
-          packages.tsh15 = tsh15;
           packages.tsh17 = tsh17;
 
           # This formats the nix files, not the rest of the repo.

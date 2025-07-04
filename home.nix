@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, username, hostname, isWork ? true, isWayland ? false, alacritty ? pkgs.alacritty, ... }:
+{ pkgs, lib, username, hostname, isWork ? true, isWayland ? false, alacritty ? pkgs.alacritty, ... }:
 let
   inherit (pkgs.stdenv) isDarwin;
   inherit (pkgs.stdenv) isLinux;

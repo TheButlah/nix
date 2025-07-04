@@ -5,8 +5,7 @@ let
 in
 {
   self = inputs-raw.self;
-  nixpkgs = if isDarwin then inputs-raw.nixpkgs-24_11-darwin else inputs-raw.nixos-24_11;
-  nixpkgs-23_11 = if isDarwin then inputs-raw.nixpkgs-23_11-darwin else inputs-raw.nixos-23_11;
+  nixpkgs = if isDarwin then inputs-raw.nixpkgs-25_05-darwin else inputs-raw.nixos-25_05;
   nixpkgs-unstable = if isDarwin then inputs-raw.nixpkgs-unstable else inputs-raw.nixos-unstable;
   nixgl = inputs-raw.nixgl;
   nix-darwin = inputs-raw.nix-darwin;

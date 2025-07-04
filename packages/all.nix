@@ -13,7 +13,8 @@
 
   # GUI
   # alacritty # handled by home-manager
-  (nerdfonts.override { fonts = [ "Meslo" "RobotoMono" ]; })
+  nerd-fonts.meslo-lg
+  nerd-fonts.roboto-mono
   wezterm # ~blazingly fast~ terminal in wgpu
   vscodium
   # legcord
