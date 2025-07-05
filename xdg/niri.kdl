@@ -106,6 +106,9 @@ input {
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 layout {
+    // https://github.com/YaLTeR/niri/wiki/Overview#backdrop-customization
+    background-color "transparent"
+
     // Set gaps around windows in logical pixels.
     gaps 16
 
@@ -253,6 +256,21 @@ layout {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 spawn-at-startup "swww-daemon"
+
+// Put wallpaper layers inside the overview backdrop.
+layer-rule {
+    match namespace="^wallpaper$"
+    match namespace="^swww-daemon$"
+
+    place-within-backdrop true
+}
+
+// https://github.com/YaLTeR/niri/wiki/Overview#backdrop-customization
+overview {
+    workspace-shadow {
+        off
+    }
+}
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
