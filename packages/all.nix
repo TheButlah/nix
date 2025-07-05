@@ -1,4 +1,5 @@
-{ pkgs, isWork ? true, isWayland ? false, ... }: with pkgs; [
+{ pkgs, isWork ? true, isWayland ? false, ... }:
+with pkgs; [
   # bootstrap
   bash # Macos has an old bash
   cachix # Service that provides nix caches
@@ -13,8 +14,6 @@
 
   # GUI
   # alacritty # handled by home-manager
-  nerd-fonts.meslo-lg
-  nerd-fonts.roboto-mono
   wezterm # ~blazingly fast~ terminal in wgpu
   vscodium
   # legcord
@@ -82,4 +81,6 @@
 ] ++ lib.optionals (pkgs.stdenv.isLinux) [
   (if isWayland then wl-clipboard else xclip)
   nixgl.auto.nixGLDefault
+] ++ lib.optionals (pkgs.stdenv.isLinux && !isWork) [
+  mixxx
 ] ++ (import ./custom_scripts.nix { pkgs = pkgs; })

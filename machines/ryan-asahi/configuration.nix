@@ -89,6 +89,11 @@ in
   #   keyMap = "us";
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
+  fonts.packages = with pkgs; [
+    nerd-fonts.meslo-lg
+    nerd-fonts.roboto-mono
+  ];
+
   services.xremap = {
     enable = true;
     userName = "${username}";

@@ -110,6 +110,7 @@
             # (import overlays/mods.nix)
             ((import overlays/unstable.nix) { inherit inputs; })
             (import overlays/karabiner-14.nix)
+            (import overlays/libdjinterop.nix)
           ];
           config = {
             allowUnfree = true;
