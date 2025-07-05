@@ -63,7 +63,7 @@
 
     # Rust animated wallpaper
     swww = {
-      url = "github:LGFae/swww";
+      url = "github:LGFae/swww/v0.10.3";
       inputs.nixpkgs.follows = "nixos-25_05";
     };
 
@@ -111,6 +111,7 @@
             ((import overlays/unstable.nix) { inherit inputs; })
             (import overlays/karabiner-14.nix)
             (import overlays/libdjinterop.nix)
+            inputs.swww.overlays.default
           ];
           config = {
             allowUnfree = true;

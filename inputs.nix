@@ -16,7 +16,8 @@ in
   nixos-generators = inputs-raw.nixos-generators;
   nixos-apple-silicon = inputs-raw.nixos-apple-silicon;
   anyrun = inputs-raw.anyrun;
-  xremap-flake = inputs-raw.xremap-flake;
-  niri-flake = inputs-raw.niri-flake;
   inhibitor = inputs-raw.inhibitor;
+  niri-flake = inputs-raw.niri-flake;
+  swww = inputs-raw.swww;
+  xremap-flake = inputs-raw.xremap-flake;
 }
