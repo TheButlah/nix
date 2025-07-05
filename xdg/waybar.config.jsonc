@@ -2,7 +2,7 @@
 [
 	{
 		// "output": ["DP-1", "eDP-2"],
-		// "layer": "top", // Waybar at top layer
+		"layer": "top", // Waybar at top layer
 		// "position": "bottom", // Waybar position (top|bottom|left|right)
 		"height": 24, // Waybar height (to be removed for auto height)
 		// "width": 1280, // Waybar width
@@ -153,53 +153,6 @@
 				"default": ["", "", ""],
 			},
 			"on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-		},
-	},
-	{
-		"output": ["HDMI-A-1"],
-		// "layer": "top", // Waybar at top layer
-		// "position": "bottom", // Waybar position (top|bottom|left|right)
-		"height": 24, // Waybar height (to be removed for auto height)
-		// "width": 1280, // Waybar width
-		"spacing": 4, // Gaps between modules (4px)
-		// Choose the order of the modules
-		"modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad"],
-		"modules-center": ["clock"],
-		"modules-right": ["sway/window"],
-		"sway/workspaces": {
-			"all-outputs": true,
-			"warp-on-scroll": true,
-			"enable-bar-scroll": true,
-			"format": "{icon}",
-			"format-icons": {
-				"1": "",
-				"2": "",
-				"3": "",
-				"4": "",
-				"5": "",
-				"9": "",
-				"10": "",
-			},
-		},
-		"sway/window": {
-			"format": "{title}",
-			"max-length": 40,
-			"all-outputs": true,
-		},
-		"sway/mode": {
-			"format": "{}",
-		},
-		"sway/scratchpad": {
-			"format": "{icon} {count}",
-			"show-empty": false,
-			"format-icons": ["", ""],
-			"tooltip": true,
-			"tooltip-format": "{app}: {title}",
-		},
-		"clock": {
-			// "timezone": "America/New_York",
-			"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-			"format-alt": "{:%Y-%m-%d}",
 		},
 	},
 ]
