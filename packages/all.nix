@@ -76,11 +76,12 @@ with pkgs; [
 ] ++ lib.optionals (!isWork) [
   # discord
 ] ++ lib.optionals (isWork) [
-  cloudflare-warp
 ] ++ lib.optionals (pkgs.stdenv.isDarwin) [
 ] ++ lib.optionals (pkgs.stdenv.isLinux) [
   (if isWayland then wl-clipboard else xclip)
   nixgl.auto.nixGLDefault
+] ++ lib.optionals (pkgs.stdenv.isLinux && isWork) [
+  cloudflare-warp
 ] ++ lib.optionals (pkgs.stdenv.isLinux && !isWork) [
   mixxx
 ] ++ (import ./custom_scripts.nix { pkgs = pkgs; })
