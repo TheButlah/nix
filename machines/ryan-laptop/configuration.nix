@@ -101,6 +101,7 @@ in
       "karabiner-elements"
       "mullvadvpn"
       "spotify"
+      "tailscale"
       "tidal"
     ];
     taps = [ "LizardByte/homebrew" ];
