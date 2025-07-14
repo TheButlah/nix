@@ -32,7 +32,8 @@ in
 
   hardware.asahi = {
     # Ensures reproducibility of firmware
-    peripheralFirmwareDirectory = ./firmware;
+    peripheralFirmwareDirectory = ./firmware; # vendored instead of /boot/asahi
+    extractPeripheralFirmware = true; # redundant, this is the default
     useExperimentalGPUDriver = true;
   };
 
@@ -198,6 +199,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    asahi-fwextract
     alsa-utils # aplay, arecord, etc
     asahi-bless
     brightnessctl # control screen brightness
