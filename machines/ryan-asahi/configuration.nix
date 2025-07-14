@@ -46,6 +46,9 @@ in
   networking.wireless.iwd = {
     enable = true;
     settings = {
+      General = {
+        EnableNetworkConfiguration = true;
+      };
       IPv6 = {
         Enabled = true;
       };
