@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, hostname, username, ... }:
+{ config, pkgs, lib, inputs, hostname, username, ... }:
 let
   inherit (inputs) self;
   my1p = pkgs._1password-gui.overrideAttrs (old: {
@@ -19,7 +19,6 @@ in
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
       inputs.xremap-flake.nixosModules.default
       inputs.niri-flake.nixosModules.niri
     ];
@@ -29,13 +28,6 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true; # true in asahi
   boot.loader.efi.canTouchEfiVariables = false; # Fale in asahi
-
-  hardware.asahi = {
-    # Ensures reproducibility of firmware
-    peripheralFirmwareDirectory = ./firmware; # vendored instead of /boot/asahi
-    extractPeripheralFirmware = true; # redundant, this is the default
-    useExperimentalGPUDriver = true;
-  };
 
   networking.hostName = hostname; # Define your hostname.
   # Pick only one of the below networking options.
@@ -64,6 +56,7 @@ in
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
     57621 # spotify https://nixos.wiki/wiki/Spotify
+    8188 # comfyui
   ];
   networking.firewall.allowedUDPPorts = [
     5353 # spotify and google cast https://nixos.wiki/wiki/Spotify
@@ -78,10 +71,14 @@ in
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  # Remote connectivity
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+    settings.PermitRootLogin = "no";
+  };
   programs.ssh.startAgent = true;
-  services.mullvad-vpn.enable = true;
+  services.mullvad-vpn.enable = false;
   services.tailscale.enable = true;
 
   # Set your time zone.
@@ -135,6 +132,42 @@ in
   # TODO: not working rn, I think I need to switch to niri-flake
   # programs.xwayland.enable = true;
 
+  # Enable OpenGL
+  hardware.graphics = {
+    enable = true;
+  };
+  # Load nvidia driver for Xorg and Wayland
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    # Modesetting is required.
+    modesetting.enable = true;
+
+    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
+    # Enable this if you have graphical corruption issues or application crashes after waking
+    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
+    # of just the bare essentials.
+    powerManagement.enable = false;
+
+    # Fine-grained power management. Turns off GPU when not in use.
+    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
+    powerManagement.finegrained = false;
+
+    # Use the NVidia open source kernel module (not to be confused with the
+    # independent third-party "nouveau" open source driver).
+    # Support is limited to the Turing and later architectures. Full list of
+    # supported GPUs is at:
+    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
+    # Only available from driver 515.43.04+
+    open = true;
+
+    # Enable the Nvidia settings menu,
+    # accessible via `nvidia-settings`.
+    nvidiaSettings = true;
+
+    # Optionally, you may need to select the appropriate driver version for your specific GPU.
+    package = config.boot.kernelPackages.nvidiaPackages.production;
+  };
+
   programs.adb.enable = true;
 
   # Enable CUPS to print documents.
@@ -169,11 +202,13 @@ in
     extraGroups = [
       "adbusers"
       "dialout"
+      "docker"
       "networkmanager"
       "plugdev"
+      "podman"
       "wheel"
-      "docker"
     ];
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL0Oa3J6JPCPyJL20pHC6kTJ5XnZb7W8nNL3xw+cwixU ryan@ryan-asahi" ];
     packages = with pkgs; [
       legcord
       mpv # currently broken in: https://github.com/haasn/libplacebo/issues/333
@@ -200,9 +235,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    asahi-fwextract
     alsa-utils # aplay, arecord, etc
-    asahi-bless
     brightnessctl # control screen brightness
     curl
     ffmpeg-full
@@ -283,7 +316,27 @@ in
   #   ];
   # };
 
-  virtualisation.docker.enable = true;
+  hardware.nvidia-container-toolkit = {
+    enable = true;
+    # suppressNvidiaDriverAssertion = true;
+  };
+  virtualisation = {
+    containers.enable = true;
+    oci-containers.backend = "podman";
+    # docker = {
+    #   daemon.settings.features.cdi = true;
+    #   enable = true;
+    #   # autoPrune.enable = true;
+    #   enableOnBoot = true;
+    # };
+    podman = {
+      enable = true;
+      # Create a `docker` alias for podman, to use it as a drop-in replacement
+      dockerCompat = true;
+      # Required for containers under podman-compose to be able to talk to each other.
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

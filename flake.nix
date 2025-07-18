@@ -254,6 +254,15 @@
         modulePath = ./machines/wsl/configuration.nix;
         hostname = "wsl";
       };
+      nixosConfigurations."ryan-desktop" = nixosConfig {
+        username = "ryan";
+        system = "x86_64-linux";
+        isWork = false;
+        isGui = true;
+        isWayland = true;
+        modulePath = ./machines/ryan-desktop/configuration.nix;
+        hostname = "ryan-desktop";
+      };
       nixosConfigurations."ryan-asahi" = nixosAsahiConfig {
         username = "ryan";
         isWork = false;

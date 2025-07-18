@@ -180,6 +180,10 @@ in
         hostname = "deck";
         user = "deck";
       };
+      "desk" = defaults true // {
+        hostname = "ryan-desktop.stalk-corn.ts.net";
+        user = "ryan";
+      };
       "li-ubuntu-us-east" = defaults true // {
         hostname = "li-ubuntu-us-east.servers.thebutlah.com";
         user = "admin";
