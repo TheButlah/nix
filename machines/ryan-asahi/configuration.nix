@@ -81,7 +81,8 @@ in
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
   programs.ssh.startAgent = true;
-
+  services.mullvad-vpn.enable = false;
+  services.tailscale.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/New_York";

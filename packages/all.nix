@@ -1,4 +1,4 @@
-{ pkgs, isWork ? true, isWayland ? false, ... }:
+{ pkgs, isWork ? true, isWayland ? false, isGui ? false, ... }:
 with pkgs; [
   # bootstrap
   bash # Macos has an old bash
@@ -14,8 +14,6 @@ with pkgs; [
 
   # GUI
   # alacritty # handled by home-manager
-  wezterm # ~blazingly fast~ terminal in wgpu
-  vscodium
   # legcord
 
   # CLI
@@ -82,6 +80,9 @@ with pkgs; [
   nixgl.auto.nixGLDefault
 ] ++ lib.optionals (pkgs.stdenv.isLinux && isWork) [
   cloudflare-warp
-] ++ lib.optionals (pkgs.stdenv.isLinux && !isWork) [
+] ++ lib.optionals (pkgs.stdenv.isLinux && !isWork && isGui) [
   mixxx
+] ++ lib.optionals (isGui) [
+  wezterm # ~blazingly fast~ terminal in wgpu
+  vscodium
 ] ++ (import ./custom_scripts.nix { pkgs = pkgs; })

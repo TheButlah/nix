@@ -1,5 +1,5 @@
 # Linux-only configuration
-{ pkgs, lib, inputs, username, hostname, isWork ? true, isWayland ? false, alacritty ? pkgs.alacritty, ... }:
+{ pkgs, lib, inputs, username, hostname, isWayland, isGui, isWork ? true, alacritty ? pkgs.alacritty, ... }:
 lib.mkIf pkgs.stdenv.isLinux {
   xdg.configFile = {
     "niri/config.kdl" = {
@@ -10,7 +10,7 @@ lib.mkIf pkgs.stdenv.isLinux {
   };
 
   programs.anyrun = {
-    enable = true;
+    enable = isGui && isWayland;
     config = {
       plugins = [
         # An array of all the plugins you want, which either can be paths to the .so files, or their packages
@@ -29,11 +29,11 @@ lib.mkIf pkgs.stdenv.isLinux {
   };
 
   programs.waybar = {
-    enable = true;
+    enable = isGui && isWayland;
     systemd.enable = true;
   };
   services.mako = {
-    enable = true;
+    enable = isGui && isWayland;
   };
 
   # note: run `spotifyd authenticate` to login.

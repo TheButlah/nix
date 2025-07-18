@@ -15,6 +15,11 @@
     nixpkgs-25_05-darwin.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixos-25_05";
+    };
+
     # Provides eachDefaultSystem and other utility functions
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -180,14 +185,14 @@
           ];
         }
       );
-      nixosConfig = { modulePath, username, hostname, system, isWork, isWayland, readOnlyPkgs ? true, homeManagerCfg ? ./home.nix }: (
+      nixosConfig = { modulePath, username, hostname, system, isWork, isWayland, isGui, readOnlyPkgs ? true, homeManagerCfg ? ./home.nix }: (
         let
           inputs = s.${system}.inputs;
           pkgs = s.${system}.pkgs;
           lib = inputs.nixpkgs.lib;
         in
         inputs.nixpkgs.lib.nixosSystem rec {
-          specialArgs = { inherit username hostname isWork isWayland inputs; modulesPath = "${inputs.nixpkgs}/nixos/modules"; };
+          specialArgs = { inherit username hostname isWork isWayland isGui inputs; modulesPath = "${inputs.nixpkgs}/nixos/modules"; };
           modules = [
             {
               nixpkgs = {
@@ -206,7 +211,7 @@
                 # include the home-manager module
                 users.${username} = import homeManagerCfg;
                 extraSpecialArgs = rec {
-                  inherit username isWork isWayland pkgs inputs;
+                  inherit username isWork isWayland pkgs inputs isGui;
                   inherit (pkgs) alacritty;
                 };
               };
@@ -219,7 +224,7 @@
         }
       );
       nixosAsahiConfig = { modulePath, username, hostname, isWork, homeManagerCfg ? ./home.nix }: (
-        nixosConfig { inherit modulePath username hostname isWork homeManagerCfg; system = "aarch64-linux"; isWayland = true; readOnlyPkgs = false; }
+        nixosConfig { inherit modulePath username hostname isWork homeManagerCfg; system = "aarch64-linux"; isWayland = true; isGui = true; readOnlyPkgs = false; }
       );
       homeManagerConfig = { username, hostname, system, isWork, isWayland ? false }: (
         let
@@ -240,6 +245,15 @@
       );
     in
     {
+      nixosConfigurations."wsl" = nixosConfig {
+        username = "ryan";
+        system = "x86_64-linux";
+        isWork = false;
+        isWayland = false;
+        isGui = false;
+        modulePath = ./machines/wsl/configuration.nix;
+        hostname = "wsl";
+      };
       nixosConfigurations."ryan-asahi" = nixosAsahiConfig {
         username = "ryan";
         isWork = false;
@@ -263,6 +277,12 @@
         system = "aarch64-linux";
         isWork = true;
         hostname = "vscode@vscode"; # TODO: is this right?
+      };
+      homeConfigurations."ryan@wsl" = homeManagerConfig {
+        username = "ryan";
+        system = "x86_64-linux";
+        isWork = false;
+        hostname = "wsl";
       };
       homeConfigurations."ryan@ryan-laptop" = homeManagerConfig {
         username = "ryan";

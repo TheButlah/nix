@@ -9,6 +9,7 @@ in
   nixpkgs-unstable = if isDarwin then inputs-raw.nixpkgs-unstable else inputs-raw.nixos-unstable;
   nixgl = inputs-raw.nixgl;
   nix-darwin = inputs-raw.nix-darwin;
+  nixos-wsl = inputs-raw.nixos-wsl;
   flake-utils = inputs-raw.flake-utils;
   fenix = if isDarwin then inputs-raw.fenix-darwin else inputs-raw.fenix-linux;
   home-manager = if isDarwin then inputs-raw.home-manager-darwin else inputs-raw.home-manager-linux;
