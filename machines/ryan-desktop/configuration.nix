@@ -29,6 +29,11 @@ in
   boot.loader.systemd-boot.enable = true; # true in asahi
   boot.loader.efi.canTouchEfiVariables = false; # Fale in asahi
 
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 48 * 1024; # plus 16 from partition.
+  }];
+
   networking.hostName = hostname; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -208,7 +213,10 @@ in
       "podman"
       "wheel"
     ];
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL0Oa3J6JPCPyJL20pHC6kTJ5XnZb7W8nNL3xw+cwixU ryan@ryan-asahi" ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL0Oa3J6JPCPyJL20pHC6kTJ5XnZb7W8nNL3xw+cwixU ryan@ryan-asahi"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrQiHPGP0KIT1dBEKOkZ9j7xkAqPDii1xWgCnQZHyvC ryan@juicessh"
+    ];
     packages = with pkgs; [
       legcord
       mpv # currently broken in: https://github.com/haasn/libplacebo/issues/333
