@@ -177,6 +177,7 @@
                 extraSpecialArgs = rec {
                   inherit isWork username pkgs inputs hostname;
                   inherit (pkgs) alacritty;
+                  isGui = true;
                 };
               };
               # https://github.com/nix-community/home-manager/issues/4026

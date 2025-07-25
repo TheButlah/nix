@@ -1,4 +1,4 @@
-{ pkgs, isWork ? true, isWayland ? false, isGui ? false, ... }:
+{ pkgs, isWork, isWayland, isGui, ... }:
 with pkgs; [
   # bootstrap
   bash # Macos has an old bash
