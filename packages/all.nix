@@ -81,6 +81,7 @@ with pkgs; [
 ] ++ lib.optionals (pkgs.stdenv.isLinux && isWork) [
   cloudflare-warp
 ] ++ lib.optionals (pkgs.stdenv.isLinux && !isWork && isGui) [
+  legcord
   mixxx
 ] ++ lib.optionals (isGui) [
   wezterm # ~blazingly fast~ terminal in wgpu

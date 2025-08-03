@@ -180,7 +180,6 @@ in
       "docker"
     ];
     packages = with pkgs; [
-      legcord
       mpv # currently broken in: https://github.com/haasn/libplacebo/issues/333
     ];
   };
