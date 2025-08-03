@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "uas" "sdhci_pci" ];
@@ -14,15 +15,13 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/0a33bec3-2f58-48db-b051-cfb884ba0e2a";
+    {
+      device = "/dev/disk/by-uuid/0a33bec3-2f58-48db-b051-cfb884ba0e2a";
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/1D37-3AD8";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-    };
+  # fstab will automatically detect /boot based on the partition type, so no need to
+  # manually specify it.
 
   swapDevices = [ ];
 
