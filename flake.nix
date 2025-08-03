@@ -216,8 +216,6 @@
                   inherit (pkgs) alacritty;
                 };
               };
-              # https://github.com/nix-community/home-manager/issues/4026
-              # users.users.${username}.home = s.${system}.pkgs.lib.mkForce "/Users/${username}";
             }
           ] ++ (lib.optionals readOnlyPkgs [
             inputs.nixpkgs.nixosModules.readOnlyPkgs
@@ -269,6 +267,12 @@
         isWork = false;
         modulePath = ./machines/ryan-asahi/configuration.nix;
         hostname = "ryan-asahi";
+      };
+      nixosConfigurations."ryan-wld-asahi" = nixosAsahiConfig {
+        username = "ryan.butler";
+        isWork = true;
+        modulePath = ./machines/ryan-wld-asahi/configuration.nix;
+        hostname = "ryan-wld-asahi";
       };
       darwinConfigurations."ryan-laptop" = darwinConfig {
         username = "ryan";
