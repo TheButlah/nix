@@ -1,7 +1,7 @@
 { pkgs, lib, inputs, hostname, username, ... }:
 let
   inherit (inputs) self;
-  my1p = pkgs._1password-gui.overrideAttrs (old: {
+  my1p = pkgs.unstable._1password-gui.overrideAttrs (old: {
     # see https://www.1password.community/discussions/1password/1password-window-blank-on-gnome-47-wayland--fedora-41/153548/replies/153967
     # Also, this patches things to actually use ozone
     preFixup = old.preFixup + ''\
@@ -83,6 +83,10 @@ in
   programs.ssh.startAgent = true;
   services.mullvad-vpn.enable = true;
   services.tailscale.enable = true;
+
+  # device trust for IT, to set up enrollment secret, see docs at:
+  # https://github.com/kolide/nix-agent
+  services.kolide-launcher.enable = true;
 
   # Set your time zone.
   time.timeZone = "America/New_York";

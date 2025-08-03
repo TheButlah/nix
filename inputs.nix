@@ -21,4 +21,5 @@ in
   niri-flake = inputs-raw.niri-flake;
   swww = inputs-raw.swww;
   xremap-flake = inputs-raw.xremap-flake;
+  kolide-launcher = inputs-raw.kolide-launcher;
 }

@@ -714,6 +714,27 @@
         "type": "github"
       }
     },
+    "kolide-launcher": {
+      "inputs": {
+        "nixpkgs": [
+          "nixos-25_05"
+        ]
+      },
+      "locked": {
+        "lastModified": 1742843998,
+        "narHash": "sha256-9c1Wg6xfn35eUz53y0nSwTe8IogZ1/wIihkIAnd61z4=",
+        "owner": "kolide",
+        "repo": "nix-agent",
+        "rev": "33f1cb5e498e99b07874399246fd90e144680ed1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kolide",
+        "ref": "becca/arm-support",
+        "repo": "nix-agent",
+        "type": "github"
+      }
+    },
     "niri-flake": {
       "inputs": {
         "niri-stable": "niri-stable",
@@ -1071,6 +1092,7 @@
         "home-manager-darwin": "home-manager-darwin",
         "home-manager-linux": "home-manager-linux",
         "inhibitor": "inhibitor",
+        "kolide-launcher": "kolide-launcher",
         "niri-flake": "niri-flake",
         "nix-darwin": "nix-darwin",
         "nixgl": "nixgl",

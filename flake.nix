@@ -94,6 +94,12 @@
       url = "github:TheButlah/inhibitor";
       inputs.nixpkgs.follows = "nixos-25_05";
     };
+
+    # for work
+    kolide-launcher = {
+      url = "github:kolide/nix-agent/becca/arm-support";
+      inputs.nixpkgs.follows = "nixos-25_05";
+    };
   };
 
   outputs = inputs-raw:
@@ -217,9 +223,11 @@
                 };
               };
             }
-          ] ++ (lib.optionals readOnlyPkgs [
+          ] ++ lib.optionals readOnlyPkgs [
             inputs.nixpkgs.nixosModules.readOnlyPkgs
-          ]);
+          ] ++ lib.optionals isWork [
+            inputs.kolide-launcher.nixosModules.kolide-launcher
+          ];
         }
       );
       nixosAsahiConfig = { modulePath, username, hostname, isWork, homeManagerCfg ? ./home.nix }: (
