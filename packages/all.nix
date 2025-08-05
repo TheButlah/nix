@@ -18,6 +18,7 @@ with pkgs; [
 
   # CLI
   asciinema
+  b3sum
   bat
   bottom
   dust
