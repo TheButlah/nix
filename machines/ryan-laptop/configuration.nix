@@ -100,6 +100,7 @@ in
     casks = [
       "karabiner-elements"
       "mullvadvpn"
+      "obs"
       "spotify"
       "tailscale"
       "tidal"
