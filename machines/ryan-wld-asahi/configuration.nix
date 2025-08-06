@@ -81,6 +81,7 @@ in
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
   programs.ssh.startAgent = true;
+  services.cloudflare-warp.enable = true;
   services.mullvad-vpn.enable = true;
   services.tailscale.enable = true;
 
