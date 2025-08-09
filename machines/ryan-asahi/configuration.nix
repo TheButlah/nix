@@ -69,11 +69,6 @@ in
     5353 # spotify and google cast https://nixos.wiki/wiki/Spotify
   ];
 
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -169,10 +164,11 @@ in
     extraGroups = [
       "adbusers"
       "dialout"
+      "docker"
+      "libvirt"
       "networkmanager"
       "plugdev"
       "wheel"
-      "docker"
     ];
     packages = with pkgs; [
       legcord
@@ -200,9 +196,9 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    asahi-fwextract
     alsa-utils # aplay, arecord, etc
     asahi-bless
+    asahi-fwextract
     brightnessctl # control screen brightness
     curl
     ffmpeg-full
@@ -219,6 +215,7 @@ in
     usbutils # lsusb
     v4l-utils # v4l2-ctl
     vim
+    virt-manager # for virt-install
     vulkan-tools
     wezterm
     wget
@@ -284,6 +281,9 @@ in
   # };
 
   virtualisation.docker.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
