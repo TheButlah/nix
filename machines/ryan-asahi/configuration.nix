@@ -140,7 +140,7 @@ in
   # OR
   services.pipewire = {
     enable = true; # redundant, here for clarity
-    pulse.enable = lib.mkForce true;
+    pulse.enable = true;
     wireplumber = {
       enable = true; # redundant, here for clarify
       configPackages = [
