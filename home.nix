@@ -64,6 +64,9 @@ in
     };
   };
 
+  # Noise suppression etc
+  services.easyeffects.enable = pkgs.stdenv.isLinux;
+
   # shell stuff
   programs.zsh = {
     enable = true;
