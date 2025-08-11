@@ -252,6 +252,7 @@ in
     inhibitor # disable built-in keeb and other input devices
     libnotify # notify-send
     neovim
+    pavucontrol
     pkgs.xwayland-satellite-stable
     qpwgraph # control pipewire nodes using a GUI
     ripgrep
@@ -291,19 +292,19 @@ in
     after = [ "dev-corne.device" ];
     bindsTo = [ "dev-corne.device" ]; # kills this unit when the device unit is stopped
   };
-  systemd.services."builtin-keyboard-disable" = {
-    description = "disables built-in keyboard while active";
-    after = [ "wireless-keyboard.target" ];
-    bindsTo = [ "wireless-keyboard.target" ];
-    wantedBy = [ "wireless-keyboard.target" ];
-    path = with pkgs; [ inhibitor ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = "yes";
-      ExecStart = "/usr/bin/env inhibitor disable --name \"Apple MTP keyboard\"";
-      ExecStop = "/usr/bin/env inhibitor enable --name \"Apple MTP keyboard\"";
-    };
-  };
+  # systemd.services."builtin-keyboard-disable" = {
+  #   description = "disables built-in keyboard while active";
+  #   after = [ "wireless-keyboard.target" ];
+  #   bindsTo = [ "wireless-keyboard.target" ];
+  #   wantedBy = [ "wireless-keyboard.target" ];
+  #   path = with pkgs; [ inhibitor ];
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     RemainAfterExit = "yes";
+  #     ExecStart = "/usr/bin/env inhibitor disable --name \"Apple MTP keyboard\"";
+  #     ExecStop = "/usr/bin/env inhibitor enable --name \"Apple MTP keyboard\"";
+  #   };
+  # };
 
   services.monado = {
     enable = true;
