@@ -263,6 +263,13 @@ in
     vulkan-tools
     wezterm
     wget
+
+    wlx-overlay-s
+    (heroic.override {
+      extraPkgs = pkgs: [
+        pkgs.gamescope
+      ];
+    })
   ];
 
   # USB stuff
