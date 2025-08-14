@@ -168,6 +168,7 @@ in
       "libvirt"
       "networkmanager"
       "plugdev"
+      "podman"
       "wheel"
     ];
     packages = with pkgs; [
@@ -280,7 +281,23 @@ in
   #   ];
   # };
 
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    containers.enable = true;
+    oci-containers.backend = "podman";
+    podman = {
+      enable = true;
+      # docker` alias for podman
+      dockerCompat = false;
+      # Required for containers under podman-compose to be able to talk to each other.
+      defaultNetwork.settings.dns_enabled = true;
+    };
+    docker = {
+      daemon.settings.features.cdi = true;
+      enable = true;
+      autoPrune.enable = true;
+      enableOnBoot = true;
+    };
+  };
   virtualisation.libvirtd = {
     enable = true;
   };
