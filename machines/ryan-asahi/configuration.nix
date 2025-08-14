@@ -185,6 +185,7 @@ in
   programs = {
     zsh.enable = true;
     firefox.enable = true;
+    chromium.enable = true;
     _1password.enable = true;
     _1password-gui = {
       package = my1p;
@@ -201,6 +202,7 @@ in
     asahi-bless
     asahi-fwextract
     brightnessctl # control screen brightness
+    chromium
     curl
     ffmpeg-full
     git

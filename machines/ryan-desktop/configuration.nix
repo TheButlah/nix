@@ -231,6 +231,7 @@ in
   programs = {
     zsh.enable = true;
     firefox.enable = true;
+    chromium.enable = true;
     _1password.enable = true;
     _1password-gui = {
       package = my1p;
@@ -245,6 +246,7 @@ in
   environment.systemPackages = with pkgs; [
     alsa-utils # aplay, arecord, etc
     brightnessctl # control screen brightness
+    chromium
     curl
     ffmpeg-full
     git
