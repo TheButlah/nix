@@ -72,6 +72,7 @@ with pkgs; [
   unstable.ollama
   unstable.openai-whisper
   unstable.openai-whisper-cpp
+  unstable.ramalama
 ] ++ lib.optionals (!isWork) [
   # discord
 ] ++ lib.optionals (isWork) [
