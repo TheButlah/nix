@@ -24,6 +24,14 @@ let
         acct = acct.me;
         url = "op://Terminal Secrets/Anthropic API Key/credential";
       };
+    groqApiKey =
+      if isWork then {
+        acct = acct.tfh;
+        url = "op://Employee/GROQ_API_KEY/credential";
+      } else {
+        acct = acct.me;
+        url = "op://Terminal Secrets/GROQ_API_KEY/credential";
+      };
   };
 in
 # See https://github.com/nix-community/home-manager/issues/414#issuecomment-427163925
@@ -87,6 +95,7 @@ in
 
       export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account "${op.openaiApiKey.acct}" "${op.openaiApiKey.url}")"}"
       export ANTHROPIC_API_KEY="''${ANTHROPIC_API_KEY:-"$(op read --account "${op.anthropicApiKey.acct}" "${op.anthropicApiKey.url}")"}"
+      export GROQ_API_KEY="''${GROQ_API_KEY:-"$(op read --account "${op.groqApiKey.acct}" "${op.groqApiKey.url}")"}"
     '';
     envExtra = ''
     '';
