@@ -24,6 +24,7 @@ in
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.trusted-users = [ "root" "${username}" ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true; # true in asahi
