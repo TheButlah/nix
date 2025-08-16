@@ -138,7 +138,7 @@
 			"format-icons": ["", "", "", "", ""],
 		},
 		"wireplumber": {
-			"scroll-step": 5, // %, can be a float
+			"scroll-step": 0.25, // %, can be a float
 			"format": "{icon} {volume}%",
 			"format-bluetooth": "{icon} {volume}% ",
 			"format-bluetooth-muted": " {icon}",
