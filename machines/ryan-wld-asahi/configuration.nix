@@ -150,7 +150,7 @@ in
   # OR
   services.pipewire = {
     enable = true; # redundant, here for clarity
-    pulse.enable = lib.mkForce true;
+    pulse.enable = true; # redundant?
     wireplumber = {
       enable = true; # redundant, here for clarify
       configPackages = [
@@ -215,12 +215,14 @@ in
     brightnessctl # control screen brightness
     chromium
     curl
+    easyeffects
     ffmpeg-full
     git
     glxinfo
     inhibitor # disable built-in keeb and other input devices
     libnotify # notify-send
     neovim
+    pavucontrol
     pkgs.xwayland-satellite-stable
     qpwgraph # control pipewire nodes using a GUI
     ripgrep
