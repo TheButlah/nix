@@ -287,14 +287,14 @@ in
   };
 
   programs.droidcam.enable = true;
-  # programs.obs-studio = {
-  #   enable = true;
-  #   enableVirtualCamera = true;
-  #   plugins = [
-  #     pkgs.obs-studio-plugins.droidcam-obs
-  #     # pkgs.obs-studio-plugins.wlrobs
-  #   ];
-  # };
+  programs.obs-studio = {
+    enable = true;
+    enableVirtualCamera = true;
+    plugins = [
+      pkgs.obs-studio-plugins.droidcam-obs
+      # pkgs.obs-studio-plugins.wlrobs
+    ];
+  };
 
   virtualisation = {
     containers.enable = true;
