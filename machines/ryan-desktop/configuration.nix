@@ -1,7 +1,7 @@
 { config, pkgs, lib, inputs, hostname, username, ... }:
 let
   inherit (inputs) self;
-  my1p = pkgs._1password-gui.overrideAttrs (old: {
+  my1p = pkgs.unstable._1password-gui.overrideAttrs (old: {
     # see https://www.1password.community/discussions/1password/1password-window-blank-on-gnome-47-wayland--fedora-41/153548/replies/153967
     # Also, this patches things to actually use ozone
     preFixup = old.preFixup + ''\
