@@ -13,7 +13,7 @@ let
       --add-flags "--js-flags=--nodecommit_pooled_pages"
     '';
   });
-  linuxPackages = pkgs.linuxPackages_latest;
+  linuxPackages = (pkgs.unstable.linuxPackagesFor pkgs.linuxPackages.kernel);
 in
 {
   imports =
@@ -175,7 +175,7 @@ in
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = linuxPackages.nvidiaPackages.production;
+    package = linuxPackages.nvidiaPackages.beta;
   };
 
   programs.adb.enable = true;
