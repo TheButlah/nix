@@ -13,6 +13,7 @@ let
       --add-flags "--js-flags=--nodecommit_pooled_pages"
     '';
   });
+  linuxPackages = pkgs.linuxPackages_latest;
 in
 {
   imports =
@@ -28,7 +29,10 @@ in
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true; # true in asahi
-  boot.loader.efi.canTouchEfiVariables = false; # Fale in asahi
+  boot.loader.efi.canTouchEfiVariables = false; # False in asahi
+
+  # we want the latest nvidia drivers, which will come with the latest kernel.
+  boot.kernelPackages = linuxPackages;
 
   swapDevices = [{
     device = "/var/lib/swapfile";
@@ -171,7 +175,7 @@ in
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.production;
+    package = linuxPackages.nvidiaPackages.production;
   };
 
   programs.adb.enable = true;
@@ -311,15 +315,15 @@ in
 
   services.monado = {
     enable = true;
-    # defaultRuntime = true; # Register as default OpenXR runtime
+    defaultRuntime = true; # Register as default OpenXR runtime
   };
   systemd.user.services.monado.environment = {
-    # STEAMVR_LH_ENABLE = "1";
+    STEAMVR_LH_ENABLE = "1";
     XRT_COMPOSITOR_COMPUTE = "1";
   };
   services.wivrn = {
     enable = true;
-    defaultRuntime = true; # Register as default OpenXR runtime
+    # defaultRuntime = true; # Register as default OpenXR runtime
     openFirewall = true;
     # Run WiVRn as a systemd service on startup
     autoStart = true;
