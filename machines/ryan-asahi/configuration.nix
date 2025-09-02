@@ -236,6 +236,17 @@ in
       ACTION=="add", KERNEL=="event*", SUBSYSTEM=="input", ATTRS{id/vendor}=="1d50", ATTRS{id/product}=="615e", ATTRS{name}=="Corne Keyboard", SYMLINK+="corne", TAG+="systemd", ENV{SYSTEMD_WANTS}="wireless-keyboard.target"
     '';
   };
+  services.usbguard = {
+    enable = true;
+    rules = ''
+      # Block everything else
+      block id *:*
+    '';
+    implicitPolicyTarget = "block";
+    presentDevicePolicy = "apply-policy";
+    presentControllerPolicy = "keep";
+    insertedDevicePolicy = "apply-policy";
+  };
 
   # Set up keyboard services
   # This target just helps abstract over the particular name of the device, and its slightly
