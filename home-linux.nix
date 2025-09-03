@@ -7,6 +7,7 @@ lib.mkIf pkgs.stdenv.isLinux {
     };
     "waybar/style.css".source = ./xdg/waybar.style.css;
     "waybar/config.jsonc".source = ./xdg/waybar.config.jsonc;
+    "swaylock/config".source = ./xdg/swaylock.config;
   };
 
   programs.anyrun = {
@@ -39,7 +40,7 @@ lib.mkIf pkgs.stdenv.isLinux {
     # from https://wiki.nixos.org/wiki/Swayidle
     let
       # Lock command
-      lock = "${pkgs.swaylock}/bin/swaylock --daemonize";
+      lock = "${pkgs.swaylock-effects}/bin/swaylock --daemonize";
       # TODO: modify "display" function based on your window manager
       # Sway
       # display = status: "swaymsg 'output * power ${status}'"; \
