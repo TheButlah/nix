@@ -107,19 +107,27 @@ in
   services.xserver.enable = false;
   services.displayManager = {
     # KDE login/display manager
-    sddm = {
-      enable = true;
-      wayland.enable = true;
-    };
+    # sddm = {
+    #   enable = true;
+    #   wayland.enable = true;
+    # };
+    cosmic-greeter.enable = true;
+    # ly = {
+    #   enable = true;
+    #   package = pkgs.unstable.ly;
+    #   settings = {
+    #     animation = "colormix";
+    #   };
+    # };
     # this is the desktop manager that gets launched
     defaultSession = "niri";
   };
   # KDE plasma window manager
-  services.desktopManager = {
-    plasma6 = {
-      enable = true;
-    };
-  };
+  # services.desktopManager = {
+  #   plasma6 = {
+  #     enable = true;
+  #   };
+  # };
   # tiling window manager
   programs.niri = {
     enable = true;
