@@ -105,29 +105,21 @@ in
 
   # We don't enable x11
   services.xserver.enable = false;
-  services.displayManager = {
-    # KDE login/display manager
-    # sddm = {
-    #   enable = true;
-    #   wayland.enable = true;
-    # };
-    cosmic-greeter.enable = true;
-    # ly = {
-    #   enable = true;
-    #   package = pkgs.unstable.ly;
-    #   settings = {
-    #     animation = "colormix";
-    #   };
-    # };
-    # this is the desktop manager that gets launched
-    defaultSession = "niri";
+  services.greetd = {
+    enable = true;
+    settings = {
+      initial_session = {
+        command = "${pkgs.niri}/bin/niri-session";
+        user = username;
+      };
+
+      # Fallback greeter
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.niri}/bin/niri-session";
+        user = username;
+      };
+    };
   };
-  # KDE plasma window manager
-  # services.desktopManager = {
-  #   plasma6 = {
-  #     enable = true;
-  #   };
-  # };
   # tiling window manager
   programs.niri = {
     enable = true;
@@ -161,7 +153,6 @@ in
   };
   # redundant, here for clarity. This should be false when using sound servers
   hardware.alsa.enable = false;
-
 
 
   # Enable touchpad support (enabled default in most desktopManager).
