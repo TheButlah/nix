@@ -28,8 +28,14 @@ in
   nix.settings.trusted-users = [ "root" "${username}" ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true; # true in asahi
-  boot.loader.efi.canTouchEfiVariables = false; # Fale in asahi
+  boot.loader = {
+    systemd-boot = {
+      enable = true; # true in asahi
+      editor = false;
+    };
+    timeout = 1;
+    efi.canTouchEfiVariables = false; # False in asahi
+  };
 
   hardware.asahi = {
     # Ensures reproducibility of firmware
