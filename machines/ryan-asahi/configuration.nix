@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, hostname, username, ... }:
+{ pkgs, lib, inputs, hostname, username, isWork, ... }:
 let
   inherit (inputs) self;
   my1p = pkgs.unstable._1password-gui.overrideAttrs (old: {
@@ -165,7 +165,7 @@ in
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.ryan = {
+  users.users."${username}" = {
     isNormalUser = true;
     extraGroups = [
       "adbusers"
@@ -178,8 +178,9 @@ in
       "wheel"
     ];
     packages = with pkgs; [
-      legcord
       mpv # currently broken in: https://github.com/haasn/libplacebo/issues/333
+    ] ++ lib.optionals (!isWork) [
+      legcord
     ];
   };
   users.defaultUserShell = pkgs.zsh;
