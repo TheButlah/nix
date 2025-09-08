@@ -291,6 +291,12 @@ in
     # Run WiVRn as a systemd service on startup
     autoStart = true;
   };
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
 
   programs.droidcam.enable = true;
   programs.obs-studio = {
