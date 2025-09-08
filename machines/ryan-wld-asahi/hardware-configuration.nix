@@ -14,9 +14,10 @@
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
+  boot.initrd.luks.devices."rootfs".device = "/dev/disk/by-uuid/f8e7454c-cb9a-4666-be16-5f4265de238d";
   fileSystems."/" =
     {
-      device = "/dev/disk/by-uuid/0a33bec3-2f58-48db-b051-cfb884ba0e2a";
+      device = "/dev/mapper/rootfs";
       fsType = "ext4";
     };
 
