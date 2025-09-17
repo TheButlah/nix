@@ -71,6 +71,12 @@ in
       };
     };
   };
+  programs.gh = {
+    enable = true;
+    gitCredentialHelper = {
+      enable = true;
+    };
+  };
 
   # Noise suppression etc
   services.easyeffects.enable = pkgs.stdenv.isLinux;
