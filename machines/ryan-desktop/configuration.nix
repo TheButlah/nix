@@ -34,6 +34,8 @@ in
   # we want the latest nvidia drivers, which will come with the latest kernel.
   boot.kernelPackages = linuxPackages;
 
+  # security.rtkit.enable = true;
+
   swapDevices = [{
     device = "/var/lib/swapfile";
     size = 48 * 1024; # plus 16 from partition.
@@ -87,7 +89,7 @@ in
     settings.PasswordAuthentication = false;
     settings.PermitRootLogin = "no";
   };
-  programs.ssh.startAgent = true;
+  # programs.ssh.startAgent = true;
   services.mullvad-vpn.enable = false;
   services.tailscale.enable = true;
 
@@ -320,6 +322,7 @@ in
   systemd.user.services.monado.environment = {
     STEAMVR_LH_ENABLE = "1";
     XRT_COMPOSITOR_COMPUTE = "1";
+    WMR_HANDTRACKING = "0";
   };
   services.wivrn = {
     enable = true;

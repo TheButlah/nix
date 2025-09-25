@@ -22,4 +22,5 @@ in
   swww = inputs-raw.swww;
   xremap-flake = inputs-raw.xremap-flake;
   kolide-launcher = inputs-raw.kolide-launcher;
+  nixpkgs-xr = inputs-raw.nixpkgs-xr;
 }

@@ -42,6 +42,10 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs-25_05-darwin";
     };
+    home-manager-linux-unstable = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixos-unstable";
+    };
 
     # Provides better GPU support
     nixgl = {
@@ -100,6 +104,11 @@
       url = "github:kolide/nix-agent/becca/arm-support";
       inputs.nixpkgs.follows = "nixos-25_05";
     };
+
+    nixpkgs-xr = {
+      url = "github:nix-community/nixpkgs-xr";
+      inputs.nixpkgs.follows = "nixos-unstable";
+    };
   };
 
   outputs = inputs-raw:
@@ -107,11 +116,12 @@
       mkInputs = (system: import ./inputs.nix { inherit inputs-raw system; });
     in
     let
-      mkPkgs = (system:
+      mkPkgs = ({ system, isStable }:
         let
           inputs = mkInputs system;
+          nixpkgs = if isStable then inputs.nixpkgs else inputs.nixpkgs-unstable;
         in
-        import inputs.nixpkgs {
+        import nixpkgs {
           inherit system;
           overlays = [
             inputs.niri-flake.overlays.niri
@@ -122,6 +132,7 @@
             ((import overlays/unstable.nix) { inherit inputs; })
             (import overlays/karabiner-14.nix)
             (import overlays/libdjinterop.nix)
+            inputs.nixpkgs-xr.overlays.default
             inputs.swww.overlays.default
           ];
           config = {
@@ -133,7 +144,8 @@
       forSystem = (system:
         let
           inputs = mkInputs system;
-          pkgs = mkPkgs system;
+          pkgs = mkPkgs { inherit system; isStable = true; };
+          pkgsUnstable = mkPkgs { inherit system; isStable = false; };
           isLinux = pkgs.stdenv.isLinux;
           isDarwin = pkgs.stdenv.isDarwin;
           nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl-wrapper" { } ''
@@ -152,7 +164,7 @@
           # should go here, for later reuse.
           # This is more efficient than instantiating it ad-hoc.
         {
-          inherit pkgs inputs;
+          inherit pkgs pkgsUnstable inputs;
           alacritty = if isLinux then (nixGLWrap pkgs.alacritty) else pkgs.alacritty;
           wezterm = if isLinux then (nixGLWrap pkgs.wezterm) else pkgs.wezterm;
           tsh17 = pkgs.teleport_17;
@@ -189,6 +201,44 @@
               # https://github.com/nix-community/home-manager/issues/4026
               users.users.${username}.home = pkgs.lib.mkForce "/Users/${username}";
             }
+          ];
+        }
+      );
+      nixosUnstableConfig = { modulePath, username, hostname, system, isWork, isWayland, isGui, readOnlyPkgs ? true, homeManagerCfg ? ./home.nix }: (
+        let
+          inputs = s.${system}.inputs;
+          pkgs = s.${system}.pkgsUnstable;
+          lib = inputs.nixpkgs-unstable.lib;
+        in
+        inputs.nixpkgs-unstable.lib.nixosSystem rec {
+          specialArgs = { inherit username hostname isWork isWayland isGui inputs; modulesPath = "${inputs.nixpkgs-unstable}/nixos/modules"; };
+          modules = [
+            {
+              nixpkgs = {
+                inherit pkgs;
+              };
+            }
+
+            modulePath
+
+            # setup home-manager
+            inputs.home-manager-unstable.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                # include the home-manager module
+                users.${username} = import homeManagerCfg;
+                extraSpecialArgs = rec {
+                  inherit username isWork isWayland pkgs inputs isGui;
+                  inherit (pkgs) alacritty;
+                };
+              };
+            }
+          ] ++ lib.optionals readOnlyPkgs [
+            inputs.nixpkgs-unstable.nixosModules.readOnlyPkgs
+          ] ++ lib.optionals isWork [
+            inputs.kolide-launcher.nixosModules.kolide-launcher
           ];
         }
       );
@@ -261,7 +311,7 @@
         modulePath = ./machines/wsl/configuration.nix;
         hostname = "wsl";
       };
-      nixosConfigurations."ryan-desktop" = nixosConfig {
+      nixosConfigurations."ryan-desktop" = nixosUnstableConfig {
         username = "ryan";
         system = "x86_64-linux";
         isWork = false;
