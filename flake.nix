@@ -62,7 +62,7 @@
     };
 
     nixos-apple-silicon = {
-      url = "github:tpwrules/nixos-apple-silicon";
+      url = "github:tpwrules/nixos-apple-silicon/release-25.05";
       inputs.nixpkgs.follows = "nixos-25_05";
     };
 
