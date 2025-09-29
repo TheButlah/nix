@@ -72,12 +72,6 @@
       inputs.nixpkgs.follows = "nixos-25_05";
     };
 
-    # Rust app launcher
-    anyrun = {
-      url = "github:anyrun-org/anyrun";
-      inputs.nixpkgs.follows = "nixos-25_05";
-    };
-
     # rust keyboard remapper via evdev and uinput
     xremap-flake = {
       url = "github:xremap/nix-flake";
@@ -241,8 +235,13 @@
         inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [
+            # ({ modulesPath, ... }: {
+            #   # Important! We disable home-manager's module to avoid option
+            #   # definition collisions
+            #   disabledModules = [ "${modulesPath}/programs/anyrun.nix" ];
+            # })
+            # inputs.anyrun.homeManagerModules.default
             ./home.nix
-            inputs.anyrun.homeManagerModules.default
           ];
           extraSpecialArgs = {
             inherit username isWayland isWork inputs hostname;
