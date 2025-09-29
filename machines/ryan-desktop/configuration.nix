@@ -1,5 +1,6 @@
 { config, pkgs, lib, inputs, hostname, username, ... }:
 let
+  ethernetAdapter = "enp5s0";
   inherit (inputs) self;
   my1p = pkgs.unstable._1password-gui.overrideAttrs (old: {
     # see https://www.1password.community/discussions/1password/1password-window-blank-on-gnome-47-wayland--fedora-41/153548/replies/153967
@@ -59,6 +60,9 @@ in
         AutoConnect = true;
       };
     };
+  };
+  networking.interfaces."${ethernetAdapter}" = {
+    wakeOnLan.enable = true;
   };
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
