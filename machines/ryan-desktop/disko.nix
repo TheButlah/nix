@@ -8,6 +8,9 @@
 #  disko.devices.disk.main.device = "/dev/nvme0n1";
 # }
 {
+  # ChatGPT: Systemd in initrd is required for TPM/FIDO options in crypttab to work
+  boot.initrd.systemd.enable = true;
+
   disko.devices = {
     disk = {
       linux = {
@@ -30,14 +33,37 @@
             #     mountOptions = [ "umask=0077" ];
             #   };
             # };
-            root = {
+            rootfs = {
               size = "100%";
               content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/";
+                type = "luks";
+                name = "rootfs";
+                # LUKS settings (as defined in configuration.nix in boot.initrd.luks.devices.<name>)
+                settings = {
+                  allowDiscards = true; # https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD)
+                  crypttabExtraOpts = [
+                    "tpm2-device=auto"
+                    # Choose your PCR binding; 7 is a safe default (Secure Boot policy).
+                    "tpm2-pcrs=7"
+                  ];
+                };
+                content = {
+                  type = "filesystem";
+                  format = "ext4";
+                  mountpoint = "/";
+                  # mountOptions = [ "noatime" ];
+                };
               };
             };
+            # rootfs = {
+            #   size = "100%";
+            #   content = {
+            #
+            #     type = "filesystem";
+            #     format = "ext4";
+            #     mountpoint = "/";
+            #   };
+            # };
           };
         };
       };

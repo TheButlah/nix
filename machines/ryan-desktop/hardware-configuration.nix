@@ -14,6 +14,13 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # boot.initrd.luks.devices."rootfs".device = "/dev/disk/by-partlabel/disk-linux-root";
+  # fileSystems."/" =
+  #   {
+  #     device = "/dev/mapper/rootfs";
+  #     fsType = "ext4";
+  #   };
+
   # fileSystems."/" =
   #   {
   #     device = "/dev/disk/by-uuid/a4000be4-4e44-44e4-bc14-897d9dcaf3ba";
