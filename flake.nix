@@ -23,6 +23,11 @@
     # Provides eachDefaultSystem and other utility functions
     flake-utils.url = "github:numtide/flake-utils";
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixos-25_05";
+    };
+
     # Replacement for rustup
     fenix-linux = {
       url = "github:nix-community/fenix";

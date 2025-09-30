@@ -23,6 +23,8 @@ in
       ./hardware-configuration.nix
       inputs.xremap-flake.nixosModules.default
       inputs.niri-flake.nixosModules.niri
+      inputs.disko.nixosModules.disko
+      ./disko.nix
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

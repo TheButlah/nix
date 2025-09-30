@@ -85,6 +85,26 @@
         "type": "github"
       }
     },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixos-25_05"
+        ]
+      },
+      "locked": {
+        "lastModified": 1758287904,
+        "narHash": "sha256-IGmaEf3Do8o5Cwp1kXBN1wQmZwQN3NLfq5t4nHtVtcU=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "67ff9807dd148e704baadbd4fd783b54282ca627",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -1044,6 +1064,7 @@
     },
     "root": {
       "inputs": {
+        "disko": "disko",
         "fenix-darwin": "fenix-darwin",
         "fenix-linux": "fenix-linux",
         "flake-utils": "flake-utils",
