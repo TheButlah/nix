@@ -66,6 +66,11 @@ in
   networking.interfaces."${ethernetAdapter}" = {
     wakeOnLan.enable = true;
   };
+  services.resolved = {
+    enable = true;
+    # set to "false" if giving you trouble
+    dnsovertls = "opportunistic";
+  };
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
 
@@ -75,7 +80,7 @@ in
     8188 # comfyui
   ];
   networking.firewall.allowedUDPPorts = [
-    5353 # spotify and google cast https://nixos.wiki/wiki/Spotify
+    5353 # mDNS
   ];
 
   # networking.firewall.allowedTCPPorts = [ ... ];

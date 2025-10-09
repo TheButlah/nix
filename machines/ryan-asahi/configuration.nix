@@ -65,6 +65,11 @@ in
       };
     };
   };
+  services.resolved = {
+    enable = true;
+    # set to "false" if giving you trouble
+    dnsovertls = "opportunistic";
+  };
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
 
@@ -73,7 +78,7 @@ in
     57621 # spotify https://nixos.wiki/wiki/Spotify
   ];
   networking.firewall.allowedUDPPorts = [
-    5353 # spotify and google cast https://nixos.wiki/wiki/Spotify
+    5353 # mDNS
   ];
 
   # Configure network proxy if necessary
