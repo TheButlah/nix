@@ -76,9 +76,11 @@ in
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
     57621 # spotify https://nixos.wiki/wiki/Spotify
+    22000 # syncthing
   ];
   networking.firewall.allowedUDPPorts = [
     5353 # mDNS
+    22000 # syncthing
   ];
 
   # Configure network proxy if necessary

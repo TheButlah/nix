@@ -74,6 +74,7 @@ with pkgs; [
   unstable.openai-whisper-cpp
   unstable.ramalama
 ] ++ lib.optionals (!isWork) [
+  syncthing
   # discord
 ] ++ lib.optionals (isWork) [
 ] ++ lib.optionals (pkgs.stdenv.isDarwin) [
