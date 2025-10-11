@@ -15,6 +15,7 @@ let
     '';
   });
   linuxPackages = (pkgs.unstable.linuxPackagesFor pkgs.linuxPackages.kernel);
+  secureBoot = true;
 in
 {
   imports =
@@ -25,14 +26,23 @@ in
       inputs.niri-flake.nixosModules.niri
       inputs.disko.nixosModules.disko
       ./disko.nix
+      inputs.lanzaboote.nixosModules.lanzaboote
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.trusted-users = [ "root" "${username}" ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true; # true in asahi
-  boot.loader.efi.canTouchEfiVariables = false; # False in asahi
+  # https://github.com/nix-community/lanzaboote/blob/747b7912f49e2885090c83364d88cf853a020ac1/docs/QUICK_START.md
+  # NOTE: Lanzaboote currently replaces the systemd-boot module.
+  # This setting is usually set to true in configuration.nix
+  # generated at installation time. So we force it to false
+  # for now.
+  boot.loader.systemd-boot.enable = !secureBoot;
+  boot.loader.efi.canTouchEfiVariables = false;
+  boot.lanzaboote = {
+    enable = secureBoot;
+    pkiBundle = "/var/lib/sbctl";
+  };
 
   # we want the latest nvidia drivers, which will come with the latest kernel.
   boot.kernelPackages = linuxPackages;
@@ -276,6 +286,7 @@ in
     pkgs.xwayland-satellite-stable
     qpwgraph # control pipewire nodes using a GUI
     ripgrep
+    sbctl # lanzaboote
     swaylock-effects
     swww
     usbutils # lsusb

@@ -99,6 +99,13 @@
       url = "github:kolide/nix-agent/becca/arm-support";
       inputs.nixpkgs.follows = "nixos-25_05";
     };
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+
+      # Optional but recommended to limit the size of your system closure.
+      inputs.nixpkgs.follows = "nixos-25_05";
+    };
   };
 
   outputs = inputs-raw:

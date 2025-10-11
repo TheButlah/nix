@@ -23,4 +23,5 @@ in
   xremap-flake = inputs-raw.xremap-flake;
   kolide-launcher = inputs-raw.kolide-launcher;
   disko = inputs-raw.disko;
+  lanzaboote = inputs-raw.lanzaboote;
 }
