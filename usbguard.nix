@@ -3,6 +3,7 @@
   rules = ''
     # Generic classes
     allow with-interface equals { 09:00:* } # usb hubs
+    allow with-interface equals { 09:00:* 09:00:* } # usb hubs w multiple protocols
     allow with-interface equals { 08:*:* } # Mass storage
     allow with-interface equals { 08:*:* 08:*:* } # Mass storage with multiple protocols
 
