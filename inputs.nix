@@ -24,4 +24,5 @@ in
   kolide-launcher = inputs-raw.kolide-launcher;
   disko = inputs-raw.disko;
   lanzaboote = inputs-raw.lanzaboote;
+  comfyui-nix-devshell = inputs-raw.comfyui-nix-devshell;
 }

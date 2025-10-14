@@ -37,6 +37,26 @@
         "type": "github"
       }
     },
+    "comfyui-nix-devshell": {
+      "inputs": {
+        "nixpkgs": [
+          "nixos-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1758722472,
+        "narHash": "sha256-ZotZJRrz660uMDKENEC965SOAgqlXxOhHaallBUCqQk=",
+        "owner": "aldenparker",
+        "repo": "comfyui-nix-devshell",
+        "rev": "2eb0979ba8801b5f51b2a8a256c2b4d66dc902e9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "aldenparker",
+        "repo": "comfyui-nix-devshell",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1748047550,
@@ -1207,6 +1227,7 @@
     },
     "root": {
       "inputs": {
+        "comfyui-nix-devshell": "comfyui-nix-devshell",
         "disko": "disko",
         "fenix-darwin": "fenix-darwin",
         "fenix-linux": "fenix-linux",

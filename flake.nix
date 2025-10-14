@@ -102,9 +102,12 @@
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
-
-      # Optional but recommended to limit the size of your system closure.
       inputs.nixpkgs.follows = "nixos-25_05";
+    };
+
+    comfyui-nix-devshell = {
+      url = "github:aldenparker/comfyui-nix-devshell";
+      inputs.nixpkgs.follows = "nixos-unstable";
     };
   };
 
@@ -383,6 +386,8 @@
           apps."tsh17" = mkApp { pkg = tsh17; bin = "tsh"; };
           apps."wezterm" = mkApp { pkg = wezterm; bin = "wezterm"; };
           packages.tsh17 = tsh17;
+
+          devShells.comfyui = inputs.comfyui-nix-devshell.devShells.${system}.cuda-beta;
 
           # This formats the nix files, not the rest of the repo.
           formatter = pkgs.nixpkgs-fmt;
