@@ -188,6 +188,7 @@ in
       "plugdev"
       "podman"
       "wheel"
+      "syncthing"
     ];
     packages = with pkgs; [
       # legcord

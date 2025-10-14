@@ -183,6 +183,7 @@ in
       "plugdev"
       "podman"
       "wheel"
+      "syncthing"
     ];
     packages = with pkgs; [
       mpv # currently broken in: https://github.com/haasn/libplacebo/issues/333

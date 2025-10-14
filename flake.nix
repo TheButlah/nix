@@ -216,6 +216,8 @@
               };
             }
 
+            ./modules/mymod.nix
+
             modulePath
 
             # setup home-manager

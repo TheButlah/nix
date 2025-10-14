@@ -240,6 +240,7 @@ in
       "plugdev"
       "podman"
       "wheel"
+      "syncthing"
     ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL0Oa3J6JPCPyJL20pHC6kTJ5XnZb7W8nNL3xw+cwixU ryan@ryan-asahi"
@@ -399,6 +400,8 @@ in
       enableOnBoot = true;
     };
   };
+
+  thebutlah.selfhosting.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
