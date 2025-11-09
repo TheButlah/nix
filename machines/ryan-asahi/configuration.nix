@@ -188,6 +188,7 @@ in
     packages = with pkgs; [
       mpv # currently broken in: https://github.com/haasn/libplacebo/issues/333
     ] ++ lib.optionals (!isWork) [
+      blender
       legcord
     ];
   };
