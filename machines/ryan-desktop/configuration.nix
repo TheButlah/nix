@@ -244,7 +244,7 @@ in
     ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL0Oa3J6JPCPyJL20pHC6kTJ5XnZb7W8nNL3xw+cwixU ryan@ryan-asahi"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrQiHPGP0KIT1dBEKOkZ9j7xkAqPDii1xWgCnQZHyvC ryan@juicessh"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINyRWi0zHPJHpJNda2EHnZwjjWh9XWXV+GRjsbvsHZfj ryan@JuiceSSH"
     ];
     packages = with pkgs; [
       legcord
