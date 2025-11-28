@@ -64,6 +64,7 @@ with pkgs; [
   ngrok
   ssm-session-manager-plugin
   terraform
+  sshfs
 
   # AI
   unstable.claude-code
