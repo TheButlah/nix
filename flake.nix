@@ -9,15 +9,15 @@
     # https://discourse.nixos.org/t/which-nixpkgs-stable-tag-for-nixos-and-darwin-together/32796/3
 
     # For Linux
-    nixos-25_05.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixos-25_11.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     # For MacOS
-    nixpkgs-25_05-darwin.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs-25_11-darwin.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
-      inputs.nixpkgs.follows = "nixos-25_05";
+      inputs.nixpkgs.follows = "nixos-25_11";
     };
 
     # Provides eachDefaultSystem and other utility functions
@@ -25,84 +25,84 @@
 
     disko = {
       url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixos-25_05";
+      inputs.nixpkgs.follows = "nixos-25_11";
     };
 
     # Replacement for rustup
     fenix-linux = {
       url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixos-25_05";
+      inputs.nixpkgs.follows = "nixos-25_11";
     };
     fenix-darwin = {
       url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs-25_05-darwin";
+      inputs.nixpkgs.follows = "nixpkgs-25_11-darwin";
     };
 
     # Manages user settings
     home-manager-linux = {
-      url = "github:nix-community/home-manager/release-25.05";
-      inputs.nixpkgs.follows = "nixos-25_05";
+      url = "github:nix-community/home-manager/release-25.11";
+      inputs.nixpkgs.follows = "nixos-25_11";
     };
     home-manager-darwin = {
-      url = "github:nix-community/home-manager/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs-25_05-darwin";
+      url = "github:nix-community/home-manager/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs-25_11-darwin";
     };
 
     # Provides better GPU support
     nixgl = {
       url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixos-25_05";
+      inputs.nixpkgs.follows = "nixos-25_11";
     };
 
     # Like NixOS, but for darwin
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
-      inputs.nixpkgs.follows = "nixpkgs-25_05-darwin";
+      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
+      inputs.nixpkgs.follows = "nixpkgs-25_11-darwin";
     };
 
     # Builds nix system images
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixos-25_05";
+      inputs.nixpkgs.follows = "nixos-25_11";
     };
 
     nixos-apple-silicon = {
-      url = "github:tpwrules/nixos-apple-silicon/release-25.05";
-      inputs.nixpkgs.follows = "nixos-25_05";
+      url = "github:nix-community/nixos-apple-silicon/release-2025-11-18";
+      inputs.nixpkgs.follows = "nixos-25_11";
     };
 
     # Rust animated wallpaper
     swww = {
-      url = "github:LGFae/swww/v0.10.3";
-      inputs.nixpkgs.follows = "nixos-25_05";
+      url = "git+https://codeberg.org/LGFae/awww";
+      inputs.nixpkgs.follows = "nixos-25_11";
     };
 
     # rust keyboard remapper via evdev and uinput
     xremap-flake = {
       url = "github:xremap/nix-flake";
-      inputs.nixpkgs.follows = "nixos-25_05";
+      inputs.nixpkgs.follows = "nixos-25_11";
     };
 
     niri-flake = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixos-unstable";
-      inputs.nixpkgs-stable.follows = "nixos-25_05";
+      inputs.nixpkgs-stable.follows = "nixos-25_11";
     };
 
     inhibitor = {
       url = "github:TheButlah/inhibitor";
-      inputs.nixpkgs.follows = "nixos-25_05";
+      inputs.nixpkgs.follows = "nixos-25_11";
     };
 
     # for work
     kolide-launcher = {
-      url = "github:kolide/nix-agent/becca/arm-support";
-      inputs.nixpkgs.follows = "nixos-25_05";
+      url = "github:kolide/nix-agent";
+      inputs.nixpkgs.follows = "nixos-25_11";
     };
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs.nixpkgs.follows = "nixos-25_05";
+      url = "github:nix-community/lanzaboote/v0.4.3";
+      inputs.nixpkgs.follows = "nixos-25_11";
     };
 
     comfyui-nix-devshell = {

@@ -17,15 +17,18 @@ lib.mkIf pkgs.stdenv.isLinux {
         "${pkgs.anyrun}/lib/libapplications.so"
       ];
 
-      # x = { fraction = 0.5; };
+      x = { fraction = 0.5; };
       y = { fraction = 0.3; };
       width = { fraction = 0.25; };
+      height = { absolute = 1; };
       hideIcons = false;
-      closeOnClick = true;
+      hidePluginInfo = true;
+      # closeOnClick = true;
     };
 
     # Styling from https://github.com/fufexan/dotfiles/blob/5d5631f475d892e1521c45356805bc9a2d40d6d1/home/programs/anyrun/default.nix
     extraCss = builtins.readFile ./xdg/anyrun.css;
+    extraConfigFiles."applications.ron".text = builtins.readFile ./xdg/anyrun.applications.ron;
   };
 
   programs.waybar = {

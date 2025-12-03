@@ -41,7 +41,6 @@ in
     # Ensures reproducibility of firmware
     peripheralFirmwareDirectory = ./firmware; # vendored instead of /boot/asahi
     extractPeripheralFirmware = true; # redundant, this is the default
-    useExperimentalGPUDriver = true;
   };
 
   networking.hostName = hostname; # Define your hostname.
@@ -89,7 +88,7 @@ in
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
-  programs.ssh.startAgent = true;
+  # programs.ssh.startAgent = true;
   services.mullvad-vpn.enable = true;
   services.tailscale.enable = true;
 
@@ -223,7 +222,7 @@ in
     easyeffects
     ffmpeg-full
     git
-    glxinfo
+    mesa-demos
     inhibitor # disable built-in keeb and other input devices
     libnotify # notify-send
     neovim

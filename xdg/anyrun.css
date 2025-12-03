@@ -1,48 +1,62 @@
+/* GTK4 / anyrun port of your GTK+ snippet */
+
 * {
   all: unset;
   font-size: 1.2rem;
 }
 
-#window,
-#match,
-#entry,
-#plugin,
-#main {
-  background: transparent;
+/* AnyRun uses:
+   - GtkWindow           -> window
+   - GtkBox.main         -> box.main
+   - GtkBox.plugin       -> .plugin
+   - GtkBox.matches      -> .matches
+   - GtkBox.match        -> .match
+   - GtkText (entry)     -> text
+*/
+window,
+.match,
+text,
+.plugin,
+box.main {
+  background-color: transparent;
 }
 
-#match.activatable {
+/* Match rows */
+.match {
   border-radius: 8px;
   margin: 4px 0;
-  padding: 4px;
-  /* transition: 100ms ease-out; */
+  padding: 0px;
+  /* transition: 100ms ease-out;  (GTK generally won’t animate like browsers) */
 }
-#match.activatable:first-child {
-  margin-top: 12px;
+.match:first-child {
+  margin-top: 0px;
 }
-#match.activatable:last-child {
+.match:last-child {
   margin-bottom: 0;
 }
 
-#match:hover {
-  background: rgba(255, 255, 255, 0.05);
+.match:hover {
+  background-color: rgba(255, 255, 255, 0.05);
 }
-#match:selected {
-  background: rgba(255, 255, 255, 0.1);
+.match:selected {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
-#entry {
-  background: rgba(255, 255, 255, 0.05);
+/* Entry (GtkText). If this styles too much, scope it to `box.main text { ... }` */
+box.main text {
+  background-color: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 4px 8px;
 }
 
-box#main {
-  background: rgba(0, 0, 0, 0.75);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
-    0 30px 30px 15px rgba(0, 0, 0, 0.5);
+/* Main container */
+box.main {
+  background-color: rgba(0, 0, 0, 0.75);
+  /* box-shadow: */
+  /*   inset 0 0 0 1px rgba(255, 255, 255, 0.1), */
+  /*   0 30px 30px 15px rgba(0, 0, 0, 0.5); */
   border-radius: 20px;
   padding: 12px;
 }
+

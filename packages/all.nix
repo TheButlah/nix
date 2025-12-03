@@ -50,7 +50,7 @@ with pkgs; [
   libiconv # see https://stackoverflow.com/a/69732679
   ninja
   nixpkgs-fmt # formats nix files
-  probe-rs
+  probe-rs-tools
   python312
   rustup
   unstable.cargo-zigbuild
@@ -72,7 +72,7 @@ with pkgs; [
   unstable.mods
   unstable.ollama
   unstable.openai-whisper
-  unstable.openai-whisper-cpp
+  unstable.whisper-cpp
   unstable.ramalama
 ] ++ lib.optionals (!isWork) [
   syncthing
