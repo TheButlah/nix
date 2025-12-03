@@ -225,9 +225,9 @@ in
     easyeffects
     ffmpeg-full
     git
-    glxinfo
     inhibitor # disable built-in keeb and other input devices
     libnotify # notify-send
+    mesa-demos
     neovim
     pavucontrol
     pkgs.xwayland-satellite-stable

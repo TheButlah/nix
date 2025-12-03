@@ -222,9 +222,9 @@ in
     easyeffects
     ffmpeg-full
     git
-    mesa-demos
     inhibitor # disable built-in keeb and other input devices
     libnotify # notify-send
+    mesa-demos
     neovim
     pavucontrol
     pkgs.xwayland-satellite-stable
