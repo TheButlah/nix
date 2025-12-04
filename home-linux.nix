@@ -10,6 +10,27 @@ lib.mkIf pkgs.stdenv.isLinux {
     "swaylock/config".source = ./xdg/swaylock.config;
   };
 
+  xdg.configFile."openxr/1/active_runtime.json".source = "${pkgs.monado}/share/openxr/1/openxr_monado.json";
+  xdg.configFile."openvr/openvrpaths.vrpath".text = ''
+    {
+      "config" :
+      [
+        "/home/${username}/.local/share/Steam/config"
+      ],
+      "external_drivers" : null,
+      "jsonid" : "vrpathreg",
+      "log" :
+      [
+        "/home/${username}/.local/share/Steam/logs"
+      ],
+      "runtime" :
+      [
+        "${pkgs.opencomposite}/lib/opencomposite"
+      ],
+      "version" : 1
+    }
+  '';
+
   programs.anyrun = {
     enable = isGui && isWayland;
     config = {

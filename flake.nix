@@ -109,6 +109,11 @@
       url = "github:aldenparker/comfyui-nix-devshell";
       inputs.nixpkgs.follows = "nixos-unstable";
     };
+
+    nixpkgs-xr = {
+      url = "github:nix-community/nixpkgs-xr";
+      inputs.nixpkgs.follows = "nixos-25_11";
+    };
   };
 
   outputs = inputs-raw:
@@ -132,6 +137,7 @@
             (import overlays/karabiner-14.nix)
             (import overlays/libdjinterop.nix)
             inputs.swww.overlays.default
+            inputs.nixpkgs-xr.overlays.default
           ];
           config = {
             allowUnfree = true;

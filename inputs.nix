@@ -25,4 +25,5 @@ in
   disko = inputs-raw.disko;
   lanzaboote = inputs-raw.lanzaboote;
   comfyui-nix-devshell = inputs-raw.comfyui-nix-devshell;
+  nixpkgs-xr = inputs-raw.nixpkgs-xr;
 }

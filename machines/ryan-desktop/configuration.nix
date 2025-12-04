@@ -281,10 +281,12 @@ in
     git
     inhibitor # disable built-in keeb and other input devices
     libnotify # notify-send
-    mesa-demos
+    lighthouse-steamvr # control lighthouse power
+    mesa-demos # glxinfo, etc
     neovim
     pavucontrol
     pkgs.xwayland-satellite-stable
+    protonplus # Manage steam proton versions
     qpwgraph # control pipewire nodes using a GUI
     ripgrep
     sbctl # lanzaboote
@@ -343,15 +345,21 @@ in
     defaultRuntime = true; # Register as default OpenXR runtime
   };
   systemd.user.services.monado.environment = {
-    STEAMVR_LH_ENABLE = "1";
-    XRT_COMPOSITOR_COMPUTE = "1";
+    STEAMVR_LH_ENABLE = "1"; # Requires running room setup in steamvr at least once
+    XRT_COMPOSITOR_COMPUTE = "1"; # 1 causes it to crash when using simulated HMDs but anecdotally seems better for performance
+    XRT_COMPOSITOR_FORCE_WAYLAND_DIRECT = "1"; # Fixes wayland
+
+    # These two fix screen tear: https://lvra.gitlab.io/docs/hardware/
+    XRT_COMPOSITOR_USE_PRESENT_WAIT = "1";
+    U_PACING_COMP_TIME_FRACTION_PERCENT = "90";
   };
   services.wivrn = {
-    enable = pkgs.stdenv.hostPlatform.isx86; # seems to be broken on asahi
+    # enable = pkgs.stdenv.hostPlatform.isx86; # seems to be broken on asahi
+    enable = false; # seems to be broken on asahi
     # defaultRuntime = true; # Register as default OpenXR runtime
     openFirewall = true;
     # Run WiVRn as a systemd service on startup
-    autoStart = true;
+    autoStart = false;
   };
 
   programs.steam = {
@@ -361,7 +369,7 @@ in
     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
     gamescopeSession.enable = true;
     extraCompatPackages = with pkgs; [
-      proton-ge-bin
+      # proton-ge-bin
     ];
   };
   programs.gamescope = {
