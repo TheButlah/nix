@@ -110,7 +110,7 @@ in
     settings.PasswordAuthentication = false;
     settings.PermitRootLogin = "no";
   };
-  programs.ssh.startAgent = true;
+  # programs.ssh.startAgent = true;
   services.mullvad-vpn.enable = false;
   services.tailscale.enable = true;
 
@@ -279,9 +279,9 @@ in
     curl
     ffmpeg-full
     git
-    glxinfo
     inhibitor # disable built-in keeb and other input devices
     libnotify # notify-send
+    mesa-demos
     neovim
     pavucontrol
     pkgs.xwayland-satellite-stable
