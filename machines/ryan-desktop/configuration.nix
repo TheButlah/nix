@@ -349,9 +349,14 @@ in
     XRT_COMPOSITOR_COMPUTE = "1"; # 1 causes it to crash when using simulated HMDs but anecdotally seems better for performance
     XRT_COMPOSITOR_FORCE_WAYLAND_DIRECT = "1"; # Fixes wayland
 
-    # These two fix screen tear: https://lvra.gitlab.io/docs/hardware/
+    # Be sure that VRR / Adaptive sync is turned off on your monitor, otherwise you get screen tear
+
+    # These two fix lagginess: https://lvra.gitlab.io/docs/hardware/
     XRT_COMPOSITOR_USE_PRESENT_WAIT = "1";
     U_PACING_COMP_TIME_FRACTION_PERCENT = "90";
+
+    # Recommended by @sapphire from LVRA discord: Uncaps the frame limiter.
+    U_PACING_APP_IMMEDIATE_WAIT_FRAME_RETURN = "1";
   };
   services.wivrn = {
     # enable = pkgs.stdenv.hostPlatform.isx86; # seems to be broken on asahi
