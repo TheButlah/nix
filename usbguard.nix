@@ -11,6 +11,7 @@
     allow id 1050:0402 serial "" name "YubiKey FIDO" hash "ZZ2J/ZgNx0xMmsjwUrSVnZ4BdrM/RSDsfjrYRCmvoME=" with-interface 03:00:00
     allow id 0909:001c serial "" name "AT2020USB+" hash "/Rj52epXXbngHHurEDmdeKQOn/F9aYSO4ChFo/Snpgo=" with-interface { 01:01:00 01:02:00 01:02:00 01:02:00 01:02:00 03:00:00 }
     allow id 1935:102b serial "000000000001" name "Elektron Digitakt II" hash "qhmC0G+vsuzFsGWypvwiQ99fqIXgYejjChjBO6hcx3I=" with-interface { 01:01:20 01:02:20 01:02:20 01:02:20 01:02:20 01:01:00 01:03:00 }
+    block id 1d50:615e serial "7E9C97C092E11E0A" name "Corne" hash "F1i6fSRQyssfm7PAtDBNxR3tzdarO+2Gz0aEjz5/9Og=" with-interface 03:00:00
 
     # Block everything else
     block id *:*

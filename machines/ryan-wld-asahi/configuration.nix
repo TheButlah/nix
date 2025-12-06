@@ -278,28 +278,6 @@ in
     };
   };
 
-  services.monado = {
-    enable = true;
-    # defaultRuntime = true; # Register as default OpenXR runtime
-  };
-  systemd.user.services.monado.environment = {
-    # STEAMVR_LH_ENABLE = "1";
-    XRT_COMPOSITOR_COMPUTE = "1";
-  };
-  services.wivrn = {
-    enable = pkgs.stdenv.hostPlatform.isx86; # seems to be broken on asahi
-    defaultRuntime = true; # Register as default OpenXR runtime
-    openFirewall = true;
-    # Run WiVRn as a systemd service on startup
-    autoStart = true;
-  };
-  services.sunshine = {
-    enable = true;
-    autoStart = true;
-    capSysAdmin = true;
-    openFirewall = true;
-  };
-
   programs.droidcam.enable = true;
   programs.obs-studio = {
     enable = true;
