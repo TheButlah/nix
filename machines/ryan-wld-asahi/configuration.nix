@@ -49,6 +49,10 @@ in
   networking.networkmanager = {
     enable = true;
     wifi.backend = "iwd";
+    extraConfig = ''
+      [wifi]
+      country=US
+    '';
   };
   networking.wireless.iwd = {
     enable = true;
