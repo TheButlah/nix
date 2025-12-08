@@ -88,10 +88,10 @@ lib.mkIf pkgs.stdenv.isLinux {
           command = display "off";
           resumeCommand = display "on";
         }
-        # {
-        #   timeout = 60 * 20;
-        #   command = "${pkgs.systemd}/bin/systemctl suspend";
-        # }
+        {
+          timeout = 60 * 20;
+          command = "${pkgs.systemd}/bin/systemctl suspend";
+        }
       ];
       events = [
         {
