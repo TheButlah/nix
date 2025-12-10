@@ -1,11 +1,10 @@
-{
-  pkgs,
-  lib,
-  inputs,
-  hostname,
-  username,
-  isWork,
-  ...
+{ pkgs
+, lib
+, inputs
+, hostname
+, username
+, isWork
+, ...
 }:
 let
   inherit (inputs) self;
@@ -63,10 +62,7 @@ in
   networking.networkmanager = {
     enable = true;
     wifi.backend = "iwd";
-    extraConfig = ''
-      [wifi]
-      country=US
-    '';
+    settings.wifi.country = "US";
   };
   networking.wireless.iwd = {
     enable = true;
