@@ -1,4 +1,14 @@
-{ pkgs, lib, username, hostname, isWork ? true, isWayland ? false, isGui ? false, alacritty ? pkgs.alacritty, ... }:
+{
+  pkgs,
+  lib,
+  username,
+  hostname,
+  isWork ? true,
+  isWayland ? false,
+  isGui ? false,
+  alacritty ? pkgs.alacritty,
+  ...
+}:
 let
   inherit (pkgs.stdenv) isDarwin;
   inherit (pkgs.stdenv) isLinux;
@@ -9,29 +19,38 @@ let
       me = "PJ5RFQLTJNBQDI3OMBJHR3LOZ4";
     };
     openaiApiKey =
-      if isWork then {
-        acct = acct.tfh;
-        url = "op://Engineering/Orb SW OpenAI API Key/credential";
-      } else {
-        acct = acct.me;
-        url = "op://Terminal Secrets/OpenAI API Key/credential";
-      };
+      if isWork then
+        {
+          acct = acct.tfh;
+          url = "op://Engineering/Orb SW OpenAI API Key/credential";
+        }
+      else
+        {
+          acct = acct.me;
+          url = "op://Terminal Secrets/OpenAI API Key/credential";
+        };
     anthropicApiKey =
-      if isWork then {
-        acct = acct.tfh;
-        url = "op://Engineering/Orb SW Anthropic API Key/credential";
-      } else {
-        acct = acct.me;
-        url = "op://Terminal Secrets/Anthropic API Key/credential";
-      };
+      if isWork then
+        {
+          acct = acct.tfh;
+          url = "op://Engineering/Orb SW Anthropic API Key/credential";
+        }
+      else
+        {
+          acct = acct.me;
+          url = "op://Terminal Secrets/Anthropic API Key/credential";
+        };
     groqApiKey =
-      if isWork then {
-        acct = acct.tfh;
-        url = "op://Employee/GROQ_API_KEY/credential";
-      } else {
-        acct = acct.me;
-        url = "op://Terminal Secrets/GROQ_API_KEY/credential";
-      };
+      if isWork then
+        {
+          acct = acct.tfh;
+          url = "op://Employee/GROQ_API_KEY/credential";
+        }
+      else
+        {
+          acct = acct.me;
+          url = "op://Terminal Secrets/GROQ_API_KEY/credential";
+        };
   };
 in
 # See https://github.com/nix-community/home-manager/issues/414#issuecomment-427163925
@@ -42,7 +61,14 @@ in
   home = {
     inherit homeDirectory;
     username = "${username}";
-    packages = import ./packages/all.nix { inherit pkgs isWork isWayland isGui; };
+    packages = import ./packages/all.nix {
+      inherit
+        pkgs
+        isWork
+        isWayland
+        isGui
+        ;
+    };
     sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
@@ -87,24 +113,25 @@ in
     autosuggestion.enable = true;
     enableCompletion = true;
     oh-my-zsh.enable = true;
-    initExtra = (lib.optionalString pkgs.stdenv.isDarwin ''
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-    '') + ''
-      set -o vi
+    initExtra =
+      (lib.optionalString pkgs.stdenv.isDarwin ''
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+      '')
+      + ''
+        set -o vi
 
-      eval "$(fnm env --use-on-cd --shell zsh)"
+        eval "$(fnm env --use-on-cd --shell zsh)"
 
-      export BUN_INSTALL="$HOME/.bun"
-      export PATH="$BUN_INSTALL/bin:$PATH"
+        export BUN_INSTALL="$HOME/.bun"
+        export PATH="$BUN_INSTALL/bin:$PATH"
 
-      export PATH="$PATH:${homeDirectory}/.dotnet/tools"
+        export PATH="$PATH:${homeDirectory}/.dotnet/tools"
 
-      export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account "${op.openaiApiKey.acct}" "${op.openaiApiKey.url}")"}"
-      export ANTHROPIC_API_KEY="''${ANTHROPIC_API_KEY:-"$(op read --account "${op.anthropicApiKey.acct}" "${op.anthropicApiKey.url}")"}"
-      export GROQ_API_KEY="''${GROQ_API_KEY:-"$(op read --account "${op.groqApiKey.acct}" "${op.groqApiKey.url}")"}"
-    '';
-    envExtra = ''
-    '';
+        export OPENAI_API_KEY="''${OPENAI_API_KEY:-"$(op read --account "${op.openaiApiKey.acct}" "${op.openaiApiKey.url}")"}"
+        export ANTHROPIC_API_KEY="''${ANTHROPIC_API_KEY:-"$(op read --account "${op.anthropicApiKey.acct}" "${op.anthropicApiKey.url}")"}"
+        export GROQ_API_KEY="''${GROQ_API_KEY:-"$(op read --account "${op.groqApiKey.acct}" "${op.groqApiKey.url}")"}"
+      '';
+    envExtra = '''';
   };
   programs.starship = {
     enable = true;

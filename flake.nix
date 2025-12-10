@@ -116,12 +116,14 @@
     };
   };
 
-  outputs = inputs-raw:
+  outputs =
+    inputs-raw:
     let
       mkInputs = (system: import ./inputs.nix { inherit inputs-raw system; });
     in
     let
-      mkPkgs = (system:
+      mkPkgs = (
+        system:
         let
           inputs = mkInputs system;
         in
@@ -143,29 +145,33 @@
             allowUnfree = true;
           };
           flake = abort "this should be specified in nixos modules, its inert here";
-        });
+        }
+      );
       # All system-specific variables
-      forSystem = (system:
+      forSystem = (
+        system:
         let
           inputs = mkInputs system;
           pkgs = mkPkgs system;
           isLinux = pkgs.stdenv.isLinux;
           isDarwin = pkgs.stdenv.isDarwin;
-          nixGLWrap = pkg: pkgs.runCommand "${pkg.name}-nixgl-wrapper" { } ''
-            mkdir $out
-            ln -s ${pkg}/* $out
-            rm $out/bin
-            mkdir $out/bin
-            for bin in ${pkg}/bin/*; do
-            wrapped_bin=$out/bin/$(basename $bin)
-            echo "exec ${pkgs.lib.getExe pkgs.nixgl.auto.nixGLDefault} $bin \$@" > $wrapped_bin
-            chmod +x $wrapped_bin
-            done
-          '';
+          nixGLWrap =
+            pkg:
+            pkgs.runCommand "${pkg.name}-nixgl-wrapper" { } ''
+              mkdir $out
+              ln -s ${pkg}/* $out
+              rm $out/bin
+              mkdir $out/bin
+              for bin in ${pkg}/bin/*; do
+              wrapped_bin=$out/bin/$(basename $bin)
+              echo "exec ${pkgs.lib.getExe pkgs.nixgl.auto.nixGLDefault} $bin \$@" > $wrapped_bin
+              chmod +x $wrapped_bin
+              done
+            '';
         in
         # These are instantiated once per-system. So anything that should be per-system
-          # should go here, for later reuse.
-          # This is more efficient than instantiating it ad-hoc.
+        # should go here, for later reuse.
+        # This is more efficient than instantiating it ad-hoc.
         {
           inherit pkgs inputs;
           alacritty = if isLinux then (nixGLWrap pkgs.alacritty) else pkgs.alacritty;
@@ -174,104 +180,185 @@
           darwin-rebuild = inputs.nix-darwin.outputs.packages.${system}.darwin-rebuild;
         }
       );
-      inherit (inputs-raw.flake-utils.lib.eachDefaultSystem (system: { s = forSystem system; })) s;
+      inherit
+        (inputs-raw.flake-utils.lib.eachDefaultSystem (system: {
+          s = forSystem system;
+        }))
+        s
+        ;
 
-      darwinConfig = { modulePath, username, isWork, hostname, }: (
-        let
-          system = "aarch64-darwin";
-          inputs = s.${system}.inputs;
-          pkgs = s.${system}.pkgs;
-        in
-        inputs.nix-darwin.lib.darwinSystem rec {
-          inherit system;
-          specialArgs = { inherit hostname username inputs; };
-          modules = [
-            modulePath
-            # setup home-manager
-            inputs.home-manager.darwinModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                # include the home-manager module
-                users.${username} = import ./home.nix;
-                extraSpecialArgs = rec {
-                  inherit isWork username pkgs inputs hostname;
-                  inherit (pkgs) alacritty;
-                  isGui = true;
+      darwinConfig =
+        {
+          modulePath,
+          username,
+          isWork,
+          hostname,
+        }:
+        (
+          let
+            system = "aarch64-darwin";
+            inputs = s.${system}.inputs;
+            pkgs = s.${system}.pkgs;
+          in
+          inputs.nix-darwin.lib.darwinSystem rec {
+            inherit system;
+            specialArgs = { inherit hostname username inputs; };
+            modules = [
+              modulePath
+              # setup home-manager
+              inputs.home-manager.darwinModules.home-manager
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  # include the home-manager module
+                  users.${username} = import ./home.nix;
+                  extraSpecialArgs = rec {
+                    inherit
+                      isWork
+                      username
+                      pkgs
+                      inputs
+                      hostname
+                      ;
+                    inherit (pkgs) alacritty;
+                    isGui = true;
+                  };
                 };
-              };
-              # https://github.com/nix-community/home-manager/issues/4026
-              users.users.${username}.home = pkgs.lib.mkForce "/Users/${username}";
-            }
-          ];
-        }
-      );
-      nixosConfig = { modulePath, username, hostname, system, isWork, isWayland, isGui, readOnlyPkgs ? true, homeManagerCfg ? ./home.nix }: (
-        let
-          inputs = s.${system}.inputs;
-          pkgs = s.${system}.pkgs;
-          lib = inputs.nixpkgs.lib;
-        in
-        inputs.nixpkgs.lib.nixosSystem rec {
-          specialArgs = { inherit username hostname isWork isWayland isGui inputs; modulesPath = "${inputs.nixpkgs}/nixos/modules"; };
-          modules = [
-            {
-              nixpkgs = {
-                inherit pkgs;
-              };
-            }
-
-            ./modules/mymod.nix
-
-            modulePath
-
-            # setup home-manager
-            inputs.home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                # include the home-manager module
-                users.${username} = import homeManagerCfg;
-                extraSpecialArgs = rec {
-                  inherit username isWork isWayland pkgs inputs isGui;
-                  inherit (pkgs) alacritty;
+                # https://github.com/nix-community/home-manager/issues/4026
+                users.users.${username}.home = pkgs.lib.mkForce "/Users/${username}";
+              }
+            ];
+          }
+        );
+      nixosConfig =
+        {
+          modulePath,
+          username,
+          hostname,
+          system,
+          isWork,
+          isWayland,
+          isGui,
+          readOnlyPkgs ? true,
+          homeManagerCfg ? ./home.nix,
+        }:
+        (
+          let
+            inputs = s.${system}.inputs;
+            pkgs = s.${system}.pkgs;
+            lib = inputs.nixpkgs.lib;
+          in
+          inputs.nixpkgs.lib.nixosSystem rec {
+            specialArgs = {
+              inherit
+                username
+                hostname
+                isWork
+                isWayland
+                isGui
+                inputs
+                ;
+              modulesPath = "${inputs.nixpkgs}/nixos/modules";
+            };
+            modules = [
+              {
+                nixpkgs = {
+                  inherit pkgs;
                 };
-              };
-            }
-          ] ++ lib.optionals readOnlyPkgs [
-            inputs.nixpkgs.nixosModules.readOnlyPkgs
-          ] ++ lib.optionals isWork [
-            inputs.kolide-launcher.nixosModules.kolide-launcher
-          ];
-        }
-      );
-      nixosAsahiConfig = { modulePath, username, hostname, isWork, homeManagerCfg ? ./home.nix }: (
-        nixosConfig { inherit modulePath username hostname isWork homeManagerCfg; system = "aarch64-linux"; isWayland = true; isGui = true; readOnlyPkgs = false; }
-      );
-      homeManagerConfig = { username, hostname, system, isWork, isWayland ? false }: (
-        let
-          inputs = s.${system}.inputs;
-          pkgs = s.${system}.pkgs;
-        in
-        inputs.home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [
-            # ({ modulesPath, ... }: {
-            #   # Important! We disable home-manager's module to avoid option
-            #   # definition collisions
-            #   disabledModules = [ "${modulesPath}/programs/anyrun.nix" ];
-            # })
-            # inputs.anyrun.homeManagerModules.default
-            ./home.nix
-          ];
-          extraSpecialArgs = {
-            inherit username isWayland isWork inputs hostname;
-            inherit (s.${system}) alacritty;
-          };
-        }
-      );
+              }
+
+              ./modules/mymod.nix
+
+              modulePath
+
+              # setup home-manager
+              inputs.home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  # include the home-manager module
+                  users.${username} = import homeManagerCfg;
+                  extraSpecialArgs = rec {
+                    inherit
+                      username
+                      isWork
+                      isWayland
+                      pkgs
+                      inputs
+                      isGui
+                      ;
+                    inherit (pkgs) alacritty;
+                  };
+                };
+              }
+            ]
+            ++ lib.optionals readOnlyPkgs [
+              inputs.nixpkgs.nixosModules.readOnlyPkgs
+            ]
+            ++ lib.optionals isWork [
+              inputs.kolide-launcher.nixosModules.kolide-launcher
+            ];
+          }
+        );
+      nixosAsahiConfig =
+        {
+          modulePath,
+          username,
+          hostname,
+          isWork,
+          homeManagerCfg ? ./home.nix,
+        }:
+        (nixosConfig {
+          inherit
+            modulePath
+            username
+            hostname
+            isWork
+            homeManagerCfg
+            ;
+          system = "aarch64-linux";
+          isWayland = true;
+          isGui = true;
+          readOnlyPkgs = false;
+        });
+      homeManagerConfig =
+        {
+          username,
+          hostname,
+          system,
+          isWork,
+          isWayland ? false,
+        }:
+        (
+          let
+            inputs = s.${system}.inputs;
+            pkgs = s.${system}.pkgs;
+          in
+          inputs.home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            modules = [
+              # ({ modulesPath, ... }: {
+              #   # Important! We disable home-manager's module to avoid option
+              #   # definition collisions
+              #   disabledModules = [ "${modulesPath}/programs/anyrun.nix" ];
+              # })
+              # inputs.anyrun.homeManagerModules.default
+              ./home.nix
+            ];
+            extraSpecialArgs = {
+              inherit
+                username
+                isWayland
+                isWork
+                inputs
+                hostname
+                ;
+              inherit (s.${system}) alacritty;
+            };
+          }
+        );
     in
     {
       nixosConfigurations."wsl" = nixosConfig {
@@ -335,14 +422,13 @@
         isWayland = false;
         hostname = "ryan-laptop";
       };
-      homeConfigurations."ryan@ryan-asahi" = homeManagerConfig
-        {
-          username = "ryan";
-          system = "aarch64-linux";
-          isWork = false;
-          isWayland = true;
-          hostname = "ryan-asahi";
-        };
+      homeConfigurations."ryan@ryan-asahi" = homeManagerConfig {
+        username = "ryan";
+        system = "aarch64-linux";
+        isWork = false;
+        isWayland = true;
+        hostname = "ryan-asahi";
+      };
       homeConfigurations."ryan.butler@ryan-worldcoin" = homeManagerConfig {
         username = "ryan.butler";
         system = "aarch64-darwin";
@@ -364,19 +450,35 @@
         isWayland = true;
         hostname = "ryan-wld-darter";
       };
-    } //
-    # This helper function is used to more easily abstract
-    # over the host platform.
-    # See https://github.com/numtide/flake-utils#eachdefaultsystem--system---attrs
-    inputs-raw.flake-utils.lib.eachDefaultSystem
-      (system:
+    }
+    //
+      # This helper function is used to more easily abstract
+      # over the host platform.
+      # See https://github.com/numtide/flake-utils#eachdefaultsystem--system---attrs
+      inputs-raw.flake-utils.lib.eachDefaultSystem (
+        system:
         let
-          inherit (s.${system}) inputs pkgs alacritty wezterm tsh17 darwin-rebuild;
-          mkApp = ({ pkg, bin ? null }:
+          inherit (s.${system})
+            inputs
+            pkgs
+            alacritty
+            wezterm
+            tsh17
+            darwin-rebuild
+            ;
+          mkApp = (
+            {
+              pkg,
+              bin ? null,
+            }:
             let
               b = if bin == null then pkg.name else bin;
             in
-            { program = "${pkg}/bin/${b}"; type = "app"; });
+            {
+              program = "${pkg}/bin/${b}";
+              type = "app";
+            }
+          );
         in
         # See https://nixos.wiki/wiki/Flakes#Output_schema
         {
@@ -388,17 +490,32 @@
             format = "linode";
           };
 
-          apps."alacritty" = mkApp { pkg = alacritty; bin = "alacritty"; };
-          apps."darwin-rebuild" = mkApp { pkg = darwin-rebuild; bin = "darwin-rebuild"; };
-          apps."home-manager" = mkApp { pkg = pkgs.home-manager; bin = "home-manager"; };
-          apps."tsh17" = mkApp { pkg = tsh17; bin = "tsh"; };
-          apps."wezterm" = mkApp { pkg = wezterm; bin = "wezterm"; };
+          apps."alacritty" = mkApp {
+            pkg = alacritty;
+            bin = "alacritty";
+          };
+          apps."darwin-rebuild" = mkApp {
+            pkg = darwin-rebuild;
+            bin = "darwin-rebuild";
+          };
+          apps."home-manager" = mkApp {
+            pkg = pkgs.home-manager;
+            bin = "home-manager";
+          };
+          apps."tsh17" = mkApp {
+            pkg = tsh17;
+            bin = "tsh";
+          };
+          apps."wezterm" = mkApp {
+            pkg = wezterm;
+            bin = "wezterm";
+          };
           packages.tsh17 = tsh17;
 
           devShells.comfyui = inputs.comfyui-nix-devshell.devShells.${system}.cuda-beta;
 
           # This formats the nix files, not the rest of the repo.
-          formatter = pkgs.nixpkgs-fmt;
+          formatter = pkgs.nixfmt-tree;
         }
       );
 }

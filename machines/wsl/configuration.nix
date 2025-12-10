@@ -5,7 +5,15 @@
 # NixOS-WSL specific options are documented on the NixOS-WSL repository:
 # https://github.com/nix-community/NixOS-WSL
 
-{ username, hostname, config, inputs, lib, pkgs, ... }:
+{
+  username,
+  hostname,
+  config,
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 {
   imports = [
     # include NixOS-WSL modules
@@ -18,7 +26,10 @@
     useWindowsDriver = true;
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   environment.systemPackages = with pkgs; [
     neovim

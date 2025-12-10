@@ -1,5 +1,16 @@
 # Linux-only configuration
-{ pkgs, lib, inputs, username, hostname, isWayland, isGui, isWork ? true, alacritty ? pkgs.alacritty, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  username,
+  hostname,
+  isWayland,
+  isGui,
+  isWork ? true,
+  alacritty ? pkgs.alacritty,
+  ...
+}:
 lib.mkIf pkgs.stdenv.isLinux {
   xdg.configFile = {
     "niri/config.kdl" = {
@@ -10,7 +21,8 @@ lib.mkIf pkgs.stdenv.isLinux {
     "swaylock/config".source = ./xdg/swaylock.config;
   };
 
-  xdg.configFile."openxr/1/active_runtime.json".source = "${pkgs.monado}/share/openxr/1/openxr_monado.json";
+  xdg.configFile."openxr/1/active_runtime.json".source =
+    "${pkgs.monado}/share/openxr/1/openxr_monado.json";
   xdg.configFile."openvr/openvrpaths.vrpath".text = ''
     {
       "config" :
@@ -38,10 +50,18 @@ lib.mkIf pkgs.stdenv.isLinux {
         "${pkgs.anyrun}/lib/libapplications.so"
       ];
 
-      x = { fraction = 0.5; };
-      y = { fraction = 0.3; };
-      width = { fraction = 0.25; };
-      height = { absolute = 1; };
+      x = {
+        fraction = 0.5;
+      };
+      y = {
+        fraction = 0.3;
+      };
+      width = {
+        fraction = 0.25;
+      };
+      height = {
+        absolute = 1;
+      };
       hideIcons = false;
       hidePluginInfo = true;
       # closeOnClick = true;

@@ -1,36 +1,50 @@
-{ config, pkgs, lib, inputs, hostname, username, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  hostname,
+  username,
+  ...
+}:
 let
   ethernetAdapter = "enp6s0";
   inherit (inputs) self;
   my1p = pkgs.unstable._1password-gui.overrideAttrs (old: {
     # see https://www.1password.community/discussions/1password/1password-window-blank-on-gnome-47-wayland--fedora-41/153548/replies/153967
     # Also, this patches things to actually use ozone
-    preFixup = old.preFixup + ''\
-      makeShellWrapper $out/share/1password/1password $out/bin/1password \
-      "''${gappsWrapperArgs[@]}" \
-      --suffix PATH : ${lib.makeBinPath [ pkgs.xdg-utils ]} \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.udev ]} \
-      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
-      --add-flags "--js-flags=--nodecommit_pooled_pages"
+    preFixup = old.preFixup + ''
+      \
+            makeShellWrapper $out/share/1password/1password $out/bin/1password \
+            "''${gappsWrapperArgs[@]}" \
+            --suffix PATH : ${lib.makeBinPath [ pkgs.xdg-utils ]} \
+            --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.udev ]} \
+            --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
+            --add-flags "--js-flags=--nodecommit_pooled_pages"
     '';
   });
   linuxPackages = (pkgs.unstable.linuxPackagesFor pkgs.linuxPackages.kernel);
   secureBoot = true;
 in
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.xremap-flake.nixosModules.default
-      inputs.niri-flake.nixosModules.niri
-      inputs.disko.nixosModules.disko
-      ./disko.nix
-      inputs.lanzaboote.nixosModules.lanzaboote
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    inputs.xremap-flake.nixosModules.default
+    inputs.niri-flake.nixosModules.niri
+    inputs.disko.nixosModules.disko
+    ./disko.nix
+    inputs.lanzaboote.nixosModules.lanzaboote
+  ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "root" "${username}" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+  nix.settings.trusted-users = [
+    "root"
+    "${username}"
+  ];
 
   # https://github.com/nix-community/lanzaboote/blob/747b7912f49e2885090c83364d88cf853a020ac1/docs/QUICK_START.md
   # NOTE: Lanzaboote currently replaces the systemd-boot module.
@@ -47,10 +61,12 @@ in
   # we want the latest nvidia drivers, which will come with the latest kernel.
   boot.kernelPackages = linuxPackages;
 
-  swapDevices = [{
-    device = "/var/lib/swapfile";
-    size = 48 * 1024; # plus 16 from partition.
-  }];
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 48 * 1024; # plus 16 from partition.
+    }
+  ];
 
   networking.hostName = hostname; # Define your hostname.
   # Pick only one of the below networking options.
@@ -223,8 +239,6 @@ in
   };
   # redundant, here for clarity. This should be false when using sound servers
   hardware.alsa.enable = false;
-
-
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;

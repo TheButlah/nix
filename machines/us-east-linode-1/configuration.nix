@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   username = "ryan";
   hostname = "us-east-linode-1";
@@ -49,7 +54,15 @@ in
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     # Needed for https://github.com/NixOS/nixpkgs/issues/58959
-    supportedFilesystems = lib.mkForce [ "btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs" ];
+    supportedFilesystems = lib.mkForce [
+      "btrfs"
+      "reiserfs"
+      "vfat"
+      "f2fs"
+      "xfs"
+      "ntfs"
+      "cifs"
+    ];
   };
 
   system.stateVersion = "24.05";

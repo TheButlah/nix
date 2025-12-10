@@ -1,5 +1,12 @@
 # nix-darwin config
-{ pkgs, lib, inputs, hostname, username, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  hostname,
+  username,
+  ...
+}:
 let
   inherit (inputs) self;
 in
@@ -10,7 +17,10 @@ in
     channel.enable = false;
     # nixPath = lib.mkForce [ "nixpkgs=flake:nixpkgs" ];
     settings = {
-      "experimental-features" = [ "nix-command" "flakes" ];
+      "experimental-features" = [
+        "nix-command"
+        "flakes"
+      ];
       "max-jobs" = "auto";
       trusted-users = [
         "root"

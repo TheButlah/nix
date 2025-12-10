@@ -1,31 +1,44 @@
-{ pkgs, lib, inputs, hostname, username, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  hostname,
+  username,
+  ...
+}:
 let
   inherit (inputs) self;
   my1p = pkgs.unstable._1password-gui.overrideAttrs (old: {
     # see https://www.1password.community/discussions/1password/1password-window-blank-on-gnome-47-wayland--fedora-41/153548/replies/153967
     # Also, this patches things to actually use ozone
-    preFixup = old.preFixup + ''\
-      makeShellWrapper $out/share/1password/1password $out/bin/1password \
-      "''${gappsWrapperArgs[@]}" \
-      --suffix PATH : ${lib.makeBinPath [ pkgs.xdg-utils ]} \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.udev ]} \
-      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
-      --add-flags "--js-flags=--nodecommit_pooled_pages"
+    preFixup = old.preFixup + ''
+      \
+            makeShellWrapper $out/share/1password/1password $out/bin/1password \
+            "''${gappsWrapperArgs[@]}" \
+            --suffix PATH : ${lib.makeBinPath [ pkgs.xdg-utils ]} \
+            --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.udev ]} \
+            --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --enable-wayland-ime=true}}" \
+            --add-flags "--js-flags=--nodecommit_pooled_pages"
     '';
   });
 in
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
-      inputs.xremap-flake.nixosModules.default
-      inputs.niri-flake.nixosModules.niri
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
+    inputs.xremap-flake.nixosModules.default
+    inputs.niri-flake.nixosModules.niri
+  ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "root" "${username}" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+  nix.settings.trusted-users = [
+    "root"
+    "${username}"
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader = {
@@ -175,7 +188,6 @@ in
   # redundant, here for clarity. This should be false when using sound servers
   hardware.alsa.enable = false;
 
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
@@ -215,6 +227,7 @@ in
       # cli needs this
       polkitPolicyOwners = [ "${username}" ];
     };
+    nix-ld.enable = true;
   };
 
   # List packages installed in system profile. To search, run:

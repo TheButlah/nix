@@ -1,5 +1,12 @@
-{ pkgs, isWork, isWayland, isGui, ... }:
-with pkgs; [
+{
+  pkgs,
+  isWork,
+  isWayland,
+  isGui,
+  ...
+}:
+with pkgs;
+[
   # bootstrap
   bash # Macos has an old bash
   cachix # Service that provides nix caches
@@ -74,20 +81,28 @@ with pkgs; [
   unstable.openai-whisper
   unstable.whisper-cpp
   unstable.ramalama
-] ++ lib.optionals (!isWork) [
+]
+++ lib.optionals (!isWork) [
   syncthing
   # discord
-] ++ lib.optionals (isWork) [
-] ++ lib.optionals (pkgs.stdenv.isDarwin) [
-] ++ lib.optionals (pkgs.stdenv.isLinux) [
+]
+++ lib.optionals (isWork) [
+]
+++ lib.optionals (pkgs.stdenv.isDarwin) [
+]
+++ lib.optionals (pkgs.stdenv.isLinux) [
   (if isWayland then wl-clipboard else xclip)
   nixgl.auto.nixGLDefault
-] ++ lib.optionals (pkgs.stdenv.isLinux && isWork) [
+]
+++ lib.optionals (pkgs.stdenv.isLinux && isWork) [
   cloudflare-warp
-] ++ lib.optionals (pkgs.stdenv.isLinux && !isWork && isGui) [
+]
+++ lib.optionals (pkgs.stdenv.isLinux && !isWork && isGui) [
   legcord
   mixxx
-] ++ lib.optionals (isGui) [
+]
+++ lib.optionals (isGui) [
   wezterm # ~blazingly fast~ terminal in wgpu
   vscodium
-] ++ (import ./custom_scripts.nix { pkgs = pkgs; })
+]
+++ (import ./custom_scripts.nix { pkgs = pkgs; })
