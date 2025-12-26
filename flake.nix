@@ -67,7 +67,7 @@
     };
 
     nixos-apple-silicon = {
-      url = "github:nix-community/nixos-apple-silicon/release-2025-11-18";
+      url = "github:nix-community/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixos-25_11";
     };
 
@@ -170,8 +170,8 @@
             '';
         in
         # These are instantiated once per-system. So anything that should be per-system
-        # should go here, for later reuse.
-        # This is more efficient than instantiating it ad-hoc.
+          # should go here, for later reuse.
+          # This is more efficient than instantiating it ad-hoc.
         {
           inherit pkgs inputs;
           alacritty = if isLinux then (nixGLWrap pkgs.alacritty) else pkgs.alacritty;
@@ -188,11 +188,11 @@
         ;
 
       darwinConfig =
-        {
-          modulePath,
-          username,
-          isWork,
-          hostname,
+        { modulePath
+        , username
+        , isWork
+        , hostname
+        ,
         }:
         (
           let
@@ -232,16 +232,16 @@
           }
         );
       nixosConfig =
-        {
-          modulePath,
-          username,
-          hostname,
-          system,
-          isWork,
-          isWayland,
-          isGui,
-          readOnlyPkgs ? true,
-          homeManagerCfg ? ./home.nix,
+        { modulePath
+        , username
+        , hostname
+        , system
+        , isWork
+        , isWayland
+        , isGui
+        , readOnlyPkgs ? true
+        , homeManagerCfg ? ./home.nix
+        ,
         }:
         (
           let
@@ -303,12 +303,12 @@
           }
         );
       nixosAsahiConfig =
-        {
-          modulePath,
-          username,
-          hostname,
-          isWork,
-          homeManagerCfg ? ./home.nix,
+        { modulePath
+        , username
+        , hostname
+        , isWork
+        , homeManagerCfg ? ./home.nix
+        ,
         }:
         (nixosConfig {
           inherit
@@ -324,12 +324,12 @@
           readOnlyPkgs = false;
         });
       homeManagerConfig =
-        {
-          username,
-          hostname,
-          system,
-          isWork,
-          isWayland ? false,
+        { username
+        , hostname
+        , system
+        , isWork
+        , isWayland ? false
+        ,
         }:
         (
           let
@@ -452,70 +452,70 @@
       };
     }
     //
-      # This helper function is used to more easily abstract
-      # over the host platform.
-      # See https://github.com/numtide/flake-utils#eachdefaultsystem--system---attrs
-      inputs-raw.flake-utils.lib.eachDefaultSystem (
-        system:
-        let
-          inherit (s.${system})
-            inputs
-            pkgs
-            alacritty
-            wezterm
-            tsh17
-            darwin-rebuild
-            ;
-          mkApp = (
-            {
-              pkg,
-              bin ? null,
-            }:
-            let
-              b = if bin == null then pkg.name else bin;
-            in
-            {
-              program = "${pkg}/bin/${b}";
-              type = "app";
-            }
-          );
-        in
-        # See https://nixos.wiki/wiki/Flakes#Output_schema
-        {
-          packages.linode = inputs.nixos-generators.nixosGenerate {
-            system = "x86_64-linux";
-            modules = [
-              ./machines/us-east-linode-1/configuration.nix
-            ];
-            format = "linode";
-          };
+    # This helper function is used to more easily abstract
+    # over the host platform.
+    # See https://github.com/numtide/flake-utils#eachdefaultsystem--system---attrs
+    inputs-raw.flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        inherit (s.${system})
+          inputs
+          pkgs
+          alacritty
+          wezterm
+          tsh17
+          darwin-rebuild
+          ;
+        mkApp = (
+          { pkg
+          , bin ? null
+          ,
+          }:
+          let
+            b = if bin == null then pkg.name else bin;
+          in
+          {
+            program = "${pkg}/bin/${b}";
+            type = "app";
+          }
+        );
+      in
+      # See https://nixos.wiki/wiki/Flakes#Output_schema
+      {
+        packages.linode = inputs.nixos-generators.nixosGenerate {
+          system = "x86_64-linux";
+          modules = [
+            ./machines/us-east-linode-1/configuration.nix
+          ];
+          format = "linode";
+        };
 
-          apps."alacritty" = mkApp {
-            pkg = alacritty;
-            bin = "alacritty";
-          };
-          apps."darwin-rebuild" = mkApp {
-            pkg = darwin-rebuild;
-            bin = "darwin-rebuild";
-          };
-          apps."home-manager" = mkApp {
-            pkg = pkgs.home-manager;
-            bin = "home-manager";
-          };
-          apps."tsh17" = mkApp {
-            pkg = tsh17;
-            bin = "tsh";
-          };
-          apps."wezterm" = mkApp {
-            pkg = wezterm;
-            bin = "wezterm";
-          };
-          packages.tsh17 = tsh17;
+        apps."alacritty" = mkApp {
+          pkg = alacritty;
+          bin = "alacritty";
+        };
+        apps."darwin-rebuild" = mkApp {
+          pkg = darwin-rebuild;
+          bin = "darwin-rebuild";
+        };
+        apps."home-manager" = mkApp {
+          pkg = pkgs.home-manager;
+          bin = "home-manager";
+        };
+        apps."tsh17" = mkApp {
+          pkg = tsh17;
+          bin = "tsh";
+        };
+        apps."wezterm" = mkApp {
+          pkg = wezterm;
+          bin = "wezterm";
+        };
+        packages.tsh17 = tsh17;
 
-          devShells.comfyui = inputs.comfyui-nix-devshell.devShells.${system}.cuda-beta;
+        devShells.comfyui = inputs.comfyui-nix-devshell.devShells.${system}.cuda-beta;
 
-          # This formats the nix files, not the rest of the repo.
-          formatter = pkgs.nixfmt-tree;
-        }
-      );
+        # This formats the nix files, not the rest of the repo.
+        formatter = pkgs.nixfmt-tree;
+      }
+    );
 }
