@@ -131,8 +131,11 @@ in
 
   # We don't enable x11
   services.xserver.enable = false;
+  services.gnome.gnome-keyring.enable = true;
+  programs.seahorse.enable = true; # gnome keyring UI
   services.greetd = {
     enable = true;
+    useTextGreeter = true; # prevent error messages breaking tty
     settings = {
       initial_session = {
         command = "${pkgs.niri}/bin/niri-session";
@@ -241,6 +244,7 @@ in
     git
     inhibitor # disable built-in keeb and other input devices
     libnotify # notify-send
+    libsecret # needed for gnome-keyring
     mesa-demos
     neovim
     pavucontrol

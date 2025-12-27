@@ -1,11 +1,10 @@
-{
-  config,
-  pkgs,
-  lib,
-  inputs,
-  hostname,
-  username,
-  ...
+{ config
+, pkgs
+, lib
+, inputs
+, hostname
+, username
+, ...
 }:
 let
   ethernetAdapter = "enp6s0";
@@ -155,6 +154,7 @@ in
 
   # We don't enable x11
   services.xserver.enable = false;
+  programs.seahorse.enable = true; # gnome keyring UI
   services.displayManager = {
     # KDE login/display manager
     sddm = {
@@ -295,6 +295,7 @@ in
     git
     inhibitor # disable built-in keeb and other input devices
     libnotify # notify-send
+    libsecret # needed for gnome-keyring
     lighthouse-steamvr # control lighthouse power
     mesa-demos # glxinfo, etc
     neovim
