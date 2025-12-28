@@ -1,12 +1,13 @@
-{ pkgs
-, lib
-, username
-, hostname
-, isWork ? true
-, isWayland ? false
-, isGui ? false
-, alacritty ? pkgs.alacritty
-, ...
+{
+  pkgs,
+  lib,
+  username,
+  hostname,
+  isWork ? true,
+  isWayland ? false,
+  isGui ? false,
+  alacritty ? pkgs.alacritty,
+  ...
 }:
 let
   inherit (pkgs.stdenv) isDarwin;

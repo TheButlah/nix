@@ -1,8 +1,9 @@
-{ pkgs
-, isWork
-, isWayland
-, isGui
-, ...
+{
+  pkgs,
+  isWork,
+  isWayland,
+  isGui,
+  ...
 }:
 with pkgs;
 [

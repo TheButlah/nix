@@ -1,10 +1,11 @@
-{ pkgs
-, lib
-, inputs
-, hostname
-, username
-, isWork
-, ...
+{
+  pkgs,
+  lib,
+  inputs,
+  hostname,
+  username,
+  isWork,
+  ...
 }:
 let
   inherit (inputs) self;

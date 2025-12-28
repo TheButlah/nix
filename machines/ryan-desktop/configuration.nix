@@ -1,10 +1,11 @@
-{ config
-, pkgs
-, lib
-, inputs
-, hostname
-, username
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  hostname,
+  username,
+  ...
 }:
 let
   ethernetAdapter = "enp6s0";
