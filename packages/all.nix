@@ -1,9 +1,8 @@
-{
-  pkgs,
-  isWork,
-  isWayland,
-  isGui,
-  ...
+{ pkgs
+, isWork
+, isWayland
+, isGui
+, ...
 }:
 with pkgs;
 [
@@ -36,11 +35,12 @@ with pkgs;
   htop
   jq
   neofetch
+  neovim
   picocom
   ripgrep
   shellcheck
   tree
-  unstable.neovim
+  tree-sitter
   unstable.zellij
   watch
   zoxide
@@ -56,7 +56,7 @@ with pkgs;
   just
   libiconv # see https://stackoverflow.com/a/69732679
   ninja
-  nixpkgs-fmt # formats nix files
+  nixfmt # formats nix files
   probe-rs-tools
   python312
   rustup

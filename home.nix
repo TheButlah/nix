@@ -1,13 +1,12 @@
-{
-  pkgs,
-  lib,
-  username,
-  hostname,
-  isWork ? true,
-  isWayland ? false,
-  isGui ? false,
-  alacritty ? pkgs.alacritty,
-  ...
+{ pkgs
+, lib
+, username
+, hostname
+, isWork ? true
+, isWayland ? false
+, isGui ? false
+, alacritty ? pkgs.alacritty
+, ...
 }:
 let
   inherit (pkgs.stdenv) isDarwin;
@@ -185,8 +184,8 @@ in
       source = pkgs.fetchFromGitHub {
         owner = "thebutlah";
         repo = "init.lua";
-        rev = "61b8f2be557e2fe5ec21219c26136bf0d17c3c6f";
-        hash = "sha256-IVpxyPX2dCfkVlsuR0s9zMKc+dwP1fg3vTRd/tSc1vQ=";
+        rev = "07ff5578624ca34e7b193ac65fcfd4168deca9aa";
+        hash = "sha256-W8rlrWXIIeaWXyjwlyjk+78jCyR44FOvc8zI6NdQgpk=";
       };
     };
     "karabiner/karabiner.json" = {
