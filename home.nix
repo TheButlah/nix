@@ -81,7 +81,6 @@ in
 
       a64 = "echo aarch64-unknown-linux-gnu";
       x86 = "echo x86_64-unknown-linux-gnu";
-
     };
   };
 
@@ -185,8 +184,8 @@ in
       source = pkgs.fetchFromGitHub {
         owner = "thebutlah";
         repo = "init.lua";
-        rev = "07ff5578624ca34e7b193ac65fcfd4168deca9aa";
-        hash = "sha256-W8rlrWXIIeaWXyjwlyjk+78jCyR44FOvc8zI6NdQgpk=";
+        rev = "ed2ea25388905636bb4ca575fa5b6e4215a9d5fa";
+        hash = "sha256-Klv7MYPCUKFCX8D7kqLGKsPX5MPTpIOZmqxqihpJs28=";
       };
     };
     "karabiner/karabiner.json" = {
