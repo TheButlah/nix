@@ -233,8 +233,7 @@ in
         user = "admin";
       };
       "hil" = defaults true // {
-        hostname = "ryan-worldcoin-hil.servers.thebutlah.com";
-        port = 222;
+        hostname = "ryan-worldcoin-hil.tail189ef.ts.net";
         user = "worldcoin";
       };
       "i-* mi-*" = defaults true // {
