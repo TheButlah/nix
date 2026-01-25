@@ -302,6 +302,7 @@ in
     # defaultRuntime = true; # Register as default OpenXR runtime
   };
   systemd.user.services.monado.environment = {
+    IPC_EXIT_ON_DISCONNECT = "1"; # stop monado when all xr apps close
     # STEAMVR_LH_ENABLE = "1";
     XRT_COMPOSITOR_COMPUTE = "1";
   };

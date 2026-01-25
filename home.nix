@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   lib,
   username,
   hostname,
@@ -199,6 +200,32 @@ in
     };
     "atuin/config.toml" = {
       source = ./xdg/atuin.toml;
+    };
+    "openvr/openvrpaths.vrpath".text =
+      let
+        steam = "${config.xdg.dataHome}/Steam";
+      in
+      builtins.toJSON {
+        version = 1;
+        jsonid = "vrpathreg";
+
+        external_drivers = null;
+        config = [ "${steam}/config" ];
+
+        log = [ "${steam}/logs" ];
+
+        runtime = [
+          "${pkgs.xrizer}/lib/xrizer"
+          # OR
+          #"${pkgs.opencomposite}/lib/opencomposite"
+        ];
+      };
+  };
+
+  home.file = {
+    "vr.sh" = {
+      executable = true;
+      source = ./scripts/vr.sh;
     };
   };
 

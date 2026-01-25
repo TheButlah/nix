@@ -321,12 +321,22 @@ in
         pkgs.gamescope
       ];
     })
+    xrizer
   ];
 
   # USB stuff
   services.udev = {
     enable = true;
     extraRules = ''
+      # Bigscreen Beyond
+      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35bd", ATTRS{idProduct}=="0101", MODE="0660", GROUP="users"
+      # Bigscreen Bigeye
+      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35bd", ATTRS{idProduct}=="0202", MODE="0660", GROUP="users"
+      # Bigscreen Beyond Audio Strap
+      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35bd", ATTRS{idProduct}=="0105", MODE="0660", GROUP="users"
+      # Bigscreen Beyond Firmware Mode?
+      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35bd", ATTRS{idProduct}=="4004", MODE="0660", GROUP="users"
+
       SUBSYSTEM=="usb", MODE="0660", GROUP="plugdev"
       # SYMLINK also creates a .device with the path of the symlink, i.e. `dev-corne.device`
       ACTION=="add", KERNEL=="event*", SUBSYSTEM=="input", ATTRS{id/vendor}=="1d50", ATTRS{id/product}=="615e", ATTRS{name}=="Corne Keyboard", SYMLINK+="corne", TAG+="systemd", ENV{SYSTEMD_WANTS}="wireless-keyboard.target"
@@ -361,6 +371,7 @@ in
     defaultRuntime = true; # Register as default OpenXR runtime
   };
   systemd.user.services.monado.environment = {
+    IPC_EXIT_ON_DISCONNECT = "1"; # stop monado when all xr apps close
     STEAMVR_LH_ENABLE = "1"; # Requires running room setup in steamvr at least once
     XRT_COMPOSITOR_COMPUTE = "1"; # 1 causes it to crash when using simulated HMDs but anecdotally seems better for performance
     XRT_COMPOSITOR_FORCE_WAYLAND_DIRECT = "1"; # Fixes wayland
@@ -392,6 +403,14 @@ in
     extraCompatPackages = with pkgs; [
       # proton-ge-bin
     ];
+    package = pkgs.steam.override {
+      extraProfile = ''
+        # Fixes timezones on VRChat
+        unset TZ
+        # Allows Monado to be used
+        export PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1
+      '';
+    };
   };
   programs.gamescope = {
     enable = true;
