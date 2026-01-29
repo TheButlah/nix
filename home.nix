@@ -89,7 +89,7 @@ in
   programs.git = {
     enable = true;
     userName = "Ryan Butler";
-    userEmail = "thebutlah@gmail.com";
+    userEmail = "thebutlah" + "@" + "gmail.com";
     lfs.enable = true;
     extraConfig = {
       init = {
