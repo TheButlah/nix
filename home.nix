@@ -92,6 +92,9 @@ in
     userEmail = "thebutlah@gmail.com";
     lfs.enable = true;
     extraConfig = {
+      init = {
+        defaultBranch = "main";
+      };
       rebase = {
         updateRefs = true;
       };
