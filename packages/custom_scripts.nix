@@ -7,4 +7,5 @@ in
 [
   (fromStr "tsh17" "${pkgs.teleport_17}/bin/tsh")
   (fromFile "tid" ../scripts/tid.sh)
+  (fromFile "gnome-color" ../scripts/gnome-color.sh)
 ]

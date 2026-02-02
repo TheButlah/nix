@@ -12,6 +12,7 @@
 		"modules-center": ["niri/window"],
 		"modules-right": [
 			"mpris",
+			"custom/darkmode",
 			"idle_inhibitor",
 			"load",
 			"wireplumber",
@@ -70,6 +71,15 @@
 			},
 			"dynamic-order": ["title", "artist"],
 			"ignored-players": ["firefox"],
+		},
+		"custom/darkmode": {
+		  "format": "{text}",
+		  "return-type": "json",
+		  "exec": "gnome-color status",
+		  "on-click": "gnome-color toggle",
+		  "interval": "once",
+		  "signal": 9,
+		  "tooltip": true
 		},
 		"idle_inhibitor": {
 			"format": "{icon}",
