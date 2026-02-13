@@ -1,0 +1,7 @@
+[[ssh-keys]]
+item = "Rv SSH Key"
+vault = "Rv"
+
+[[ssh-keys]]
+item = "SSH Key"
+vault = "Terminal Secrets"

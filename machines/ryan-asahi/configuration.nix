@@ -106,6 +106,7 @@ in
   # programs.ssh.startAgent = true;
   services.mullvad-vpn.enable = true;
   services.tailscale.enable = true;
+  services.zerotierone.enable = true;
 
   # Set your time zone.
   time.timeZone = null; # imperatively set with timedatectl

@@ -103,7 +103,7 @@ in
   programs.gh = {
     enable = true;
     gitCredentialHelper = {
-      enable = true;
+      enable = false;
     };
   };
 
@@ -184,6 +184,9 @@ in
 
   xdg.enable = true;
   xdg.configFile = {
+    "1Password/ssh/agent.toml" = {
+      source = ./xdg/1pass-ssh.toml;
+    };
     "nvim" = {
       source = pkgs.fetchFromGitHub {
         owner = "thebutlah";
@@ -243,8 +246,19 @@ in
         forwardX11 = true;
         forwardX11Trusted = isTrusted;
       };
+      defaultSsh = pkgs.writeText "default.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJIkanzFkEBan4Qa2bw/2IjEsJaxKo8XbbxwxOBIECEX ryan@1password";
     in
     {
+      "*" = {
+        identityAgent = "~/.1password/agent.sock";
+        identityFile = "${defaultSsh}";
+        identitiesOnly = true;
+      };
+      "rvn" = defaults true // {
+        hostname = "192.168.196.188";
+        user = "ryan";
+        identityFile = null;
+      };
       "hug" = defaults true // {
         hostname = "huggable.us";
         user = "ryan";
