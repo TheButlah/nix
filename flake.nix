@@ -330,6 +330,7 @@
           system,
           isWork,
           isWayland ? false,
+          isGui ? false,
         }:
         (
           let
@@ -352,6 +353,7 @@
                 username
                 isWayland
                 isWork
+                isGui
                 inputs
                 hostname
                 ;
@@ -403,6 +405,14 @@
         modulePath = ./machines/ryan-laptop/configuration.nix;
         hostname = "Ryan-Butler";
       };
+      homeConfigurations."ryan@x86" = homeManagerConfig {
+        username = "ryan";
+        system = "x86_64-linux";
+        isWork = false;
+        isWayland = false;
+        isGui = false;
+        hostname = "x86";
+      };
       homeConfigurations."vscode" = homeManagerConfig {
         username = "vscode";
         system = "aarch64-linux";
@@ -421,6 +431,13 @@
         isWork = false;
         isWayland = false;
         hostname = "ryan-laptop";
+      };
+      homeConfigurations."ryan@x86" = homeManagerConfig {
+        username = "ryan";
+        system = "x86_64-linux";
+        isWork = false;
+        isWayland = false;
+        hostname = "ryan-asahi";
       };
       homeConfigurations."ryan@ryan-asahi" = homeManagerConfig {
         username = "ryan";
