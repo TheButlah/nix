@@ -3,6 +3,7 @@
 history_filter = [
   "CACHIX_AUTH_TOKEN=",
   "GITHUB_TOKEN=",
+  "LINODE_TOKEN=",
   "MEMFAULT_AUTH_TOKEN=",
   "MY_SECRET=",
   "OPENAI_API_KEY=",

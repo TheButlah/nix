@@ -5,3 +5,7 @@ vault = "Rv"
 [[ssh-keys]]
 item = "SSH Key"
 vault = "Terminal Secrets"
+
+[[ssh-keys]]
+item = "Linode SSH"
+vault = "Personal Infra"
