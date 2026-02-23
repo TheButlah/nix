@@ -1,2 +1,7 @@
 /result
 .venv/
+
+# terraform
+.terraform/
+terraform.tfstate*
+terraform.tfvars
