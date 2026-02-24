@@ -10,6 +10,7 @@
   disko.devices = {
     disk = {
       main = {
+        imageSize = "6G";
         device = "/dev/disk/by-label/linode-root";
         type = "disk";
         content = {

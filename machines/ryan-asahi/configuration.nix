@@ -135,6 +135,7 @@ in
   # We don't enable x11
   services.xserver.enable = false;
   services.gnome.gnome-keyring.enable = true;
+  services.gnome.gcr-ssh-agent.enable = false;
   programs.seahorse.enable = true; # gnome keyring UI
   services.greetd = {
     enable = true;
