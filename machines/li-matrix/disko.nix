@@ -11,7 +11,7 @@
     disk = {
       main = {
         imageSize = "6G";
-        device = "/dev/disk/by-label/linode-root";
+        device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi-disk-0";
         type = "disk";
         content = {
           type = "gpt";
@@ -21,7 +21,7 @@
               type = "EF02"; # for grub MBR
             };
             ESP = {
-              size = "1G";
+              size = "256M";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -31,7 +31,10 @@
               };
             };
             root = {
-              size = "100%";
+              name = "root";
+              size = "4G";
+              # linux x84-64 rootfs partition
+              type = "8304";
               content = {
                 type = "filesystem";
                 format = "ext4";

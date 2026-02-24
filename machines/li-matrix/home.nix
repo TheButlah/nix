@@ -13,13 +13,13 @@ in
 {
 
   imports = [
-    ../../home-common.nix
+    # ../../home-common.nix
   ];
 
-  thebutlah.terminal = {
-    enable = true;
-    nvim = true;
-  };
+  # thebutlah.terminal = {
+  #   enable = true;
+  #   nvim = true;
+  # };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "24.11";
