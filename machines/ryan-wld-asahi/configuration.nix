@@ -251,6 +251,7 @@ in
     pkgs.xwayland-satellite-stable
     qpwgraph # control pipewire nodes using a GUI
     ripgrep
+    sshfs
     swaylock-effects
     swww
     usbutils # lsusb

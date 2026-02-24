@@ -2,6 +2,7 @@
   pkgs,
   lib,
   inputs,
+  config,
   hostname,
   username,
   isWork,
@@ -330,6 +331,12 @@ in
       # pkgs.obs-studio-plugins.wlrobs
     ];
   };
+
+  # emulation
+  boot.binfmt.emulatedSystems = [
+    "x86_64-linux"
+  ];
+  nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
 
   virtualisation = {
     containers.enable = true;

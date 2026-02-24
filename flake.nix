@@ -193,6 +193,7 @@
           username,
           isWork,
           hostname,
+          homeManagerCfg,
         }:
         (
           let
@@ -212,7 +213,7 @@
                   useGlobalPkgs = true;
                   useUserPackages = true;
                   # include the home-manager module
-                  users.${username} = import ./home.nix;
+                  users.${username} = import homeManagerCfg;
                   extraSpecialArgs = rec {
                     inherit
                       isWork
@@ -241,7 +242,7 @@
           isWayland,
           isGui,
           readOnlyPkgs ? true,
-          homeManagerCfg ? ./home.nix,
+          homeManagerCfg,
         }:
         (
           let
@@ -308,7 +309,7 @@
           username,
           hostname,
           isWork,
-          homeManagerCfg ? ./home.nix,
+          homeManagerCfg,
         }:
         (nixosConfig {
           inherit
@@ -331,6 +332,7 @@
           isWork,
           isWayland ? false,
           isGui ? false,
+          homeManagerCfg,
         }:
         (
           let
@@ -346,7 +348,7 @@
               #   disabledModules = [ "${modulesPath}/programs/anyrun.nix" ];
               # })
               # inputs.anyrun.homeManagerModules.default
-              ./home.nix
+              homeManagerCfg
             ];
             extraSpecialArgs = {
               inherit
@@ -379,6 +381,7 @@
         isGui = true;
         isWayland = true;
         modulePath = ./machines/ryan-desktop/configuration.nix;
+        homeManagerCfg = ./machines/ryan-desktop/home.nix;
         hostname = "ryan-desktop";
       };
       nixosConfigurations."ryan-asahi" = nixosAsahiConfig {
@@ -386,24 +389,38 @@
         isWork = false;
         modulePath = ./machines/ryan-asahi/configuration.nix;
         hostname = "ryan-asahi";
+        homeManagerCfg = ./machines/ryan-asahi/home.nix;
       };
       nixosConfigurations."ryan-wld-asahi" = nixosAsahiConfig {
         username = "ryan.butler";
         isWork = true;
         modulePath = ./machines/ryan-wld-asahi/configuration.nix;
         hostname = "ryan-wld-asahi";
+        homeManagerCfg = ./machines/ryan-wld-asahi/home.nix;
+      };
+      nixosConfigurations."li-matrix" = nixosConfig {
+        username = "foobar";
+        system = "x86_64-linux";
+        isWork = false;
+        isGui = false;
+        isWayland = false;
+        modulePath = ./machines/li-matrix/configuration.nix;
+        hostname = "li-matrix";
+        homeManagerCfg = ./machines/li-matrix/home.nix;
       };
       darwinConfigurations."ryan-laptop" = darwinConfig {
         username = "ryan";
         isWork = false;
         modulePath = ./machines/ryan-laptop/configuration.nix;
         hostname = "ryan-laptop";
+        homeManagerCfg = ./machines/ryan-asahi/home.nix;
       };
       darwinConfigurations."Ryan-Butler" = darwinConfig {
         username = "ryan.butler";
         isWork = true;
         modulePath = ./machines/ryan-laptop/configuration.nix;
         hostname = "Ryan-Butler";
+        homeManagerCfg = ./machines/ryan-wld-asahi/home.nix;
       };
       homeConfigurations."ryan@x86" = homeManagerConfig {
         username = "ryan";
