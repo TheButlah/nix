@@ -275,7 +275,7 @@ in
         user = "ryan";
       };
       "li-matrix" = defaults true // {
-        hostname = "45.79.189.106";
+        hostname = "matrix.thebutlah.com";
         user = "root";
         identityFile = "${linodeSsh}";
       };
