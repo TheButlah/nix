@@ -260,7 +260,7 @@ in
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJIkanzFkEBan4Qa2bw/2IjEsJaxKo8XbbxwxOBIECEX ryan@1password"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJiaW7FenssDdRhSkMmLmt7VxPzPRJEsbQ1g9flfKkI JuiceSSH"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICEM3k4MAQ2Qwf+Gt61K6pAWjTgYIC3xXtPb1J0trdeF droid@debian"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEMmhj9poBzww1HUvzjmbWA87f6zxTCXZE4IfG4/aw/g droid@debian"
     ];
     packages = with pkgs; [
       legcord
