@@ -14,15 +14,27 @@ let
 
   inherit (pkgs.stdenv) isDarwin;
   inherit (pkgs.stdenv) isLinux;
-  homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    ;
 
-  inherit (lib) mkIf mkEnableOption mkDefault;
+  homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
+  mkDisableOption =
+    name:
+    mkOption {
+      type = lib.types.bool;
+      example = true;
+      default = true;
+      description = "Whether to enable ${name}.";
+    };
 in
 # See https://github.com/nix-community/home-manager/issues/414#issuecomment-427163925
 {
   options.thebutlah.${modname} = {
     enable = mkEnableOption "terminal ricing";
-    nvim = mkEnableOption "neovim";
+    nvim = mkDisableOption "neovim";
   };
 
   config = mkIf cfg.enable {
@@ -66,6 +78,7 @@ in
         ++ lib.optionals cfg.nvim [
           tree-sitter
           nixfmt
+          neovim
         ];
     };
 
@@ -80,15 +93,7 @@ in
         '')
         + ''
           set -o vi
-
-          eval "$(fnm env --use-on-cd --shell zsh)"
-
-          export BUN_INSTALL="$HOME/.bun"
-          export PATH="$BUN_INSTALL/bin:$PATH"
-
-          export PATH="$PATH:${homeDirectory}/.dotnet/tools"
         '';
-      envExtra = '''';
     };
 
     programs.starship = {

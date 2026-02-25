@@ -59,6 +59,16 @@ in
         identityFile = "${defaultSsh}";
         identitiesOnly = true;
       };
+      "rv-gh" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "${rvSsh}";
+      };
+      "gh" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "${defaultSsh}";
+      };
       "rvn" = defaults true // {
         hostname = "192.168.196.188";
         user = "ryan";

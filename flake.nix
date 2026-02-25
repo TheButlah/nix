@@ -223,7 +223,6 @@
                       hostname
                       ;
                     inherit (pkgs) alacritty;
-                    isGui = true;
                   };
                 };
                 # https://github.com/nix-community/home-manager/issues/4026
@@ -239,8 +238,6 @@
           hostname,
           system,
           isWork,
-          isWayland,
-          isGui,
           readOnlyPkgs ? true,
           homeManagerCfg,
         }:
@@ -256,8 +253,6 @@
                 username
                 hostname
                 isWork
-                isWayland
-                isGui
                 inputs
                 ;
               modulesPath = "${inputs.nixpkgs}/nixos/modules";
@@ -285,10 +280,8 @@
                     inherit
                       username
                       isWork
-                      isWayland
                       pkgs
                       inputs
-                      isGui
                       ;
                     inherit (pkgs) alacritty;
                   };
@@ -320,8 +313,6 @@
             homeManagerCfg
             ;
           system = "aarch64-linux";
-          isWayland = true;
-          isGui = true;
           readOnlyPkgs = false;
         });
       homeManagerConfig =
@@ -330,8 +321,6 @@
           hostname,
           system,
           isWork,
-          isWayland ? false,
-          isGui ? false,
           homeManagerCfg,
         }:
         (
@@ -353,9 +342,7 @@
             extraSpecialArgs = {
               inherit
                 username
-                isWayland
                 isWork
-                isGui
                 inputs
                 hostname
                 ;
@@ -369,8 +356,6 @@
         username = "ryan";
         system = "x86_64-linux";
         isWork = false;
-        isWayland = false;
-        isGui = false;
         modulePath = ./machines/wsl/configuration.nix;
         hostname = "wsl";
       };
@@ -378,8 +363,6 @@
         username = "ryan";
         system = "x86_64-linux";
         isWork = false;
-        isGui = true;
-        isWayland = true;
         modulePath = ./machines/ryan-desktop/configuration.nix;
         homeManagerCfg = ./machines/ryan-desktop/home.nix;
         hostname = "ryan-desktop";
@@ -402,8 +385,6 @@
         username = "foobar";
         system = "x86_64-linux";
         isWork = false;
-        isGui = false;
-        isWayland = false;
         modulePath = ./machines/li-matrix/configuration.nix;
         hostname = "li-matrix";
         homeManagerCfg = ./machines/li-matrix/home.nix;
@@ -426,9 +407,15 @@
         username = "ryan";
         system = "x86_64-linux";
         isWork = false;
-        isWayland = false;
-        isGui = false;
         hostname = "x86";
+        homeManagerCfg = ./machines/home-headless-developer.nix;
+      };
+      homeConfigurations."ryan@aarch64" = homeManagerConfig {
+        username = "ryan";
+        system = "aarch64-linux";
+        isWork = false;
+        hostname = "aarch64";
+        homeManagerCfg = ./machines/home-headless-developer.nix;
       };
       homeConfigurations."vscode" = homeManagerConfig {
         username = "vscode";
@@ -446,35 +433,30 @@
         username = "ryan";
         system = "aarch64-darwin";
         isWork = false;
-        isWayland = false;
         hostname = "ryan-laptop";
       };
       homeConfigurations."ryan@ryan-asahi" = homeManagerConfig {
         username = "ryan";
         system = "aarch64-linux";
         isWork = false;
-        isWayland = true;
         hostname = "ryan-asahi";
       };
       homeConfigurations."ryan.butler@ryan-worldcoin" = homeManagerConfig {
         username = "ryan.butler";
         system = "aarch64-darwin";
         isWork = true;
-        isWayland = false;
         hostname = "ryan-worldcoin";
       };
       homeConfigurations."ryan@ryan-worldcoin-asahi" = homeManagerConfig {
         username = "ryan";
         system = "aarch64-linux";
         isWork = true;
-        isWayland = true;
         hostname = "ryan-worldcoin-asahi";
       };
       homeConfigurations."ryan.butler@ryan-wld-darter" = homeManagerConfig {
         username = "ryan.butler";
         system = "x86_64-linux";
         isWork = true;
-        isWayland = true;
         hostname = "ryan-wld-darter";
       };
     }
