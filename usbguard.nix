@@ -19,6 +19,8 @@
     allow id 18d1:4ee7 serial "59120DLCQ005A6" name "Pixel 10 Pro XL" hash "EWaGWgjqbyIHtGwqAFfWw44MOmjFAWK00eRExteS/OQ=" with-interface ff:42:01 with-connect-type "not used" # adb
     allow id 0403:6001 name "FT232R USB UART" with-interface ff:ff:ff with-connect-type "unknown"
     allow id 0955:7e19 name "APX" with-interface ff:ff:ff with-connect-type "unknown" # Jetson
+    allow id 0525:a4a2 serial "" name "RNDIS/Ethernet Gadget" hash "VtfbWFxVs6nMUHJ2hSFVw9A2aqtbUZ4i97rFBoFDG38=" with-interface equals { 02:02:ff 0a:00:00 02:06:00 0a:00:00 0a:00:00 } with-connect-type "unknown" # NXP
+    allow id 0403:6010 serial "" name "Dual RS232" hash "tn0uCA4k10/s1Byx8ctfTF7bYUnza4P81ry5wbcmiyY=" with-interface equals { ff:ff:ff ff:ff:ff } with-connect-type "unknown"
 
 
     # Block everything else

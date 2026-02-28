@@ -65,6 +65,29 @@ in
     enable = true;
     wifi.backend = "iwd";
     settings.wifi.country = "US";
+    dns = "systemd-resolved";
+    ensureProfiles.profiles = {
+      "NXP Ethernet" = {
+        connection = {
+          autoconnect = true;
+          id = "NXP Ethernet";
+          interface-name = "nxpeth0"; # TODO: set name from udev
+          type = "ethernet";
+        };
+        ethernet = { };
+        ipv4 = {
+          method = "shared";
+          # Pin the host-side address/subnet instead of letting NM auto-pick 10.42.x.0/24
+          address1 = "10.42.0.1/24";
+          shared-dhcp-range = "10.42.0.2,10.42.0.2"; # Device IP
+          shared-dhcp-lease-time = "2147483647"; # 2^31
+        };
+        ipv6 = {
+          method = "link-local"; # Keep IPv6 link-local alive on the USB link
+        };
+        proxy = { };
+      };
+    };
   };
   networking.wireless.iwd = {
     enable = true;
@@ -97,6 +120,13 @@ in
     5353 # mDNS
     22000 # syncthing
   ];
+  networking.firewall.trustedInterfaces = [
+    "nxpeth0"
+  ];
+  # networking.firewall.interfaces."nxpeth0".allowedUDPPorts = [
+  #   53 # DNS for downstream client
+  #   67 # DHCP server on host
+  # ];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -273,6 +303,9 @@ in
       SUBSYSTEM=="usb", MODE="0660", GROUP="plugdev"
       # SYMLINK also creates a .device with the path of the symlink, i.e. `dev-corne.device`
       ACTION=="add", KERNEL=="event*", SUBSYSTEM=="input", ATTRS{id/vendor}=="1d50", ATTRS{id/product}=="615e", ATTRS{name}=="Corne Keyboard", SYMLINK+="corne", TAG+="systemd", ENV{SYSTEMD_WANTS}="wireless-keyboard.target"
+
+      # IMX usb ethernet
+      ACTION=="add", SUBSYSTEM=="net", SUBSYSTEMS=="usb", ATTRS{idVendor}=="0525", ATTRS{idProduct}=="a4a2", NAME="nxpeth%n"
     '';
   };
   services.usbguard = import ../../usbguard.nix;
