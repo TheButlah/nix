@@ -12,11 +12,6 @@
     ../../home-common.nix
   ];
 
-  home.packages = with pkgs; [
-    nixgl.auto.nixGLNvidia
-    nixgl.auto.nixVulkanNvidia
-  ];
-
   programs.git.settings.user = {
     name = "Ryan Butler";
     email = "thebutlah" + "@" + "gmail.com";
