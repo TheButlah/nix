@@ -23,9 +23,6 @@ in
   home.packages = [
     (fromStr "tsh17" "${pkgs.teleport_17}/bin/tsh")
     (fromFile "tid" ../../scripts/tid.sh)
-
-    nixgl.nixGLIntel
-    nixgl.nixVulkanIntel
   ];
 
   programs.git.settings.user = {
