@@ -13,6 +13,7 @@
     allow id 1050:0402 serial "" name "YubiKey FIDO" hash "ZZ2J/ZgNx0xMmsjwUrSVnZ4BdrM/RSDsfjrYRCmvoME=" with-interface 03:00:00
     allow id 0909:001c serial "" name "AT2020USB+" hash "/Rj52epXXbngHHurEDmdeKQOn/F9aYSO4ChFo/Snpgo=" with-interface { 01:01:00 01:02:00 01:02:00 01:02:00 01:02:00 03:00:00 }
     allow id 1935:102b serial "000000000001" name "Elektron Digitakt II" hash "qhmC0G+vsuzFsGWypvwiQ99fqIXgYejjChjBO6hcx3I=" with-interface { 01:01:20 01:02:20 01:02:20 01:02:20 01:02:20 01:01:00 01:03:00 }
+    allow id 1935:1034 serial "000000000001" name "Elektron Digitone II" hash "8yAKxPDjwh0CeTCnFUtjFU6r6FfxVZ8q0Jwk7OQelZk=" with-interface { 01:01:20 01:02:20 01:02:20 01:02:20 01:02:20 01:01:00 01:03:00 }
     allow id 0bda:4c07 serial "" name "TX-384Khz Hifi Type-C Audio" hash "9yKCsVifCIoMIuAZNQhzX8KKJmghaIMGcDWXemiMzHQ=" with-interface { 01:01:20 01:02:20 01:02:20 01:02:20 01:02:20 03:00:00 } with-connect-type "not used"
     allow id 1d50:615e serial "7E9C97C092E11E0A" name "Corne" hash "F1i6fSRQyssfm7PAtDBNxR3tzdarO+2Gz0aEjz5/9Og=" with-interface 03:00:00
     allow id 18d1:4ee0 serial "59120DLCQ005A6" name "Pixel 10 Pro XL" hash "FmAp0eGmtgwF8/sGkm2vOLPA9KbmuqqjUuAZA3xauv0=" with-interface ff:42:03 with-connect-type "not used" # fastboot
