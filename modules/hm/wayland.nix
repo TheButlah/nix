@@ -31,6 +31,7 @@ in
     home.packages = with pkgs; [
       (fromFile "gnome-color" ../../scripts/gnome-color.sh)
       wl-clipboard
+      nautilus # For file picker
     ];
 
     xdg.configFile = {
