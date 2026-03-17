@@ -54,12 +54,13 @@ in
           gnumake
           ninja
           libiconv # see https://stackoverflow.com/a/69732679
-
-          python312
-
           just
 
+          git
+          unstable.worktrunk
           gh
+
+          python312
 
           picocom
           probe-rs-tools
