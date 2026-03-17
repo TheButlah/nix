@@ -84,8 +84,7 @@ in
           unstable.codex
           unstable.mods
           unstable.ollama
-          unstable.openai-whisper
-          unstable.ramalama
+          # unstable.ramalama
           unstable.whisper-cpp
         ]
         ++ lib.optionals cfg.rust [
