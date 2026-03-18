@@ -49,7 +49,7 @@ in
         forwardX11 = true;
         forwardX11Trusted = isTrusted;
       };
-      defaultSsh = pkgs.writeText "default.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJIkanzFkEBan4Qa2bw/2IjEsJaxKo8XbbxwxOBIECEX ryan@1password";
+      defaultSsh = ../../ssh-keys/wld-1password.pub;
     in
     {
       "*" = {

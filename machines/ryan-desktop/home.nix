@@ -40,8 +40,8 @@
         forwardX11 = true;
         forwardX11Trusted = isTrusted;
       };
-      defaultSsh = pkgs.writeText "default.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJIkanzFkEBan4Qa2bw/2IjEsJaxKo8XbbxwxOBIECEX ryan@1password";
-      linodeSsh = pkgs.writeText "linode.pub" "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAFs2eYQL0EOZUgACuXwEteHUtnm0k1KmOeb8WnTiYw8 root@1password";
+      defaultSsh = ../../ssh-keys/1password.pub;
+      linodeSsh = ../../ssh-keys/linode.pub;
     in
     {
       "*" = {

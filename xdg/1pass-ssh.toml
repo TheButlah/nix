@@ -9,3 +9,7 @@ vault = "Terminal Secrets"
 [[ssh-keys]]
 item = "Linode SSH"
 vault = "Personal Infra"
+
+[[ssh-keys]]
+item = "ryan.butler@wld-1password"
+vault = "Employee"

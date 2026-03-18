@@ -110,15 +110,17 @@ in
 
     # shell stuff
     programs.zsh = {
-      initContent =
-        (lib.optionalString cfg.js ''
-          eval "$(fnm env --use-on-cd --shell zsh)"
-          export BUN_INSTALL="$HOME/.bun"
-          export PATH="$BUN_INSTALL/bin:$PATH"
-        '')
-        + (lib.optionalString cfg.cs ''
-          export PATH="$PATH:${homeDirectory}/.dotnet/tools"
-        '');
+      initContent = ''
+        eval "$(wt config shell init zsh)"
+      ''
+      + (lib.optionalString cfg.js ''
+        eval "$(fnm env --use-on-cd --shell zsh)"
+        export BUN_INSTALL="$HOME/.bun"
+        export PATH="$BUN_INSTALL/bin:$PATH"
+      '')
+      + (lib.optionalString cfg.cs ''
+        export PATH="$PATH:${homeDirectory}/.dotnet/tools"
+      '');
     };
 
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
