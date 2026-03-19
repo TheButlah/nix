@@ -107,6 +107,11 @@ in
         source = ../../xdg/mods.yml;
       };
     };
+    xdg.configFile = {
+      "worktrunk/config.toml" = {
+        source = ../../xdg/worktrunk.toml;
+      };
+    };
 
     # shell stuff
     programs.zsh = {
