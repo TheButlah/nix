@@ -102,12 +102,10 @@ in
     };
 
     xdg.enable = true;
-    xdg.configFile = mkIf cfg.ai {
-      "mods/mods.yml" = {
+    xdg.configFile = {
+      "mods/mods.yml" = mkIf cfg.ai {
         source = ../../xdg/mods.yml;
       };
-    };
-    xdg.configFile = {
       "worktrunk/config.toml" = {
         source = ../../xdg/worktrunk.toml;
       };
