@@ -1,13 +1,12 @@
 # Common home.nix functionality. most stuff is broken into modules
-{
-  pkgs,
-  config,
-  lib,
-  username,
-  hostname,
-  isWork,
-  alacritty ? pkgs.alacritty,
-  ...
+{ pkgs
+, config
+, lib
+, username
+, hostname
+, isWork
+, alacritty ? pkgs.alacritty
+, ...
 }:
 let
   inherit (pkgs.stdenv) isDarwin;
@@ -86,9 +85,6 @@ in
       source = ./xdg/karabiner.json;
     };
   };
-
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
 
   programs.ssh.enable = true;
   programs.ssh.enableDefaultConfig = false;

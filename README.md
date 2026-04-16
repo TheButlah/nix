@@ -11,7 +11,7 @@ nix run ~/P/nix#home-manager -- switch --impure --flake ~/P/nix
 ```
 ### For nix-darwin
 ```
-nix run ~/P/nix#darwin-rebuild -- switch --flake ~/P/nix
+sudo nix run ~/P/nix#darwin-rebuild -- switch --flake ~/P/nix
 ```
 ### For NixOS
 ```

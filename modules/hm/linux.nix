@@ -1,8 +1,7 @@
 # Linux-only configuration
-{
-  pkgs,
-  lib,
-  ...
+{ pkgs
+, lib
+, ...
 }:
 let
   inherit (pkgs.stdenv) isDarwin;
@@ -15,6 +14,9 @@ in
 lib.mkIf pkgs.stdenv.isLinux {
   # Noise suppression etc
   services.easyeffects.enable = true;
+
+  # Nicely reload system units when changing configs
+  systemd.user.startServices = "sd-switch";
 
   home.packages = [
     (fromFile "rmbcm" ../../scripts/rmbcm.sh)

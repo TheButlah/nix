@@ -74,6 +74,8 @@ in
   };
   networking.hostName = "${hostname}";
 
+  users.users.${username}.home = "/Users/${username}";
+
   # TODO: For some reason these don't do anything on my work laptop
   system.defaults.NSGlobalDomain = {
     # Use fn keys as regular keys.
@@ -105,7 +107,7 @@ in
   '';
 
   homebrew = {
-    enable = true;
+    enable = false;
     brews = [ ];
     casks = [
       "karabiner-elements"

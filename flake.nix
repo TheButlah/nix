@@ -138,6 +138,7 @@
             ((import overlays/unstable.nix) { inherit inputs; })
             (import overlays/karabiner-14.nix)
             (import overlays/libdjinterop.nix)
+            (import overlays/direnv-no-check.nix)
             inputs.swww.overlays.default
             inputs.nixpkgs-xr.overlays.default
           ];
@@ -170,8 +171,8 @@
             '';
         in
         # These are instantiated once per-system. So anything that should be per-system
-        # should go here, for later reuse.
-        # This is more efficient than instantiating it ad-hoc.
+          # should go here, for later reuse.
+          # This is more efficient than instantiating it ad-hoc.
         {
           inherit pkgs inputs;
           alacritty = if isLinux then (nixGLWrap pkgs.alacritty) else pkgs.alacritty;
@@ -188,24 +189,29 @@
         ;
 
       darwinConfig =
-        {
-          modulePath,
-          username,
-          isWork,
-          hostname,
-          homeManagerCfg,
+        { modulePath
+        , username
+        , isWork
+        , hostname
+        , homeManagerCfg
+        , readOnlyPkgs ? true
+        ,
         }:
         (
           let
             system = "aarch64-darwin";
             inputs = s.${system}.inputs;
             pkgs = s.${system}.pkgs;
+            lib = inputs.nixpkgs.lib;
           in
           inputs.nix-darwin.lib.darwinSystem rec {
             inherit system;
-            specialArgs = { inherit hostname username inputs; };
+            specialArgs = {
+              inherit hostname username inputs;
+            };
             modules = [
               modulePath
+
               # setup home-manager
               inputs.home-manager.darwinModules.home-manager
               {
@@ -216,30 +222,30 @@
                   users.${username} = import homeManagerCfg;
                   extraSpecialArgs = rec {
                     inherit
-                      isWork
                       username
+                      isWork
                       pkgs
                       inputs
-                      hostname
                       ;
                     inherit (pkgs) alacritty;
                   };
                 };
-                # https://github.com/nix-community/home-manager/issues/4026
-                users.users.${username}.home = pkgs.lib.mkForce "/Users/${username}";
               }
+            ]
+            ++ lib.optionals isWork [
+              # inputs.kolide-launcher.nixosModules.kolide-launcher
             ];
           }
         );
       nixosConfig =
-        {
-          modulePath,
-          username,
-          hostname,
-          system,
-          isWork,
-          readOnlyPkgs ? true,
-          homeManagerCfg,
+        { modulePath
+        , username
+        , hostname
+        , system
+        , isWork
+        , readOnlyPkgs ? true
+        , homeManagerCfg
+        ,
         }:
         (
           let
@@ -297,12 +303,12 @@
           }
         );
       nixosAsahiConfig =
-        {
-          modulePath,
-          username,
-          hostname,
-          isWork,
-          homeManagerCfg,
+        { modulePath
+        , username
+        , hostname
+        , isWork
+        , homeManagerCfg
+        ,
         }:
         (nixosConfig {
           inherit
@@ -316,12 +322,12 @@
           readOnlyPkgs = false;
         });
       homeManagerConfig =
-        {
-          username,
-          hostname,
-          system,
-          isWork,
-          homeManagerCfg,
+        { username
+        , hostname
+        , system
+        , isWork
+        , homeManagerCfg
+        ,
         }:
         (
           let
@@ -394,7 +400,7 @@
         isWork = false;
         modulePath = ./machines/ryan-laptop/configuration.nix;
         hostname = "ryan-laptop";
-        homeManagerCfg = ./machines/ryan-asahi/home.nix;
+        homeManagerCfg = ./machines/ryan-laptop/home.nix;
       };
       darwinConfigurations."Ryan-Butler" = darwinConfig {
         username = "ryan.butler";
@@ -461,70 +467,70 @@
       };
     }
     //
-      # This helper function is used to more easily abstract
-      # over the host platform.
-      # See https://github.com/numtide/flake-utils#eachdefaultsystem--system---attrs
-      inputs-raw.flake-utils.lib.eachDefaultSystem (
-        system:
-        let
-          inherit (s.${system})
-            inputs
-            pkgs
-            alacritty
-            wezterm
-            tsh17
-            darwin-rebuild
-            ;
-          mkApp = (
-            {
-              pkg,
-              bin ? null,
-            }:
-            let
-              b = if bin == null then pkg.name else bin;
-            in
-            {
-              program = "${pkg}/bin/${b}";
-              type = "app";
-            }
-          );
-        in
-        # See https://nixos.wiki/wiki/Flakes#Output_schema
-        {
-          packages.linode = inputs.nixos-generators.nixosGenerate {
-            system = "x86_64-linux";
-            modules = [
-              ./machines/us-east-linode-1/configuration.nix
-            ];
-            format = "linode";
-          };
+    # This helper function is used to more easily abstract
+    # over the host platform.
+    # See https://github.com/numtide/flake-utils#eachdefaultsystem--system---attrs
+    inputs-raw.flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        inherit (s.${system})
+          inputs
+          pkgs
+          alacritty
+          wezterm
+          tsh17
+          darwin-rebuild
+          ;
+        mkApp = (
+          { pkg
+          , bin ? null
+          ,
+          }:
+          let
+            b = if bin == null then pkg.name else bin;
+          in
+          {
+            program = "${pkg}/bin/${b}";
+            type = "app";
+          }
+        );
+      in
+      # See https://nixos.wiki/wiki/Flakes#Output_schema
+      {
+        packages.linode = inputs.nixos-generators.nixosGenerate {
+          system = "x86_64-linux";
+          modules = [
+            ./machines/us-east-linode-1/configuration.nix
+          ];
+          format = "linode";
+        };
 
-          apps."alacritty" = mkApp {
-            pkg = alacritty;
-            bin = "alacritty";
-          };
-          apps."darwin-rebuild" = mkApp {
-            pkg = darwin-rebuild;
-            bin = "darwin-rebuild";
-          };
-          apps."home-manager" = mkApp {
-            pkg = pkgs.home-manager;
-            bin = "home-manager";
-          };
-          apps."tsh17" = mkApp {
-            pkg = tsh17;
-            bin = "tsh";
-          };
-          apps."wezterm" = mkApp {
-            pkg = wezterm;
-            bin = "wezterm";
-          };
-          packages.tsh17 = tsh17;
+        apps."alacritty" = mkApp {
+          pkg = alacritty;
+          bin = "alacritty";
+        };
+        apps."darwin-rebuild" = mkApp {
+          pkg = darwin-rebuild;
+          bin = "darwin-rebuild";
+        };
+        apps."home-manager" = mkApp {
+          pkg = pkgs.home-manager;
+          bin = "home-manager";
+        };
+        apps."tsh17" = mkApp {
+          pkg = tsh17;
+          bin = "tsh";
+        };
+        apps."wezterm" = mkApp {
+          pkg = wezterm;
+          bin = "wezterm";
+        };
+        packages.tsh17 = tsh17;
 
-          devShells.comfyui = inputs.comfyui-nix-devshell.devShells.${system}.cuda-beta;
+        devShells.comfyui = inputs.comfyui-nix-devshell.devShells.${system}.cuda-beta;
 
-          # This formats the nix files, not the rest of the repo.
-          formatter = pkgs.nixfmt-tree;
-        }
-      );
+        # This formats the nix files, not the rest of the repo.
+        formatter = pkgs.nixfmt-tree;
+      }
+    );
 }
