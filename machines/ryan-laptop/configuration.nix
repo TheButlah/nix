@@ -49,6 +49,7 @@ in
       #   };
       # };
     };
+    auto-optimise-store = true;
   };
   nixpkgs.flake = {
     setFlakeRegistry = false; # incompatible with determinate

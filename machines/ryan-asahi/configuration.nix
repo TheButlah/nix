@@ -33,14 +33,17 @@ in
     inputs.niri-flake.nixosModules.niri
   ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-  nix.settings.trusted-users = [
-    "root"
-    "${username}"
-  ];
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    trusted-users = [
+      "root"
+      "${username}"
+    ];
+    auto-optimise-store = true;
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader = {

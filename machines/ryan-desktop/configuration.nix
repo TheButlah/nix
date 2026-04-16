@@ -37,14 +37,17 @@ in
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-  nix.settings.trusted-users = [
-    "root"
-    "${username}"
-  ];
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    trusted-users = [
+      "root"
+      "${username}"
+    ];
+    auto-optimise-store = true;
+  };
 
   # https://github.com/nix-community/lanzaboote/blob/747b7912f49e2885090c83364d88cf853a020ac1/docs/QUICK_START.md
   # NOTE: Lanzaboote currently replaces the systemd-boot module.
