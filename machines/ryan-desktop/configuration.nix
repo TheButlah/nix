@@ -266,7 +266,6 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEMmhj9poBzww1HUvzjmbWA87f6zxTCXZE4IfG4/aw/g droid@debian"
     ];
     packages = with pkgs; [
-      legcord
       mpv # currently broken in: https://github.com/haasn/libplacebo/issues/333
     ];
   };

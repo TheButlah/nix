@@ -244,7 +244,6 @@ in
       ]
       ++ lib.optionals (!isWork) [
         blender
-        legcord
       ];
   };
   users.defaultUserShell = pkgs.zsh;
