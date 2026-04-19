@@ -347,7 +347,6 @@ in
   };
   services.wivrn = {
     enable = pkgs.stdenv.hostPlatform.isx86; # seems to be broken on asahi
-    defaultRuntime = true; # Register as default OpenXR runtime
     openFirewall = true;
     # Run WiVRn as a systemd service on startup
     autoStart = true;
