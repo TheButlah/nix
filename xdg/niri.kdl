@@ -327,6 +327,7 @@ window-rule {
     match app-id=r#"^org\.gnome\.World\.Secrets$"#
     match app-id=r#"^1[Pp]assword$"#
     match app-id=r#"^legcord$"#
+    match title=r#" - [Ll]egcord$"#
 
     block-out-from "screen-capture"
 
