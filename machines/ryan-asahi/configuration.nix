@@ -23,6 +23,14 @@ let
             --add-flags "--js-flags=--nodecommit_pooled_pages"
     '';
   });
+
+  pkgsX86 = import pkgs.path {
+    system = "x86_64-linux";
+    config = config.nixpkgs.config;
+  };
+  x86DynamicLinker = pkgsX86.stdenv.cc.bintools.dynamicLinker;
+  x86LdsoDir = pkgsX86.stdenv.hostPlatform.libDir;
+  x86LdsoName = builtins.baseNameOf x86DynamicLinker;
 in
 {
   imports = [
@@ -263,8 +271,17 @@ in
       # cli needs this
       polkitPolicyOwners = [ "${username}" ];
     };
-    nix-ld.enable = true;
   };
+
+  # Set up nix-ld as well as nix-ld for emulated x86.
+  programs.nix-ld.enable = true;
+  environment.sessionVariables = {
+    NIX_LD_x86_64_linux = x86DynamicLinker;
+  };
+  systemd.tmpfiles.rules = [
+    "d /${x86LdsoDir} 0755 root root - -"
+    "L+ /${x86LdsoDir}/${x86LdsoName} - - - - ${pkgsX86.nix-ld}/libexec/nix-ld"
+  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
