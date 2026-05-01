@@ -1,0 +1,31 @@
+{
+	"model": "opus[1m]",
+	"alwaysThinkingEnabled": true,
+	"enabledPlugins": {
+		"rust-analyzer-lsp@claude-plugins-official": true
+	},
+	"hooks": {
+		"Notification": [
+			{
+				"matcher": "permission_prompt",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "notify-send claude-code \"claude needs your permission\"",
+						"timeout": 5
+					}
+				]
+			},
+			{
+				"matcher": "idle_prompt",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "notify-send claude-code \"claude is idle\"",
+						"timeout": 5
+					}
+				]
+			}
+		]
+	}
+}

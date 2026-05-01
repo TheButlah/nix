@@ -101,6 +101,12 @@ in
         ];
     };
 
+    home.file = {
+      ".claude/settings.json" = mkIf cfg.ai {
+        source = ../../xdg/claude.json;
+      };
+    };
+
     xdg.enable = true;
     xdg.configFile = {
       "mods/mods.yml" = mkIf cfg.ai {
