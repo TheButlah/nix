@@ -2,15 +2,16 @@
 ## with ^ or end with $, they'll match anywhere in the command.
 history_filter = [
   "CACHIX_AUTH_TOKEN=",
+  "CLOUDFLARE_API_TOKEN=",
   "GITHUB_TOKEN=",
+  "HCLOUD_TOKEN=",
   "LINODE_TOKEN=",
   "MEMFAULT_AUTH_TOKEN=",
-  "CLOUDFLARE_API_TOKEN=",
   "MY_SECRET=",
   "OPENAI_API_KEY=",
   "ORB_MANAGER_INTERNAL_TOKEN=",
   "TOKEN=",
   "cachix authtoken",
-  "export AWS_(ACCESS_KEY_ID|SECRET_ACCESS_KEY|SESSION_TOKEN)=",
+  "AWS_(ACCESS_KEY_ID|SECRET_ACCESS_KEY|SESSION_TOKEN)=",
   "gt auth --token",
 ]
