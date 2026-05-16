@@ -74,6 +74,7 @@ in
           tree
           watch
           ripgrep
+          atuin
         ]
         ++ lib.optionals cfg.nvim [
           tree-sitter
