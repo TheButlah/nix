@@ -1,12 +1,13 @@
 # Common home.nix functionality. most stuff is broken into modules
-{ pkgs
-, config
-, lib
-, username
-, hostname
-, isWork
-, alacritty ? pkgs.alacritty
-, ...
+{
+  pkgs,
+  config,
+  lib,
+  username,
+  hostname,
+  isWork,
+  alacritty ? pkgs.alacritty,
+  ...
 }:
 let
   inherit (pkgs.stdenv) isDarwin;
@@ -65,6 +66,9 @@ in
 
   # shell stuff
   programs.zsh = {
+    enable = true;
+  };
+  programs.bash = {
     enable = true;
   };
 
