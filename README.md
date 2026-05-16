@@ -5,6 +5,22 @@ My nix configs that I use for development.
 The `--impure` is necessary due to the use of nixGL's auto detection. This should be
 fixed in the future by avoiding auto and directly specifying the host's drivers.
 
+### For standalone home-manager on a devcontainer:
+```
+mkdir -p ~/.config/nix/nix.conf && echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
+nix run ~/P/nix#home-manager -- init --switch
+```
+
+### For standalone home-manager on regular OS:
+```
+mkdir -p ~/.config/nix/nix.conf && echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install
+nix run ~/P/nix#home-manager -- init --switch
+```
+
+## Rebuilding
+
 ### For standalone home-manager:
 ```
 nix run ~/P/nix#home-manager -- switch --impure --flake ~/P/nix

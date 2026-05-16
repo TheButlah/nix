@@ -1,5 +1,5 @@
 {
-  enable = true;
+  enable = false;
   rules = ''
     # Generic classes
     allow with-interface equals { 09:00:* } # usb hubs

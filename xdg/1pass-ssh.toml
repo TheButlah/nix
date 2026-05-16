@@ -3,6 +3,10 @@ item = "Rv SSH Key"
 vault = "Rv"
 
 [[ssh-keys]]
+item = "Watney SSH Key"
+vault = "Watney"
+
+[[ssh-keys]]
 item = "SSH Key"
 vault = "Terminal Secrets"
 

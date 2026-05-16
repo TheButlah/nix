@@ -51,6 +51,7 @@ in
       };
       defaultSsh = ../../ssh-keys/1password.pub;
       rvSsh = ../../ssh-keys/rv.pub;
+      wrSsh = ../../ssh-keys/wr.pub;
       linodeSsh = ../../ssh-keys/linode.pub;
     in
     {
@@ -63,6 +64,11 @@ in
         hostname = "github.com";
         user = "git";
         identityFile = "${rvSsh}";
+      };
+      "wr-gh" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "${wrSsh}";
       };
       "gh" = {
         hostname = "github.com";
