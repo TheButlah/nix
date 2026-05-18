@@ -14,7 +14,7 @@ nix run ~/P/nix#home-manager -- init --switch
 
 ### For standalone home-manager on regular OS:
 ```
-mkdir -p ~/.config/nix/nix.conf && echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
+mkdir -p ~/.config/nix && echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
 curl -fsSL https://install.determinate.systems/nix | sh -s -- install
 nix run ~/P/nix#home-manager -- init --switch
 ```
