@@ -19,42 +19,20 @@ let
 
   op = rec {
     acct = {
-      tfh = "72J3ELVKX5BTPKT44JPHXUD6AM";
       me = "PJ5RFQLTJNBQDI3OMBJHR3LOZ4";
     };
-    openaiApiKey =
-      if cfg.isWork then
-        {
-          acct = acct.tfh;
-          url = "op://Engineering/Orb SW OpenAI API Key/credential";
-        }
-      else
-        {
-          acct = acct.me;
-          url = "op://Terminal Secrets/OpenAI API Key/credential";
-        };
-    anthropicApiKey =
-      if cfg.isWork then
-        {
-          acct = acct.tfh;
-          url = "op://Engineering/Orb SW Anthropic API Key/credential";
-        }
-      else
-        {
-          acct = acct.me;
-          url = "op://Terminal Secrets/Anthropic API Key/credential";
-        };
-    groqApiKey =
-      if cfg.isWork then
-        {
-          acct = acct.tfh;
-          url = "op://Employee/GROQ_API_KEY/credential";
-        }
-      else
-        {
-          acct = acct.me;
-          url = "op://Terminal Secrets/GROQ_API_KEY/credential";
-        };
+    openaiApiKey = {
+      acct = acct.me;
+      url = "op://Terminal Secrets/OpenAI API Key/credential";
+    };
+    anthropicApiKey = {
+      acct = acct.me;
+      url = "op://Terminal Secrets/Anthropic API Key/credential";
+    };
+    groqApiKey = {
+      acct = acct.me;
+      url = "op://Terminal Secrets/GROQ_API_KEY/credential";
+    };
   };
 in
 {
