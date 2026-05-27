@@ -75,7 +75,6 @@ in
   networking.networkmanager = {
     enable = true;
     wifi.backend = "iwd";
-    settings.wifi.country = "US";
     dns = "systemd-resolved";
     ensureProfiles.profiles = {
       "NXP Ethernet" = {
@@ -105,6 +104,7 @@ in
     settings = {
       General = {
         EnableNetworkConfiguration = true;
+        Country = "US";
       };
       IPv6 = {
         Enabled = true;
