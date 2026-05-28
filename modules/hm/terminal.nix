@@ -136,8 +136,8 @@ in
         source = pkgs.fetchFromGitHub {
           owner = "thebutlah";
           repo = "init.lua";
-          rev = "ed2ea25388905636bb4ca575fa5b6e4215a9d5fa";
-          hash = "sha256-Klv7MYPCUKFCX8D7kqLGKsPX5MPTpIOZmqxqihpJs28=";
+          rev = "3f5b470acd81a3931fa761fcd4e9f052aba67673";
+          hash = "sha256-T07cbqz4D+U9sSRe42njSu4OBRpMUUJ05gatwkJ9tco=";
         };
       };
       "zellij/config.kdl" = {
