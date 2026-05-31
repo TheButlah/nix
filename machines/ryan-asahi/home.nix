@@ -31,7 +31,8 @@ in
     developer.enable = true;
     monado = {
       enable = isLinux;
-      xrizer = true;
+      opencomposite = true;
+      # xrizer = true; # currently broken
     };
     music.enable = true;
     social.enable = true;
@@ -86,8 +87,9 @@ in
         port = 22;
       };
       "deck" = defaults true // {
-        hostname = "deck";
+        hostname = "192.168.0.12";
         user = "deck";
+        identityFile = "${defaultSsh}";
       };
       "desk" = defaults true // {
         hostname = "ryan-desktop.stalk-corn.ts.net";
