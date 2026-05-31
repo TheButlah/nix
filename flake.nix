@@ -402,13 +402,6 @@
         hostname = "ryan-laptop";
         homeManagerCfg = ./machines/ryan-laptop/home.nix;
       };
-      darwinConfigurations."Ryan-Butler" = darwinConfig {
-        username = "ryan.butler";
-        isWork = true;
-        modulePath = ./machines/ryan-laptop/configuration.nix;
-        hostname = "Ryan-Butler";
-        homeManagerCfg = ./machines/ryan-wld-asahi/home.nix;
-      };
       homeConfigurations."ryan@x86" = homeManagerConfig {
         username = "ryan";
         system = "x86_64-linux";
@@ -437,47 +430,12 @@
         hostname = "aarch64";
         homeManagerCfg = ./machines/home-headless-developer.nix;
       };
-      homeConfigurations."vscode" = homeManagerConfig {
-        username = "vscode";
-        system = "aarch64-linux";
-        isWork = true;
-        hostname = "vscode@vscode"; # TODO: is this right?
-      };
-      homeConfigurations."ryan@wsl" = homeManagerConfig {
-        username = "ryan";
+      homeConfigurations."deck@steamdeck" = homeManagerConfig {
+        username = "deck";
         system = "x86_64-linux";
         isWork = false;
-        hostname = "wsl";
-      };
-      homeConfigurations."ryan@ryan-laptop" = homeManagerConfig {
-        username = "ryan";
-        system = "aarch64-darwin";
-        isWork = false;
-        hostname = "ryan-laptop";
-      };
-      homeConfigurations."ryan@ryan-asahi" = homeManagerConfig {
-        username = "ryan";
-        system = "aarch64-linux";
-        isWork = false;
-        hostname = "ryan-asahi";
-      };
-      homeConfigurations."ryan.butler@ryan-worldcoin" = homeManagerConfig {
-        username = "ryan.butler";
-        system = "aarch64-darwin";
-        isWork = true;
-        hostname = "ryan-worldcoin";
-      };
-      homeConfigurations."ryan@ryan-worldcoin-asahi" = homeManagerConfig {
-        username = "ryan";
-        system = "aarch64-linux";
-        isWork = true;
-        hostname = "ryan-worldcoin-asahi";
-      };
-      homeConfigurations."ryan.butler@ryan-wld-darter" = homeManagerConfig {
-        username = "ryan.butler";
-        system = "x86_64-linux";
-        isWork = true;
-        hostname = "ryan-wld-darter";
+        hostname = "steamdeck";
+        homeManagerCfg = ./machines/steamdeck/home.nix;
       };
     }
     //
