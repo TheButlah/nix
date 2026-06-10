@@ -27,7 +27,7 @@ in
         forwardX11Trusted = isTrusted;
       };
       defaultSsh = ../ssh-keys/1password.pub;
-      rvSsh = ../ssh-keys/rv.pub;
+      rvSsh = ../ssh-keys/raven.pub;
       wrSsh = ../ssh-keys/wr.pub;
       linodeSsh = ../ssh-keys/linode.pub;
     in

@@ -412,6 +412,9 @@ in
   };
   services.flatpak.enable = true;
 
+  # For yubikey smart card
+  services.pcscd.enable = true;
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

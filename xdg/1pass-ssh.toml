@@ -1,6 +1,6 @@
 [[ssh-keys]]
-item = "Rv SSH Key"
-vault = "Rv"
+item = "Raven SSH Key"
+vault = "Raven"
 
 [[ssh-keys]]
 item = "Watney SSH Key"
@@ -13,7 +13,3 @@ vault = "Terminal Secrets"
 [[ssh-keys]]
 item = "Linode SSH"
 vault = "Personal Infra"
-
-[[ssh-keys]]
-item = "ryan.butler@wld-1password"
-vault = "Employee"
