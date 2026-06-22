@@ -31,6 +31,7 @@ let
   aarch64DynamicLinker = pkgsAarch64.stdenv.cc.bintools.dynamicLinker;
   aarch64LdsoDir = pkgsAarch64.stdenv.hostPlatform.libDir;
   aarch64LdsoName = builtins.baseNameOf aarch64DynamicLinker;
+  secureBoot = false;
 in
 {
   imports = [
@@ -38,6 +39,9 @@ in
     ./hardware-configuration.nix
     inputs.xremap-flake.nixosModules.default
     inputs.niri-flake.nixosModules.niri
+    inputs.disko.nixosModules.disko
+    ./disko.nix
+    inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
   swapDevices = [
@@ -304,6 +308,7 @@ in
     ripgrep
     swaylock-effects
     swww
+    sbctl # lanzaboote
     usbutils # lsusb
     v4l-utils # v4l2-ctl
     vim

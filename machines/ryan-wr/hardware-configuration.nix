@@ -23,8 +23,6 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.luks.devices."rootfs".device =
-    "/dev/disk/by-id/nvme-WD_BLACK_SN850X_4000GB_25166T803291";
   fileSystems."/" = {
     device = "/dev/mapper/rootfs";
     fsType = "ext4";
