@@ -63,14 +63,22 @@ in
     auto-optimise-store = true;
   };
 
-  # Use the systemd-boot EFI boot loader.
+  # https://github.com/nix-community/lanzaboote/blob/747b7912f49e2885090c83364d88cf853a020ac1/docs/QUICK_START.md
+  # NOTE: Lanzaboote currently replaces the systemd-boot module.
+  # This setting is usually set to true in configuration.nix
+  # generated at installation time. So we force it to false
+  # for now.
   boot.loader = {
     systemd-boot = {
-      enable = true; # true in asahi
+      enable = !secureBoot;
       editor = false;
     };
     timeout = 1;
-    efi.canTouchEfiVariables = false; # False in asahi
+    efi.canTouchEfiVariables = false;
+  };
+  boot.lanzaboote = {
+    enable = secureBoot;
+    pkiBundle = "/var/lib/sbctl";
   };
 
   networking.hostName = hostname; # Define your hostname.
