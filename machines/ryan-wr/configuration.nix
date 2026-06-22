@@ -40,6 +40,13 @@ in
     inputs.niri-flake.nixosModules.niri
   ];
 
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 64 * 1024;
+    }
+  ];
+
   nix.settings = {
     experimental-features = [
       "nix-command"

@@ -505,6 +505,8 @@
             pkg = wezterm;
             bin = "wezterm";
           };
+          packages."disko" = inputs.disko.packages.${system}.disko;
+          packages."disko-install" = inputs.disko.packages.${system}.disko-install;
           packages.tsh17 = tsh17;
 
           devShells.comfyui = inputs.comfyui-nix-devshell.devShells.${system}.cuda-beta;
