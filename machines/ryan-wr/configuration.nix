@@ -31,7 +31,7 @@ let
   aarch64DynamicLinker = pkgsAarch64.stdenv.cc.bintools.dynamicLinker;
   aarch64LdsoDir = pkgsAarch64.stdenv.hostPlatform.libDir;
   aarch64LdsoName = builtins.baseNameOf aarch64DynamicLinker;
-  secureBoot = false;
+  secureBoot = true;
 in
 {
   imports = [
@@ -194,10 +194,10 @@ in
     enable = true;
     useTextGreeter = true; # prevent error messages breaking tty
     settings = {
-      initial_session = {
-        command = "${pkgs.niri}/bin/niri-session";
-        user = username;
-      };
+      # initial_session = {
+      #   command = "${pkgs.niri}/bin/niri-session";
+      #   user = username;
+      # };
 
       # Fallback greeter
       default_session = {
