@@ -356,8 +356,8 @@ in
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = "yes";
-      ExecStart = "/usr/bin/env inhibitor disable --name \"Apple MTP keyboard\"";
-      ExecStop = "/usr/bin/env inhibitor enable --name \"Apple MTP keyboard\"";
+      ExecStart = "/usr/bin/env inhibitor disable --name 'Framework Laptop 16 Keyboard Module - ANSI Keyboard'";
+      ExecStop = "/usr/bin/env inhibitor enable --name 'Framework Laptop 16 Keyboard Module - ANSI Keyboard'";
     };
   };
 
