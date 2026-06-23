@@ -43,26 +43,26 @@ in
     wayland.enable = isLinux;
   };
 
-  programs.ssh.matchBlocks =
+  programs.ssh.settings =
     let
       defaultSsh = ../../ssh-keys/1password.pub;
       wrSsh = ../../ssh-keys/wr.pub;
     in
     {
       "*" = {
-        identityAgent = "~/.1password/agent.sock";
-        identityFile = "${defaultSsh}";
-        identitiesOnly = true;
+        IdentityAgent = "~/.1password/agent.sock";
+        IdentityFile = "${defaultSsh}";
+        IdentitiesOnly = true;
       };
       "wr-gh" = {
-        hostname = "github.com";
-        user = "git";
-        identityFile = "${wrSsh}";
+        HostName = "github.com";
+        User = "git";
+        IdentityFile = "${wrSsh}";
       };
       "gh" = {
-        hostname = "github.com";
-        user = "git";
-        identityFile = "${defaultSsh}";
+        Hostname = "github.com";
+        User = "git";
+        IdentityFile = "${defaultSsh}";
       };
     };
 

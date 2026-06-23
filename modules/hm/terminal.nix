@@ -93,6 +93,7 @@ in
         + ''
           set -o vi
         '';
+      dotDir = "${config.xdg.configHome}/zsh";
     };
 
     programs.starship = {
@@ -115,6 +116,7 @@ in
       enable = true;
       enableBashIntegration = true;
       enableZshIntegration = true;
+      shellWrapperName = "y";
     };
     programs.zellij = {
       enable = true;

@@ -129,7 +129,7 @@ in
   services.resolved = {
     enable = true;
     # set to "false" if giving you trouble
-    dnsovertls = "opportunistic";
+    settings.Resolve.DNSOverTLS = "opportunistic";
   };
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
@@ -201,7 +201,7 @@ in
 
       # Fallback greeter
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.niri}/bin/niri-session";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.niri}/bin/niri-session";
         user = username;
       };
     };
