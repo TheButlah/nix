@@ -144,6 +144,7 @@
           ];
           config = {
             allowUnfree = true;
+            hardware.enableRedistributableFirmware = true;
           };
           flake = abort "this should be specified in nixos modules, its inert here";
         }
