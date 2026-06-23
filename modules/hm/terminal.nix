@@ -69,7 +69,6 @@ in
           glow
           htop
           jq
-          neofetch
           shellcheck
           tree
           watch

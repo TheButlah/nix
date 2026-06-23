@@ -255,12 +255,12 @@ layout {
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
-spawn-at-startup "swww-daemon"
+spawn-at-startup "awww-daemon"
 
 // Put wallpaper layers inside the overview backdrop.
 layer-rule {
     match namespace="^wallpaper$"
-    match namespace="^swww-daemon$"
+    match namespace="^awww-daemon$"
 
     place-within-backdrop true
 }

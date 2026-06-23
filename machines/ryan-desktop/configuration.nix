@@ -310,7 +310,7 @@ in
     ripgrep
     sbctl # lanzaboote
     swaylock-effects
-    swww
+    awww
     usbutils # lsusb
     v4l-utils # v4l2-ctl
     vim

@@ -217,8 +217,6 @@ in
   # TODO: not working rn, I think I need to switch to niri-flake
   # programs.xwayland.enable = true;
 
-  programs.adb.enable = true;
-
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
@@ -315,7 +313,7 @@ in
     qpwgraph # control pipewire nodes using a GUI
     ripgrep
     swaylock-effects
-    swww
+    awww
     sbctl # lanzaboote
     usbutils # lsusb
     v4l-utils # v4l2-ctl

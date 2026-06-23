@@ -24,12 +24,15 @@ in
 {
   options.thebutlah.${modname} = {
     enable = mkEnableOption "music apps";
+    mixxx = mkEnableOption "mixxx";
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      mixxx
-    ];
+    home.packages =
+      with pkgs;
+      lib.optionals cfg.mixxx [
+        mixxx
+      ];
 
     # note: run `spotifyd authenticate` to login.
     services.spotifyd.enable = isLinux;

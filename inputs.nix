@@ -5,7 +5,7 @@ let
 in
 {
   self = inputs-raw.self;
-  nixpkgs = if isDarwin then inputs-raw.nixpkgs-25_11-darwin else inputs-raw.nixos-25_11;
+  nixpkgs = if isDarwin then inputs-raw.nixpkgs-26_05-darwin else inputs-raw.nixos-26_05;
   nixpkgs-unstable = if isDarwin then inputs-raw.nixpkgs-unstable else inputs-raw.nixos-unstable;
   nixgl = inputs-raw.nixgl;
   nix-darwin = inputs-raw.nix-darwin;
@@ -23,7 +23,7 @@ in
   anyrun = inputs-raw.anyrun;
   inhibitor = inputs-raw.inhibitor;
   niri-flake = inputs-raw.niri-flake;
-  swww = inputs-raw.swww;
+  awww = inputs-raw.awww;
   xremap-flake = inputs-raw.xremap-flake;
   kolide-launcher = inputs-raw.kolide-launcher;
   disko = inputs-raw.disko;
