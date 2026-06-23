@@ -168,8 +168,6 @@ in
   # TODO: not working rn, I think I need to switch to niri-flake
   # programs.xwayland.enable = true;
 
-  programs.adb.enable = true;
-
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 

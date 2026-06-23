@@ -221,8 +221,6 @@ in
     package = linuxPackages.nvidiaPackages.beta;
   };
 
-  programs.adb.enable = true;
-
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
