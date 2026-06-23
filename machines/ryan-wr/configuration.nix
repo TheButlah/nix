@@ -299,6 +299,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     alsa-utils # aplay, arecord, etc
+    awww
     brightnessctl # control screen brightness
     chromium
     curl
@@ -314,9 +315,9 @@ in
     pkgs.xwayland-satellite-stable
     qpwgraph # control pipewire nodes using a GUI
     ripgrep
-    swaylock-effects
-    awww
     sbctl # lanzaboote
+    slack
+    swaylock-effects
     usbutils # lsusb
     v4l-utils # v4l2-ctl
     vim
