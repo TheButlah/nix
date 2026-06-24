@@ -64,6 +64,7 @@ in
 
           picocom
           probe-rs-tools
+          devcontainer
         ]
         ++ lib.optionals cfg.go [
           go
