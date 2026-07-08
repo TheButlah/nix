@@ -1,7 +1,8 @@
 # Linux-only configuration
-{ pkgs
-, lib
-, ...
+{
+  pkgs,
+  lib,
+  ...
 }:
 let
   inherit (pkgs.stdenv) isDarwin;

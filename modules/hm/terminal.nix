@@ -60,6 +60,7 @@ in
 
           # CLI
           asciinema
+          atuin
           b3sum
           bat
           bottom
@@ -69,10 +70,10 @@ in
           glow
           htop
           jq
+          ripgrep
           shellcheck
           tree
           watch
-          ripgrep
         ]
         ++ lib.optionals cfg.nvim [
           tree-sitter
@@ -83,6 +84,7 @@ in
 
     # shell stuff
     programs.zsh = {
+      enable = true;
       autosuggestion.enable = true;
       enableCompletion = true;
       oh-my-zsh.enable = true;
@@ -93,7 +95,8 @@ in
         + ''
           set -o vi
         '';
-      dotDir = "${config.xdg.configHome}/zsh";
+      # dotDir = "${config.xdg.configHome}/zsh";
+      dotDir = config.home.homeDirectory;
     };
 
     programs.starship = {
@@ -110,7 +113,7 @@ in
       enable = true;
       enableBashIntegration = true;
       enableZshIntegration = true;
-      package = pkgs.unstable.atuin;
+      package = pkgs.atuin;
     };
     programs.yazi = {
       enable = true;
