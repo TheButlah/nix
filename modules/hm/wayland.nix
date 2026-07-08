@@ -20,6 +20,19 @@ let
 
   # see https://ertt.ca/nix/shell-scripts/
   fromFile = name: path: (pkgs.writeScriptBin name (builtins.readFile path));
+  lockscreen = pkgs.writeShellApplication {
+    name = "lockscreen";
+    runtimeInputs = with pkgs; [
+      hyprlock
+      procps
+    ];
+    text = ''
+      if pgrep -x hyprlock >/dev/null; then
+        exit 0
+      fi
+      exec hyprlock
+    '';
+  };
 in
 # See https://github.com/nix-community/home-manager/issues/414#issuecomment-427163925
 {
@@ -32,15 +45,16 @@ in
       (fromFile "gnome-color" ../../scripts/gnome-color.sh)
       wl-clipboard
       nautilus # For file picker
+      hyprlock
+      lockscreen
     ];
 
     xdg.configFile = {
-      "niri/config.kdl" = {
-        source = ../../xdg/niri.kdl;
-      };
-      "waybar/style.css".source = ../../xdg/waybar.style.css;
-      "waybar/config.jsonc".source = ../../xdg/waybar.config.jsonc;
+      "hypr/hyprlock.conf".source = ../../xdg/hyprlock.conf;
+      "niri/config.kdl".source = ../../xdg/niri.kdl;
       "swaylock/config".source = ../../xdg/swaylock.config;
+      "waybar/config.jsonc".source = ../../xdg/waybar.config.jsonc;
+      "waybar/style.css".source = ../../xdg/waybar.style.css;
     };
 
     programs.anyrun = {
@@ -79,11 +93,14 @@ in
     services.mako = {
       enable = true;
     };
+    programs.hyprlock = {
+      enable = true;
+    };
+    # security.pam.services.hyprlock = { };
     services.swayidle =
       # from https://wiki.nixos.org/wiki/Swayidle
       let
-        # Lock command
-        lock = "${pkgs.swaylock-effects}/bin/swaylock --daemonize";
+        lock = lib.getExe lockscreen;
         # TODO: modify "display" function based on your window manager
         # Sway
         # display = status: "swaymsg 'output * power ${status}'"; \
@@ -96,11 +113,11 @@ in
         enable = true;
         timeouts = [
           {
-            timeout = 60 * 2; # in seconds
+            timeout = 30; # in seconds
             command = "${pkgs.libnotify}/bin/notify-send 'Locking in 30 seconds' -t 30000";
           }
           {
-            timeout = 60 * 2 + 30;
+            timeout = 60;
             command = lock;
           }
           {
