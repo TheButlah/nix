@@ -56,9 +56,5 @@ in
         export GROQ_API_KEY="''${GROQ_API_KEY:-"$(op read --account "${op.groqApiKey.acct}" "${op.groqApiKey.url}")"}"
       '';
     };
-
-    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    home.stateVersion = "24.11";
   };
-
 }

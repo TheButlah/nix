@@ -19,6 +19,7 @@ let
     mkEnableOption
     mkOption
     ;
+  stripSlash = lib.removeSuffix "/";
 
   homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
   mkDisableOption =
@@ -84,7 +85,7 @@ in
 
     # shell stuff
     programs.zsh = {
-      enable = true;
+      # enable = true;
       autosuggestion.enable = true;
       enableCompletion = true;
       oh-my-zsh.enable = true;
@@ -95,8 +96,6 @@ in
         + ''
           set -o vi
         '';
-      # dotDir = "${config.xdg.configHome}/zsh";
-      dotDir = config.home.homeDirectory;
     };
 
     programs.starship = {
@@ -151,9 +150,5 @@ in
         source = ../../xdg/atuin.toml;
       };
     };
-
-    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    home.stateVersion = "24.11";
   };
-
 }

@@ -36,8 +36,5 @@ in
 
     # note: run `spotifyd authenticate` to login.
     services.spotifyd.enable = isLinux;
-
-    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    home.stateVersion = "24.11";
   };
 }

@@ -12,7 +12,8 @@
 let
   inherit (pkgs.stdenv) isDarwin;
   inherit (pkgs.stdenv) isLinux;
-  homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
+  stripSlash = lib.removeSuffix "/";
+  homeDirectory = stripSlash (if isDarwin then "/Users/${username}" else "/home/${username}");
 in
 {
 
@@ -94,5 +95,5 @@ in
   programs.ssh.enableDefaultConfig = false;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "24.11";
+  home.stateVersion = "26.05";
 }
