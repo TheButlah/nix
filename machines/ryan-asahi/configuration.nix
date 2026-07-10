@@ -64,6 +64,7 @@ in
   };
 
   hardware.asahi = {
+    enable = true;
     # Ensures reproducibility of firmware
     peripheralFirmwareDirectory = ./firmware; # vendored instead of /boot/asahi
     extractPeripheralFirmware = true; # redundant, this is the default
