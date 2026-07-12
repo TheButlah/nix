@@ -303,7 +303,7 @@ in
     neovim
     pavucontrol
     pkgs.xwayland-satellite-stable
-    protonplus # Manage steam proton versions
+    # protonplus # Manage steam proton versions
     qpwgraph # control pipewire nodes using a GUI
     ripgrep
     sbctl # lanzaboote
@@ -415,7 +415,7 @@ in
     localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
     gamescopeSession.enable = true;
     extraCompatPackages = with pkgs; [
-      # proton-ge-bin
+      proton-rtsp-bin # nixpkgs-xr has it
     ];
     package = pkgs.steam.override {
       extraProfile = ''
@@ -425,6 +425,7 @@ in
         export PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1
       '';
     };
+    fontPackages = with pkgs; [ source-han-sans ]; # fixes broken popups
   };
   programs.gamescope = {
     enable = true;
