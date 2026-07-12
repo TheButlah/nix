@@ -463,6 +463,7 @@ in
       enableOnBoot = true;
     };
   };
+  programs.nix-ld.enable = true;
 
   thebutlah.selfhosting.enable = true;
 
