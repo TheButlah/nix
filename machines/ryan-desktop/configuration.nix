@@ -314,7 +314,6 @@ in
     wezterm
     wget
 
-    wayvr
     (heroic.override {
       extraPkgs = pkgs: [
         pkgs.gamescope
@@ -368,9 +367,10 @@ in
   services.monado = {
     enable = true;
     defaultRuntime = true; # Register as default OpenXR runtime
+    highPriority = true;
   };
   systemd.user.services.monado.environment = {
-    IPC_EXIT_ON_DISCONNECT = "1"; # stop monado when all xr apps close
+    # IPC_EXIT_ON_DISCONNECT = "1"; # stop monado when all xr apps close
     STEAMVR_LH_ENABLE = "1"; # Requires running room setup in steamvr at least once
     XRT_COMPOSITOR_COMPUTE = "1"; # 1 causes it to crash when using simulated HMDs but anecdotally seems better for performance
     XRT_COMPOSITOR_FORCE_WAYLAND_DIRECT = "1"; # Fixes wayland
@@ -391,6 +391,19 @@ in
     openFirewall = true;
     # Run WiVRn as a systemd service on startup
     autoStart = false;
+  };
+  systemd.user.services.wayvr = {
+    description = "WayVR OpenXR overlay";
+
+    wantedBy = [ "monado.service" ];
+    requires = [ "monado.service" ];
+    after = [ "monado.service" ];
+
+    serviceConfig = {
+      ExecStart = "${pkgs.wayvr}/bin/wayvr";
+      Restart = "on-failure";
+      RestartSec = 2;
+    };
   };
 
   programs.steam = {

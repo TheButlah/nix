@@ -329,7 +329,7 @@ window-rule {
     match app-id=r#"^legcord$"#
     match title=r#" - [Ll]egcord$"#
 
-    block-out-from "screen-capture"
+    block-out-from "screencast"
 
     // Use this instead if you want them visible on third-party screenshot tools.
     // block-out-from "screencast"
@@ -339,7 +339,7 @@ window-rule {
 layer-rule {
     match namespace="^notifications$"
 
-    block-out-from "screen-capture"
+    block-out-from "screencast"
 }
 
 // Example: enable rounded corners for all windows.
