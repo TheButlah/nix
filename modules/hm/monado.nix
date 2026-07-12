@@ -15,6 +15,23 @@ let
   inherit (pkgs.stdenv) isLinux;
 
   inherit (lib) mkIf mkEnableOption mkDefault;
+
+  disableSteamVrPoweron = pkgs.writeShellApplication {
+    name = "disableSteamVrPoweron";
+    runtimeInputs = with pkgs; [ jq ];
+    text = ''
+      STEAMHOME="${config.home.homeDirectory}/.local/share/Steam"
+      VR_SETTINGS="$STEAMHOME/config/steamvr.vrsettings"
+      if [ -e $VR_SETTINGS ]; then
+        tmp="$(mktemp)"
+        echo "Found steamvr settings, mutating."
+        jq ".power.autoLaunchSteamVROnButtonPress = false" "$VR_SETTINGS" > "$tmp"
+        mv "$tmp" "$VR_SETTINGS"
+      else
+        echo "No steamvr settings found, continuing."
+      fi
+    '';
+  };
 in
 # See https://github.com/nix-community/home-manager/issues/414#issuecomment-427163925
 {
@@ -35,6 +52,15 @@ in
         message = "this module should only be used on linux";
       }
     ];
+
+    home.packages = [ disableSteamVrPoweron ];
+
+    home.activation = {
+      # https://wiki.vronlinux.org/docs/fossvr/monado/#disable-steamvr-automatically-starting-whenever-you-turn-on-your-controllers
+      disableSteamVrPoweron = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        run ${lib.getExe disableSteamVrPoweron}
+      '';
+    };
 
     home.file = {
       "vr.sh" = {
