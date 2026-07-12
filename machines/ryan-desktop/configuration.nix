@@ -130,7 +130,7 @@ in
     settings.PermitRootLogin = "no";
   };
   # programs.ssh.startAgent = true;
-  services.mullvad-vpn.enable = false;
+  services.mullvad-vpn.enable = true;
   services.tailscale.enable = true;
 
   # Set your time zone.
@@ -289,6 +289,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     alsa-utils # aplay, arecord, etc
+    awww
     brightnessctl # control screen brightness
     chromium
     curl
@@ -306,7 +307,6 @@ in
     qpwgraph # control pipewire nodes using a GUI
     ripgrep
     sbctl # lanzaboote
-    awww
     usbutils # lsusb
     v4l-utils # v4l2-ctl
     vim
@@ -314,6 +314,7 @@ in
     wezterm
     wget
 
+    wayvr
     (heroic.override {
       extraPkgs = pkgs: [
         pkgs.gamescope
@@ -396,6 +397,7 @@ in
     description = "WayVR OpenXR overlay";
 
     wantedBy = [ "monado.service" ];
+    partOf = [ "monado.service" ];
     requires = [ "monado.service" ];
     after = [ "monado.service" ];
 
