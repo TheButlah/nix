@@ -306,7 +306,6 @@ in
     qpwgraph # control pipewire nodes using a GUI
     ripgrep
     sbctl # lanzaboote
-    swaylock-effects
     awww
     usbutils # lsusb
     v4l-utils # v4l2-ctl

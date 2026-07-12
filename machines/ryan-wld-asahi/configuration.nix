@@ -253,7 +253,6 @@ in
     qpwgraph # control pipewire nodes using a GUI
     ripgrep
     sshfs
-    swaylock-effects
     awww
     usbutils # lsusb
     v4l-utils # v4l2-ctl

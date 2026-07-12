@@ -38,6 +38,7 @@ in
 {
   options.thebutlah.${modname} = {
     enable = mkEnableOption "wayland ricing";
+    suspend = mkEnableOption "suspending on inactivity";
   };
 
   config = mkIf cfg.enable {
@@ -125,10 +126,13 @@ in
             command = display "off";
             resumeCommand = display "on";
           }
+        ]
+        ++ lib.optionals cfg.suspend [
           {
             timeout = 60 * 20;
             command = "${pkgs.systemd}/bin/systemctl suspend";
           }
+
         ];
         events = {
           before-sleep = (display "off") + "; " + lock;

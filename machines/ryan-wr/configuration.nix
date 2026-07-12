@@ -317,7 +317,6 @@ in
     ripgrep
     sbctl # lanzaboote
     slack
-    swaylock-effects
     usbutils # lsusb
     v4l-utils # v4l2-ctl
     vim
