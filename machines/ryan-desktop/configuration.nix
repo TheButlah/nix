@@ -260,8 +260,7 @@ in
     ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJIkanzFkEBan4Qa2bw/2IjEsJaxKo8XbbxwxOBIECEX ryan@1password"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJiaW7FenssDdRhSkMmLmt7VxPzPRJEsbQ1g9flfKkI JuiceSSH"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEMmhj9poBzww1HUvzjmbWA87f6zxTCXZE4IfG4/aw/g droid@debian"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4iOhSHkWTJEOnzyZ+Ny79W47E6UWuHZdJQJUFLrWwL droid@debian"
     ];
     packages = with pkgs; [
       mpv # currently broken in: https://github.com/haasn/libplacebo/issues/333
@@ -316,7 +315,7 @@ in
     wezterm
     wget
 
-    wlx-overlay-s
+    wayvr
     (heroic.override {
       extraPkgs = pkgs: [
         pkgs.gamescope
