@@ -45,28 +45,34 @@ in
 
     xdg.enable = true;
     xdg.configFile = {
-      "openxr/1/active_runtime.json".source = "${pkgs.monado}/share/openxr/1/openxr_monado.json";
-
-      "openvr/openvrpaths.vrpath".text = mkIf (cfg.opencomposite || cfg.xrizer) (
+      "openxr/1/active_runtime.json" = {
+        source = "${pkgs.monado}/share/openxr/1/openxr_monado.json";
+        force = true;
+      };
+      "openvr/openvrpaths.vrpath" = mkIf (cfg.opencomposite || cfg.xrizer) (
         let
           steam = "${config.xdg.dataHome}/Steam";
+          contents = builtins.toJSON {
+            version = 1;
+            jsonid = "vrpathreg";
+
+            external_drivers = null;
+            config = [ "${steam}/config" ];
+
+            log = [ "${steam}/logs" ];
+
+            runtime =
+              lib.optionals cfg.xrizer [
+                "${pkgs.xrizer}/lib/xrizer"
+              ]
+              ++ lib.optionals cfg.opencomposite [
+                "${pkgs.opencomposite}/lib/opencomposite"
+              ];
+          };
         in
-        builtins.toJSON {
-          version = 1;
-          jsonid = "vrpathreg";
-
-          external_drivers = null;
-          config = [ "${steam}/config" ];
-
-          log = [ "${steam}/logs" ];
-
-          runtime =
-            lib.optionals cfg.xrizer [
-              "${pkgs.xrizer}/lib/xrizer"
-            ]
-            ++ lib.optionals cfg.opencomposite [
-              "${pkgs.opencomposite}/lib/opencomposite"
-            ];
+        {
+          text = contents;
+          force = true;
         }
       );
     };
