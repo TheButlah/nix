@@ -396,10 +396,10 @@ in
   systemd.user.services.wayvr = {
     description = "WayVR OpenXR overlay";
 
-    wantedBy = [ "monado.service" ];
-    partOf = [ "monado.service" ];
-    requires = [ "monado.service" ];
-    after = [ "monado.service" ];
+    wantedBy = [ "monado.service" ]; # start wayvr when monado does
+    partOf = [ "monado.service" ]; # restart and stop wayvr when monado does
+    requires = [ "monado.service" ]; # start monado when wayvr starts
+    after = [ "monado.service" ]; # ordering
 
     serviceConfig = {
       ExecStart = "${pkgs.wayvr}/bin/wayvr";
