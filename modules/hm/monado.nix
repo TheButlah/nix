@@ -20,7 +20,7 @@ let
     name = "disableSteamVrPoweron";
     runtimeInputs = with pkgs; [ jq ];
     text = ''
-      STEAMHOME="${config.home.homeDirectory}/.local/share/Steam"
+      STEAMHOME="${config.xdg.dataHome}/Steam"
       VR_SETTINGS="$STEAMHOME/config/steamvr.vrsettings"
       if [ -e $VR_SETTINGS ]; then
         tmp="$(mktemp)"

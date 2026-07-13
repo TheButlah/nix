@@ -60,6 +60,9 @@ in
     enable = secureBoot;
     pkiBundle = "/var/lib/sbctl";
   };
+  boot.kernelParams = [
+    "usbcore.autosuspend=-1" # https://www.kernel.org/doc/html/v4.16/driver-api/usb/power-management.html#changing-the-default-idle-delay-time
+  ];
 
   # we want the latest nvidia drivers, which will come with the latest kernel.
   boot.kernelPackages = linuxPackages;
