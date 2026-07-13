@@ -23,7 +23,8 @@ let
             --add-flags "--js-flags=--nodecommit_pooled_pages"
     '';
   });
-  linuxPackages = (pkgs.unstable.linuxPackagesFor pkgs.linuxPackages.kernel);
+  # linuxPackages = (pkgs.unstable.linuxPackagesFor pkgs.linuxPackages.kernel);
+  linuxPackages = pkgs.linuxPackages;
   secureBoot = true;
 in
 {
