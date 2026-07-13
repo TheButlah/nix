@@ -478,12 +478,15 @@
         in
         # See https://nixos.wiki/wiki/Flakes#Output_schema
         {
-          packages.linode = inputs.nixos-generators.nixosGenerate {
-            system = "x86_64-linux";
-            modules = [
-              ./machines/us-east-linode-1/configuration.nix
-            ];
-            format = "linode";
+          packages = {
+            linode = inputs.nixos-generators.nixosGenerate {
+              system = "x86_64-linux";
+              modules = [
+                ./machines/us-east-linode-1/configuration.nix
+              ];
+              format = "linode";
+            };
+            svrbsctl = pkgs.callPackage ./packages/svrbsctl.nix { };
           };
 
           apps."alacritty" = mkApp {
