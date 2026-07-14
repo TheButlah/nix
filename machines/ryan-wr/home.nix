@@ -29,13 +29,11 @@ in
   thebutlah = {
     _1password.enable = true;
     developer.enable = true;
-    monado = {
-      enable = isLinux;
-      opencomposite = true;
-      # xrizer = true; # currently broken
-    };
     music.enable = true;
-    social.enable = true;
+    social = {
+      enable = false;
+      isWork = true;
+    };
     terminal = {
       enable = true;
       nvim = true;

@@ -363,28 +363,6 @@ in
     };
   };
 
-  services.monado = {
-    enable = true;
-    # defaultRuntime = true; # Register as default OpenXR runtime
-  };
-  systemd.user.services.monado.environment = {
-    IPC_EXIT_ON_DISCONNECT = "1"; # stop monado when all xr apps close
-    # STEAMVR_LH_ENABLE = "1";
-    XRT_COMPOSITOR_COMPUTE = "1";
-  };
-  services.wivrn = {
-    enable = false;
-    openFirewall = true;
-    # Run WiVRn as a systemd service on startup
-    autoStart = true;
-  };
-  services.sunshine = {
-    enable = true;
-    autoStart = false;
-    capSysAdmin = true;
-    openFirewall = true;
-  };
-
   programs.droidcam.enable = true;
   programs.obs-studio = {
     enable = true;
@@ -423,21 +401,10 @@ in
   };
   services.flatpak.enable = true;
 
-  # For yubikey smart card
-  services.pcscd.enable = true;
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
+  services.ollama = {
+    enable = true;
+    package = pkgs.unstable.ollama;
+  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
