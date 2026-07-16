@@ -486,6 +486,7 @@
               ];
               format = "linode";
             };
+            chatbox = pkgs.callPackage ./packages/chatbox.nix { };
             svrbsctl = pkgs.callPackage ./packages/svrbsctl.nix { };
           };
 
