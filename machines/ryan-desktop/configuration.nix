@@ -474,6 +474,7 @@ in
   services.ollama = {
     enable = true;
     package = pkgs.unstable.ollama-cuda;
+    host = "100.94.243.29";
   };
 
   # Some programs need SUID wrappers, can be configured further or are
