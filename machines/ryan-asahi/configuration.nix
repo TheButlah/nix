@@ -316,8 +316,17 @@ in
   # USB stuff
   services.udev = {
     enable = true;
+    packages = with pkgs; [
+      yubikey-personalization # needed for yubikey-manager
+    ];
     extraRules = ''
-      SUBSYSTEM=="usb", MODE="0660", GROUP="plugdev"
+      # USB mass storage devices
+      SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{ID_USB_INTERFACES}=="*:08????:*", MODE="0660", GROUP="plugdev"
+      SUBSYSTEM=="block", SUBSYSTEMS=="usb", MODE="0660", GROUP="plugdev"
+
+      # USB HID devices
+      SUBSYSTEM=="hidraw", SUBSYSTEMS=="usb", MODE="0660", GROUP="plugdev"
+
       # SYMLINK also creates a .device with the path of the symlink, i.e. `dev-corne.device`
       ACTION=="add", KERNEL=="event*", SUBSYSTEM=="input", ATTRS{id/vendor}=="1d50", ATTRS{id/product}=="615e", ATTRS{name}=="Corne Keyboard", SYMLINK+="corne", TAG+="systemd", ENV{SYSTEMD_WANTS}="wireless-keyboard.target"
 
