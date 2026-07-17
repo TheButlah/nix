@@ -437,7 +437,14 @@
         username = "vscode";
         system = "x86_64-linux";
         isWork = false;
-        hostname = "aarch64";
+        hostname = "x86";
+        homeManagerCfg = ./machines/home-headless-developer.nix;
+      };
+      homeConfigurations."vscode@ryan-wr" = homeManagerConfig {
+        username = "vscode";
+        system = "x86_64-linux";
+        isWork = false;
+        hostname = "ryan-wr";
         homeManagerCfg = ./machines/home-headless-developer.nix;
       };
       homeConfigurations."deck@steamdeck" = homeManagerConfig {
