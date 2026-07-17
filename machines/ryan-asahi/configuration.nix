@@ -243,6 +243,7 @@ in
       "podman"
       "wheel"
       "syncthing"
+      "yubihsm"
     ];
     packages =
       with pkgs;
@@ -257,6 +258,7 @@ in
   users.groups = {
     plugdev = { };
     dialout = { };
+    yubihsm = { };
   };
 
   programs = {
@@ -332,6 +334,9 @@ in
 
       # IMX usb ethernet
       ACTION=="add", SUBSYSTEM=="net", SUBSYSTEMS=="usb", ATTRS{idVendor}=="0525", ATTRS{idProduct}=="a4a2", NAME="nxpeth%n"
+
+      # yubihsm
+      SUBSYSTEM=="usb", ATTR{idVendor}=="1050", ATTR{idProduct}=="0030", MODE="0660", GROUP="yubihsm"
     '';
   };
   services.usbguard = import ../../usbguard.nix;
