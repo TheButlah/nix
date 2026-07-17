@@ -286,6 +286,7 @@
                   extraSpecialArgs = rec {
                     inherit
                       username
+                      hostname
                       isWork
                       pkgs
                       inputs

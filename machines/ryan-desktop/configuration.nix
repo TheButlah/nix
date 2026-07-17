@@ -81,6 +81,7 @@ in
   networking.networkmanager = {
     enable = true;
     wifi.backend = "iwd";
+    settings.connection.mdns = 2;
   };
   networking.wireless.iwd = {
     enable = true;
@@ -102,7 +103,10 @@ in
   services.resolved = {
     enable = true;
     # set to "false" if giving you trouble
-    dnsovertls = "opportunistic";
+    settings.Resolve = {
+      DNSOverTLS = "opportunistic";
+      MulticastDNS = true;
+    };
   };
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot

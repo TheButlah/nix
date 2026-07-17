@@ -90,6 +90,7 @@ in
     enable = true;
     wifi.backend = "iwd";
     dns = "systemd-resolved";
+    settings.connection.mdns = 2;
     ensureProfiles.profiles = {
       "NXP Ethernet" = {
         connection = {
@@ -131,7 +132,10 @@ in
   services.resolved = {
     enable = true;
     # set to "false" if giving you trouble
-    settings.Resolve.DNSOverTLS = "opportunistic";
+    settings.Resolve = {
+      DNSOverTLS = "opportunistic";
+      MulticastDNS = true;
+    };
   };
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot

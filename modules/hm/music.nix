@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  hostname,
   username,
   ...
 }:
@@ -35,6 +36,15 @@ in
       ];
 
     # note: run `spotifyd authenticate` to login.
-    services.spotifyd.enable = isLinux;
+    services.spotifyd = {
+      enable = isLinux;
+      settings.global = {
+        # backend = "pulseaudio";
+        device_name = hostname;
+        device_type = "computer";
+        disable_discovery = false;
+        zeroconf_port = 57621;
+      };
+    };
   };
 }
