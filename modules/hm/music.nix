@@ -4,10 +4,12 @@
   lib,
   hostname,
   username,
+  hostSystem,
   ...
 }:
 let
   modname = "music";
+  system = pkgs.stdenv.hostPlatform.system;
   # Shorter name to access final settings a
   # user of hello.nix module HAS ACTUALLY SET.
   # cfg is a typical convention.
@@ -33,18 +35,20 @@ in
       with pkgs;
       lib.optionals cfg.mixxx [
         mixxx
+      ]
+      ++ lib.optionals (system == "x86_64-linux") [
+        spotify
       ];
 
-    # note: run `spotifyd authenticate` to login.
-    services.spotifyd = {
-      enable = isLinux;
-      settings.global = {
-        # backend = "pulseaudio";
-        device_name = hostname;
-        device_type = "computer";
-        disable_discovery = false;
-        zeroconf_port = 57621;
-      };
-    };
+    # services.spotifyd = {
+    #   enable = (system == "aarch64-linux");
+    #   settings.global = {
+    #     backend = "pulseaudio";
+    #     # device_name = hostname;
+    #     # device_type = "computer";
+    #     disable_discovery = false;
+    #     zeroconf_port = 57621;
+    #   };
+    # };
   };
 }
