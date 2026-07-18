@@ -9,7 +9,7 @@
 {
 
   imports = [
-    ../../home-common.nix
+    ../../modules/hm/common.nix
   ];
 
   programs.git.settings.user = {

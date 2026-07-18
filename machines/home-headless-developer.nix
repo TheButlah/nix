@@ -13,7 +13,7 @@ in
 {
 
   imports = [
-    ../home-common.nix
+    ../modules/hm/common.nix
   ];
 
   thebutlah.terminal.enable = true;

@@ -39,6 +39,7 @@ in
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
     inputs.xremap-flake.nixosModules.default
     inputs.niri-flake.nixosModules.niri
+    ../../modules/common.nix
   ];
 
   nix.settings = {

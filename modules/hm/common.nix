@@ -18,14 +18,14 @@ in
 {
 
   imports = [
-    ./modules/hm/1password.nix
-    ./modules/hm/developer.nix
-    ./modules/hm/linux.nix
-    ./modules/hm/monado.nix
-    ./modules/hm/music.nix
-    ./modules/hm/social.nix
-    ./modules/hm/terminal.nix
-    ./modules/hm/wayland.nix
+    ./1password.nix
+    ./developer.nix
+    ./linux.nix
+    ./monado.nix
+    ./music.nix
+    ./social.nix
+    ./terminal.nix
+    ./wayland.nix
   ];
 
   home = {
@@ -77,17 +77,17 @@ in
   programs.alacritty = {
     enable = true;
     package = alacritty;
-    settings = lib.trivial.importTOML ./xdg/alacritty.toml;
+    settings = lib.trivial.importTOML ../../xdg/alacritty.toml;
   };
   programs.wezterm = {
     enable = true;
-    extraConfig = builtins.readFile ./xdg/wezterm.lua;
+    extraConfig = builtins.readFile ../../xdg/wezterm.lua;
   };
 
   xdg.enable = true;
   xdg.configFile = {
     "karabiner/karabiner.json" = {
-      source = ./xdg/karabiner.json;
+      source = ../../xdg/karabiner.json;
     };
   };
 
