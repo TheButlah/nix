@@ -16,6 +16,8 @@ in
 
   imports = [
     ./monado.nix
+    ./ssh.nix
+    ./vpn.nix
   ];
 
 }

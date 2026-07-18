@@ -161,12 +161,6 @@ in
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-  # programs.ssh.startAgent = true;
-  services.mullvad-vpn.enable = true;
-  services.tailscale.enable = true;
-
   # Set your time zone.
   time.timeZone = null; # imperatively set with timedatectl
 
@@ -407,6 +401,12 @@ in
   services.ollama = {
     enable = true;
     package = pkgs.unstable.ollama;
+  };
+
+  thebutlah = {
+    # monado.enable = true;
+    # selfhosting.enable = true;
+    vpn.enable = true;
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,

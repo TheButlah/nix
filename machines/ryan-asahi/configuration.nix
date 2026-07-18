@@ -149,13 +149,6 @@ in
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-  # programs.ssh.startAgent = true;
-  services.mullvad-vpn.enable = true;
-  services.tailscale.enable = true;
-  services.zerotierone.enable = true;
-
   # Set your time zone.
   time.timeZone = null; # imperatively set with timedatectl
 
@@ -378,12 +371,6 @@ in
     # STEAMVR_LH_ENABLE = "1";
     XRT_COMPOSITOR_COMPUTE = "1";
   };
-  services.wivrn = {
-    enable = pkgs.stdenv.hostPlatform.isx86; # seems to be broken on asahi
-    openFirewall = true;
-    # Run WiVRn as a systemd service on startup
-    autoStart = true;
-  };
   services.sunshine = {
     enable = true;
     autoStart = false;
@@ -436,6 +423,13 @@ in
     enable = true;
     package = pkgs.unstable.ollama-vulkan;
   };
+
+  thebutlah = {
+    # monado.enable = true;
+    # selfhosting.enable = true;
+    vpn.enable = true;
+  };
+  services.zerotierone.enable = true;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

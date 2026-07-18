@@ -132,16 +132,6 @@ in
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Remote connectivity
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-    settings.PermitRootLogin = "no";
-  };
-  # programs.ssh.startAgent = true;
-  services.mullvad-vpn.enable = true;
-  services.tailscale.enable = true;
-
   # Set your time zone.
   time.timeZone = "America/New_York";
 
@@ -266,10 +256,6 @@ in
       "podman"
       "wheel"
       "syncthing"
-    ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJIkanzFkEBan4Qa2bw/2IjEsJaxKo8XbbxwxOBIECEX ryan@1password"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4iOhSHkWTJEOnzyZ+Ny79W47E6UWuHZdJQJUFLrWwL droid@debian"
     ];
     packages = with pkgs; [
       mpv # currently broken in: https://github.com/haasn/libplacebo/issues/333
@@ -432,8 +418,10 @@ in
   programs.nix-ld.enable = true;
 
   thebutlah = {
-    selfhosting.enable = true;
     monado.enable = true;
+    selfhosting.enable = true;
+    ssh.enable = true;
+    vpn.enable = true;
   };
 
   services.ollama = {
