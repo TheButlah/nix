@@ -390,13 +390,6 @@
         hostname = "ryan-asahi";
         homeManagerCfg = ./machines/ryan-asahi/home.nix;
       };
-      nixosConfigurations."ryan-wld-asahi" = nixosAsahiConfig {
-        username = "ryan.butler";
-        isWork = true;
-        modulePath = ./machines/ryan-wld-asahi/configuration.nix;
-        hostname = "ryan-wld-asahi";
-        homeManagerCfg = ./machines/ryan-wld-asahi/home.nix;
-      };
       nixosConfigurations."li-matrix" = nixosConfig {
         username = "foobar";
         system = "x86_64-linux";
