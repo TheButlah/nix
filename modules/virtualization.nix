@@ -22,6 +22,8 @@ let
       default = true;
       description = "Whether to enable ${name}.";
     };
+
+  system = pkgs.stdenv.hostPlatform.system;
 in
 {
   options.thebutlah.${modname} = {
@@ -29,6 +31,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    # emulation
+    boot.binfmt.emulatedSystems = [
+      (if system == "x86_64-linux" then "aarch64-linux" else "x86_64-linux")
+    ];
+
     hardware.nvidia-container-toolkit = {
       enable = config.hardware.nvidia.enabled;
       # suppressNvidiaDriverAssertion = true;

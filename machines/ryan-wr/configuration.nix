@@ -149,18 +149,6 @@ in
   # Set your time zone.
   time.timeZone = null; # imperatively set with timedatectl
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
-  fonts.packages = with pkgs; [
-    nerd-fonts.meslo-lg
-    nerd-fonts.roboto-mono
-  ];
-
   services.xremap = {
     enable = true;
     userName = "${username}";
@@ -229,21 +217,6 @@ in
   ];
 
   services.usbguard = import ../../usbguard.nix;
-
-  programs.droidcam.enable = true;
-  programs.obs-studio = {
-    enable = true;
-    enableVirtualCamera = true;
-    plugins = [
-      pkgs.obs-studio-plugins.droidcam-obs
-      # pkgs.obs-studio-plugins.wlrobs
-    ];
-  };
-
-  # emulation
-  boot.binfmt.emulatedSystems = [
-    "aarch64-linux"
-  ];
 
   services.ollama = {
     enable = true;

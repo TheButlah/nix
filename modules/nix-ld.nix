@@ -45,8 +45,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    thebutlah.virtualization.enable = true;
+
     # Set up nix-ld as well as nix-ld for emulated aarch64.
     programs.nix-ld.enable = true;
+
     environment.sessionVariables = {
       "NIX_LD_${crossVars.crossSystem}" = crossVars.dynamicLinker;
     };
