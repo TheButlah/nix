@@ -268,8 +268,6 @@ in
     capSysNice = true;
   };
 
-  programs.nix-ld.enable = true;
-
   thebutlah = {
     audio.enable = true;
     monado.enable = true;

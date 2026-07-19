@@ -24,6 +24,7 @@ in
     ./display-manager.nix
     ./bluetooth.nix
     ./streaming.nix
+    ./nix-ld.nix
   ];
 
   nix.settings = {

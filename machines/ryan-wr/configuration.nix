@@ -203,16 +203,6 @@ in
     };
   };
 
-  # Set up nix-ld as well as nix-ld for emulated aarch64.
-  programs.nix-ld.enable = true;
-  environment.sessionVariables = {
-    NIX_LD_aarch64_linux = aarch64DynamicLinker;
-  };
-  systemd.tmpfiles.rules = [
-    "d /${aarch64LdsoDir} 0755 root root - -"
-    "L+ /${aarch64LdsoDir}/${aarch64LdsoName} - - - - ${pkgsAarch64.nix-ld}/libexec/nix-ld"
-  ];
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
