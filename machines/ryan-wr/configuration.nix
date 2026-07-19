@@ -124,8 +124,6 @@ in
       MulticastDNS = true;
     };
   };
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
@@ -278,6 +276,8 @@ in
       enable = true;
       windowManager = "niri";
     };
+    bluetooth.enable = true;
+    streaming.enable = true;
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,

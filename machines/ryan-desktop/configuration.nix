@@ -95,8 +95,6 @@ in
       MulticastDNS = true;
     };
   };
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
@@ -270,16 +268,6 @@ in
     capSysNice = true;
   };
 
-  programs.droidcam.enable = true;
-  programs.obs-studio = {
-    enable = true;
-    enableVirtualCamera = true;
-    plugins = [
-      pkgs.obs-studio-plugins.droidcam-obs
-      # pkgs.obs-studio-plugins.wlrobs
-    ];
-  };
-
   programs.nix-ld.enable = true;
 
   thebutlah = {
@@ -289,6 +277,8 @@ in
     ssh.enable = true;
     virtualization.enable = true;
     vpn.enable = true;
+    bluetooth.enable = true;
+    streaming.enable = true;
   };
 
   services.ollama = {

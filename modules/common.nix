@@ -22,6 +22,8 @@ in
     ./vpn.nix
     ./inhibitor.nix
     ./display-manager.nix
+    ./bluetooth.nix
+    ./streaming.nix
   ];
 
   nix.settings = {
