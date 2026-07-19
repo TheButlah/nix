@@ -214,7 +214,6 @@ in
     curl
     ffmpeg-full
     git
-    inhibitor # disable built-in keeb and other input devices
     libnotify # notify-send
     libsecret # needed for gnome-keyring
     mesa-demos
@@ -230,29 +229,6 @@ in
   ];
 
   services.usbguard = import ../../usbguard.nix;
-
-  # Set up keyboard services
-  # This target just helps abstract over the particular name of the device, and its slightly
-  # more flexible than using udev directly.
-  # See also: https://pychao.com/2021/02/24/difference-between-partof-and-bindsto-in-a-systemd-unit
-  systemd.targets."wireless-keyboard" = {
-    description = "active when a wireless keyboard is connected";
-    after = [ "dev-corne.device" ];
-    bindsTo = [ "dev-corne.device" ]; # kills this unit when the device unit is stopped
-  };
-  systemd.services."builtin-keyboard-disable" = {
-    description = "disables built-in keyboard while active";
-    after = [ "wireless-keyboard.target" ];
-    bindsTo = [ "wireless-keyboard.target" ];
-    wantedBy = [ "wireless-keyboard.target" ];
-    path = with pkgs; [ inhibitor ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = "yes";
-      ExecStart = "/usr/bin/env inhibitor disable --name \"Apple MTP keyboard\"";
-      ExecStop = "/usr/bin/env inhibitor enable --name \"Apple MTP keyboard\"";
-    };
-  };
 
   services.monado = {
     enable = true;
@@ -301,6 +277,10 @@ in
     vpn.enable = true;
     audio.enable = true;
     virtualization.enable = true;
+    inhibitor = {
+      enable = true;
+      builtinName = "Apple MTP keyboard";
+    };
   };
   services.zerotierone.enable = true;
 

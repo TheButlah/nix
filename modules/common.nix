@@ -20,6 +20,7 @@ in
     ./ssh.nix
     ./virtualization.nix
     ./vpn.nix
+    ./inhibitor.nix
   ];
 
   nix.settings = {
