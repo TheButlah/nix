@@ -109,4 +109,6 @@ in
       KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35bd", ATTRS{idProduct}=="4004", MODE="0660", GROUP="users"
     '';
   };
+
+  services.flatpak.enable = true;
 }

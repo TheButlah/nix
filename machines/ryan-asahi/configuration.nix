@@ -233,8 +233,6 @@ in
     "x86_64-linux"
   ];
 
-  services.flatpak.enable = true;
-
   # For yubikey smart card
   services.pcscd.enable = true;
 

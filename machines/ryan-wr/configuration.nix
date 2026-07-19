@@ -255,8 +255,6 @@ in
     "aarch64-linux"
   ];
 
-  services.flatpak.enable = true;
-
   services.ollama = {
     enable = true;
     package = pkgs.unstable.ollama;
