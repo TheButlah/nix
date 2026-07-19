@@ -254,8 +254,6 @@ in
     # monado.enable = true;
     # selfhosting.enable = true;
     vpn.enable = true;
-    audio.enable = true;
-    virtualization.enable = true;
     inhibitor = {
       enable = true;
       builtinName = "Framework Laptop 16 Keyboard Module - ANSI Keyboard";
@@ -264,7 +262,6 @@ in
       enable = true;
       windowManager = "niri";
     };
-    bluetooth.enable = true;
     streaming.enable = true;
   };
 

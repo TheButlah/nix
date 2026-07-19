@@ -269,13 +269,10 @@ in
   };
 
   thebutlah = {
-    audio.enable = true;
     monado.enable = true;
     selfhosting.enable = true;
     ssh.enable = true;
-    virtualization.enable = true;
     vpn.enable = true;
-    bluetooth.enable = true;
     streaming.enable = true;
   };
 

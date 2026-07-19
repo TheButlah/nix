@@ -233,8 +233,6 @@ in
 
   thebutlah = {
     vpn.enable = true;
-    audio.enable = true;
-    virtualization.enable = true;
     inhibitor = {
       enable = true;
       builtinName = "Apple MTP keyboard";
@@ -243,7 +241,6 @@ in
       enable = true;
       windowManager = "niri";
     };
-    bluetooth.enable = true;
     streaming.enable = true;
   };
   services.zerotierone.enable = true;

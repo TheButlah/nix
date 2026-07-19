@@ -25,7 +25,7 @@ let
 in
 {
   options.thebutlah.${modname} = {
-    enable = mkEnableOption modname;
+    enable = mkDisableOption modname;
     onBoot = mkDisableOption "on boot";
   };
 

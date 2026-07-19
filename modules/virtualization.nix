@@ -12,11 +12,20 @@ let
   inherit (lib)
     mkIf
     mkEnableOption
+    mkOption
     ;
+  mkDisableOption =
+    name:
+    mkOption {
+      type = lib.types.bool;
+      example = true;
+      default = true;
+      description = "Whether to enable ${name}.";
+    };
 in
 {
   options.thebutlah.${modname} = {
-    enable = mkEnableOption modname;
+    enable = mkDisableOption modname;
   };
 
   config = mkIf cfg.enable {
