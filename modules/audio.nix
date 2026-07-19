@@ -25,6 +25,7 @@ in
       alsa-utils # aplay, arecord, etc
       easyeffects
       pavucontrol # volume control
+      mpv # currently broken in: https://github.com/haasn/libplacebo/issues/333
     ];
 
     services.pipewire = {

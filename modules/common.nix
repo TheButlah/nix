@@ -3,6 +3,7 @@
   pkgs,
   config,
   username,
+  hostname,
   ...
 }:
 let
@@ -31,6 +32,31 @@ in
     auto-optimise-store = true;
     extra-platforms = config.boot.binfmt.emulatedSystems;
   };
+
+  networking.hostName = hostname;
+
+  users.users.${username} = {
+    isNormalUser = true;
+    extraGroups = [
+      "adbusers"
+      "dialout"
+      "docker"
+      "libvirt"
+      "networkmanager"
+      "plugdev"
+      "podman"
+      "syncthing"
+      "wheel"
+      "yubihsm"
+    ];
+  };
+  users.defaultUserShell = pkgs.zsh;
+  users.groups = {
+    plugdev = { };
+    dialout = { };
+    yubihsm = { };
+  };
+  programs.zsh.enable = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";

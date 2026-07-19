@@ -58,7 +58,6 @@ in
     extractPeripheralFirmware = true; # redundant, this is the default
   };
 
-  networking.hostName = hostname; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager = {
@@ -182,39 +181,7 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users."${username}" = {
-    isNormalUser = true;
-    extraGroups = [
-      "adbusers"
-      "dialout"
-      "docker"
-      "libvirt"
-      "networkmanager"
-      "plugdev"
-      "podman"
-      "wheel"
-      "syncthing"
-      "yubihsm"
-    ];
-    packages =
-      with pkgs;
-      [
-        mpv # currently broken in: https://github.com/haasn/libplacebo/issues/333
-      ]
-      ++ lib.optionals (!isWork) [
-        blender
-      ];
-  };
-  users.defaultUserShell = pkgs.zsh;
-  users.groups = {
-    plugdev = { };
-    dialout = { };
-    yubihsm = { };
-  };
-
   programs = {
-    zsh.enable = true;
     firefox.enable = true;
     chromium.enable = true;
     _1password.enable = true;
@@ -318,7 +285,6 @@ in
   boot.binfmt.emulatedSystems = [
     "x86_64-linux"
   ];
-  nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
 
   virtualisation = {
     containers.enable = true;

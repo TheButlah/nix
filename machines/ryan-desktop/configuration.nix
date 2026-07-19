@@ -63,7 +63,6 @@ in
     }
   ];
 
-  networking.hostName = hostname; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager = {
@@ -121,18 +120,6 @@ in
 
   # Set your time zone.
   time.timeZone = "America/New_York";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
-  fonts.packages = with pkgs; [
-    nerd-fonts.meslo-lg
-    nerd-fonts.roboto-mono
-  ];
 
   services.xremap = {
     enable = true;
@@ -213,31 +200,7 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.ryan = {
-    isNormalUser = true;
-    extraGroups = [
-      "adbusers"
-      "dialout"
-      "docker"
-      "networkmanager"
-      "plugdev"
-      "podman"
-      "wheel"
-      "syncthing"
-    ];
-    packages = with pkgs; [
-      mpv # currently broken in: https://github.com/haasn/libplacebo/issues/333
-    ];
-  };
-  users.defaultUserShell = pkgs.zsh;
-  users.groups = {
-    plugdev = { };
-    dialout = { };
-  };
-
   programs = {
-    zsh.enable = true;
     firefox.enable = true;
     chromium.enable = true;
     _1password.enable = true;
