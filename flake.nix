@@ -117,7 +117,7 @@
   };
 
   outputs =
-    inputs-raw:
+    inputs-raw@{ self, ... }:
     let
       mkInputs = (system: import ./inputs.nix { inherit inputs-raw system; });
     in
@@ -261,6 +261,7 @@
                 hostname
                 isWork
                 inputs
+                self
                 ;
               modulesPath = "${inputs.nixpkgs}/nixos/modules";
             };

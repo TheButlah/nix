@@ -252,7 +252,6 @@ in
     usbutils # lsusb
     v4l-utils # v4l2-ctl
     vim
-    virt-manager # for virt-install
     vulkan-tools
     wezterm
     wget
@@ -298,26 +297,6 @@ in
     "aarch64-linux"
   ];
 
-  virtualisation = {
-    containers.enable = true;
-    oci-containers.backend = "podman";
-    podman = {
-      enable = true;
-      # docker` alias for podman
-      dockerCompat = false;
-      # Required for containers under podman-compose to be able to talk to each other.
-      defaultNetwork.settings.dns_enabled = true;
-    };
-    docker = {
-      daemon.settings.features.cdi = true;
-      enable = true;
-      autoPrune.enable = true;
-      enableOnBoot = true;
-    };
-  };
-  virtualisation.libvirtd = {
-    enable = true;
-  };
   services.flatpak.enable = true;
 
   services.ollama = {
@@ -330,6 +309,7 @@ in
     # selfhosting.enable = true;
     vpn.enable = true;
     audio.enable = true;
+    virtualization.enable = true;
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,

@@ -304,35 +304,15 @@ in
     ];
   };
 
-  hardware.nvidia-container-toolkit = {
-    enable = true;
-    # suppressNvidiaDriverAssertion = true;
-  };
-  virtualisation = {
-    containers.enable = true;
-    oci-containers.backend = "podman";
-    podman = {
-      enable = true;
-      # docker` alias for podman
-      dockerCompat = false;
-      # Required for containers under podman-compose to be able to talk to each other.
-      defaultNetwork.settings.dns_enabled = true;
-    };
-    docker = {
-      daemon.settings.features.cdi = true;
-      enable = true;
-      autoPrune.enable = true;
-      enableOnBoot = true;
-    };
-  };
   programs.nix-ld.enable = true;
 
   thebutlah = {
+    audio.enable = true;
     monado.enable = true;
     selfhosting.enable = true;
     ssh.enable = true;
+    virtualization.enable = true;
     vpn.enable = true;
-    audio.enable = true;
   };
 
   services.ollama = {
@@ -340,14 +320,6 @@ in
     package = pkgs.unstable.ollama-cuda;
     host = "100.94.243.29";
   };
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you

@@ -4,6 +4,7 @@
   config,
   username,
   hostname,
+  self,
   ...
 }:
 let
@@ -13,11 +14,12 @@ in
 {
 
   imports = [
-    ./monado.nix
-    ./ssh.nix
-    ./vpn.nix
     ./audio.nix
+    ./monado.nix
     ./selfhosting.nix
+    ./ssh.nix
+    ./virtualization.nix
+    ./vpn.nix
   ];
 
   nix.settings = {
@@ -33,6 +35,9 @@ in
     extra-platforms = config.boot.binfmt.emulatedSystems;
   };
 
+  # make the original flake present for inspection
+  environment.etc."nixos".source = self.outPath;
+
   networking.hostName = hostname;
 
   users.users.${username} = {
@@ -40,11 +45,8 @@ in
     extraGroups = [
       "adbusers"
       "dialout"
-      "docker"
-      "libvirt"
       "networkmanager"
       "plugdev"
-      "podman"
       "syncthing"
       "wheel"
       "yubihsm"
