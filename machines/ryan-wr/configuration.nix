@@ -216,8 +216,6 @@ in
     wget
   ];
 
-  services.usbguard = import ../../usbguard.nix;
-
   services.ollama = {
     enable = true;
     package = pkgs.unstable.ollama;

@@ -25,6 +25,7 @@ in
     ./bluetooth.nix
     ./streaming.nix
     ./nix-ld.nix
+    ./usbguard.nix
   ];
 
   nix.settings = {

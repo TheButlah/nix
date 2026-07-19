@@ -200,8 +200,6 @@ in
     wget
   ];
 
-  services.usbguard = import ../../usbguard.nix;
-
   services.monado = {
     enable = true;
     # defaultRuntime = true; # Register as default OpenXR runtime
