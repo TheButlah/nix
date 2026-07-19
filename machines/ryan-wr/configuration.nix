@@ -176,22 +176,6 @@ in
   services.gnome.gnome-keyring.enable = true;
   services.gnome.gcr-ssh-agent.enable = false;
   programs.seahorse.enable = true; # gnome keyring UI
-  services.greetd = {
-    enable = true;
-    useTextGreeter = true; # prevent error messages breaking tty
-    settings = {
-      # initial_session = {
-      #   command = "${pkgs.niri}/bin/niri-session";
-      #   user = username;
-      # };
-
-      # Fallback greeter
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.niri}/bin/niri-session";
-        user = username;
-      };
-    };
-  };
   # tiling window manager
   programs.niri = {
     enable = true;
@@ -289,6 +273,10 @@ in
     inhibitor = {
       enable = true;
       builtinName = "Framework Laptop 16 Keyboard Module - ANSI Keyboard";
+    };
+    displayManager = {
+      enable = true;
+      windowManager = "niri";
     };
   };
 

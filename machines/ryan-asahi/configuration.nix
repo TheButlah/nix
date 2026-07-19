@@ -148,22 +148,6 @@ in
   services.gnome.gnome-keyring.enable = true;
   services.gnome.gcr-ssh-agent.enable = false;
   programs.seahorse.enable = true; # gnome keyring UI
-  services.greetd = {
-    enable = true;
-    useTextGreeter = true; # prevent error messages breaking tty
-    settings = {
-      initial_session = {
-        command = "${pkgs.niri}/bin/niri-session";
-        user = username;
-      };
-
-      # Fallback greeter
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd ${pkgs.niri}/bin/niri-session";
-        user = username;
-      };
-    };
-  };
   # tiling window manager
   programs.niri = {
     enable = true;
@@ -272,14 +256,16 @@ in
   };
 
   thebutlah = {
-    # monado.enable = true;
-    # selfhosting.enable = true;
     vpn.enable = true;
     audio.enable = true;
     virtualization.enable = true;
     inhibitor = {
       enable = true;
       builtinName = "Apple MTP keyboard";
+    };
+    displayManager = {
+      enable = true;
+      windowManager = "niri";
     };
   };
   services.zerotierone.enable = true;

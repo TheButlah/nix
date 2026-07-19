@@ -21,6 +21,7 @@ in
     ./virtualization.nix
     ./vpn.nix
     ./inhibitor.nix
+    ./display-manager.nix
   ];
 
   nix.settings = {
