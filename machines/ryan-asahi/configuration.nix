@@ -39,7 +39,6 @@ in
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
     inputs.xremap-flake.nixosModules.default
     inputs.niri-flake.nixosModules.niri
-    ../../modules/common.nix
   ];
 
   nix.settings = {
@@ -137,9 +136,6 @@ in
     5353 # mDNS
     22000 # syncthing
   ];
-  networking.firewall.trustedInterfaces = [
-    "nxpeth0"
-  ];
   # networking.firewall.interfaces."nxpeth0".allowedUDPPorts = [
   #   53 # DNS for downstream client
   #   67 # DHCP server on host
@@ -151,18 +147,6 @@ in
 
   # Set your time zone.
   time.timeZone = null; # imperatively set with timedatectl
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
-  fonts.packages = with pkgs; [
-    nerd-fonts.meslo-lg
-    nerd-fonts.roboto-mono
-  ];
 
   services.xremap = {
     enable = true;
@@ -206,24 +190,6 @@ in
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
-
-  # Enable sound.
-  # services.pulseaudio.enable = true;
-  # OR
-  services.pipewire = {
-    enable = true; # redundant, here for clarity
-    pulse.enable = true; # redundant?
-    wireplumber = {
-      enable = true; # redundant, here for clarify
-      configPackages = [
-        # (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/10-loopback-pro-audio.conf" (
-        #   builtins.readFile ../../xdg/wireplumber-pro-audio.conf
-        # ))
-      ];
-    };
-  };
-  # redundant, here for clarity. This should be false when using sound servers
-  hardware.alsa.enable = false;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
@@ -285,13 +251,11 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    alsa-utils # aplay, arecord, etc
     asahi-bless
     asahi-fwextract
     brightnessctl # control screen brightness
     chromium
     curl
-    easyeffects
     ffmpeg-full
     git
     inhibitor # disable built-in keeb and other input devices
@@ -299,9 +263,7 @@ in
     libsecret # needed for gnome-keyring
     mesa-demos
     neovim
-    pavucontrol
     pkgs.xwayland-satellite-stable
-    qpwgraph # control pipewire nodes using a GUI
     ripgrep
     awww
     usbutils # lsusb
@@ -404,6 +366,7 @@ in
     # monado.enable = true;
     # selfhosting.enable = true;
     vpn.enable = true;
+    audio.enable = true;
   };
   services.zerotierone.enable = true;
 

@@ -271,7 +271,7 @@
                 };
               }
 
-              ./modules/mymod.nix
+              ./modules/common.nix
 
               modulePath
 

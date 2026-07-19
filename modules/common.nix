@@ -13,6 +13,20 @@ in
     ./monado.nix
     ./ssh.nix
     ./vpn.nix
+    ./audio.nix
+    ./selfhosting.nix
+  ];
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.meslo-lg
+    nerd-fonts.roboto-mono
+  ];
+
+  networking.firewall.trustedInterfaces = [
+    "nxpeth0"
   ];
 
   # USB stuff

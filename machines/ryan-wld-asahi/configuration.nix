@@ -175,24 +175,6 @@ in
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable sound.
-  # services.pulseaudio.enable = true;
-  # OR
-  services.pipewire = {
-    enable = true; # redundant, here for clarity
-    pulse.enable = true; # redundant?
-    wireplumber = {
-      enable = true; # redundant, here for clarify
-      configPackages = [
-        # (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/10-loopback-pro-audio.conf" (
-        #   builtins.readFile ../../xdg/wireplumber-pro-audio.conf
-        # ))
-      ];
-    };
-  };
-  # redundant, here for clarity. This should be false when using sound servers
-  hardware.alsa.enable = false;
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
@@ -238,13 +220,11 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    alsa-utils # aplay, arecord, etc
     asahi-bless
     asahi-fwextract
     brightnessctl # control screen brightness
     chromium
     curl
-    easyeffects
     ffmpeg-full
     git
     inhibitor # disable built-in keeb and other input devices
@@ -252,9 +232,7 @@ in
     libsecret # needed for gnome-keyring
     mesa-demos
     neovim
-    pavucontrol
     pkgs.xwayland-satellite-stable
-    qpwgraph # control pipewire nodes using a GUI
     ripgrep
     sshfs
     awww
