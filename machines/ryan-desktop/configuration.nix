@@ -318,25 +318,6 @@ in
     xrizer
   ];
 
-  # USB stuff
-  services.udev = {
-    enable = true;
-    extraRules = ''
-      # Bigscreen Beyond
-      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35bd", ATTRS{idProduct}=="0101", MODE="0660", GROUP="users"
-      # Bigscreen Bigeye
-      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35bd", ATTRS{idProduct}=="0202", MODE="0660", GROUP="users"
-      # Bigscreen Beyond Audio Strap
-      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35bd", ATTRS{idProduct}=="0105", MODE="0660", GROUP="users"
-      # Bigscreen Beyond Firmware Mode?
-      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="35bd", ATTRS{idProduct}=="4004", MODE="0660", GROUP="users"
-
-      SUBSYSTEM=="usb", MODE="0660", GROUP="plugdev"
-      # SYMLINK also creates a .device with the path of the symlink, i.e. `dev-corne.device`
-      ACTION=="add", KERNEL=="event*", SUBSYSTEM=="input", ATTRS{id/vendor}=="1d50", ATTRS{id/product}=="615e", ATTRS{name}=="Corne Keyboard", SYMLINK+="corne", TAG+="systemd", ENV{SYSTEMD_WANTS}="wireless-keyboard.target"
-    '';
-  };
-
   # Set up keyboard services
   # This target just helps abstract over the particular name of the device, and its slightly
   # more flexible than using udev directly.

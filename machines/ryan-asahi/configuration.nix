@@ -313,30 +313,6 @@ in
     wget
   ];
 
-  # USB stuff
-  services.udev = {
-    enable = true;
-    packages = with pkgs; [
-      yubikey-personalization # needed for yubikey-manager
-    ];
-    extraRules = ''
-      # USB mass storage devices
-      SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ENV{ID_USB_INTERFACES}=="*:08????:*", MODE="0660", GROUP="plugdev"
-      SUBSYSTEM=="block", SUBSYSTEMS=="usb", MODE="0660", GROUP="plugdev"
-
-      # USB HID devices
-      SUBSYSTEM=="hidraw", SUBSYSTEMS=="usb", MODE="0660", GROUP="plugdev"
-
-      # SYMLINK also creates a .device with the path of the symlink, i.e. `dev-corne.device`
-      ACTION=="add", KERNEL=="event*", SUBSYSTEM=="input", ATTRS{id/vendor}=="1d50", ATTRS{id/product}=="615e", ATTRS{name}=="Corne Keyboard", SYMLINK+="corne", TAG+="systemd", ENV{SYSTEMD_WANTS}="wireless-keyboard.target"
-
-      # IMX usb ethernet
-      ACTION=="add", SUBSYSTEM=="net", SUBSYSTEMS=="usb", ATTRS{idVendor}=="0525", ATTRS{idProduct}=="a4a2", NAME="nxpeth%n"
-
-      # yubihsm
-      SUBSYSTEM=="usb", ATTR{idVendor}=="1050", ATTR{idProduct}=="0030", MODE="0660", GROUP="yubihsm"
-    '';
-  };
   services.usbguard = import ../../usbguard.nix;
 
   # Set up keyboard services

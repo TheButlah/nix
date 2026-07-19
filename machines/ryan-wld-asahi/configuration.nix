@@ -267,15 +267,6 @@ in
     wget
   ];
 
-  # USB stuff
-  services.udev = {
-    enable = true;
-    extraRules = ''
-      SUBSYSTEM=="usb", MODE="0660", GROUP="plugdev"
-      # SYMLINK also creates a .device with the path of the symlink, i.e. `dev-corne.device`
-      ACTION=="add", KERNEL=="event*", SUBSYSTEM=="input", ATTRS{id/vendor}=="1d50", ATTRS{id/product}=="615e", ATTRS{name}=="Corne Keyboard", SYMLINK+="corne", TAG+="systemd", ENV{SYSTEMD_WANTS}="wireless-keyboard.target"
-    '';
-  };
   services.usbguard = import ../../usbguard.nix;
 
   # Set up keyboard services
