@@ -51,18 +51,6 @@ in
     }
   ];
 
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    trusted-users = [
-      "root"
-      "${username}"
-    ];
-    auto-optimise-store = true;
-  };
-
   # https://github.com/nix-community/lanzaboote/blob/747b7912f49e2885090c83364d88cf853a020ac1/docs/QUICK_START.md
   # NOTE: Lanzaboote currently replaces the systemd-boot module.
   # This setting is usually set to true in configuration.nix
@@ -340,7 +328,6 @@ in
   boot.binfmt.emulatedSystems = [
     "aarch64-linux"
   ];
-  nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
 
   virtualisation = {
     containers.enable = true;

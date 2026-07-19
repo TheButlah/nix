@@ -1,6 +1,8 @@
 # Common configuration.nix functionality. most stuff is broken into modules
 {
   pkgs,
+  config,
+  username,
   ...
 }:
 let
@@ -16,6 +18,19 @@ in
     ./audio.nix
     ./selfhosting.nix
   ];
+
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    trusted-users = [
+      "root"
+      "${username}"
+    ];
+    auto-optimise-store = true;
+    extra-platforms = config.boot.binfmt.emulatedSystems;
+  };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
