@@ -65,28 +65,6 @@ in
     wifi.backend = "iwd";
     dns = "systemd-resolved";
     settings.connection.mdns = 2;
-    ensureProfiles.profiles = {
-      "NXP Ethernet" = {
-        connection = {
-          autoconnect = true;
-          id = "NXP Ethernet";
-          interface-name = "nxpeth0"; # TODO: set name from udev
-          type = "ethernet";
-        };
-        ethernet = { };
-        ipv4 = {
-          method = "shared";
-          # Pin the host-side address/subnet instead of letting NM auto-pick 10.42.x.0/24
-          address1 = "10.42.0.1/24";
-          shared-dhcp-range = "10.42.0.2,10.42.0.2"; # Device IP
-          shared-dhcp-lease-time = "2147483647"; # 2^31
-        };
-        ipv6 = {
-          method = "link-local"; # Keep IPv6 link-local alive on the USB link
-        };
-        proxy = { };
-      };
-    };
   };
   networking.wireless.iwd = {
     enable = true;
