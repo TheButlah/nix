@@ -4,6 +4,7 @@
   lib,
   pkgs,
   username,
+  mkDisableOption,
   ...
 }:
 let
@@ -13,16 +14,7 @@ let
   inherit (lib)
     mkIf
     mkEnableOption
-    mkOption
     ;
-  mkDisableOption =
-    name:
-    mkOption {
-      type = lib.types.bool;
-      example = true;
-      default = true;
-      description = "Whether to enable ${name}.";
-    };
 in
 {
   imports = [

@@ -120,8 +120,7 @@
     inputs-raw@{ self, ... }:
     let
       mkInputs = (system: import ./inputs.nix { inherit inputs-raw system; });
-    in
-    let
+
       mkPkgs = (
         system:
         let
@@ -149,12 +148,22 @@
           flake = abort "this should be specified in nixos modules, its inert here";
         }
       );
+
       # All system-specific variables
       forSystem = (
         system:
         let
           inputs = mkInputs system;
           pkgs = mkPkgs system;
+          lib = inputs.nixpkgs.lib;
+          mkDisableOption =
+            name:
+            lib.mkOption {
+              type = lib.types.bool;
+              example = true;
+              default = true;
+              description = "Whether to enable ${name}.";
+            };
           isLinux = pkgs.stdenv.isLinux;
           isDarwin = pkgs.stdenv.isDarwin;
           nixGLWrap =
@@ -175,13 +184,19 @@
         # should go here, for later reuse.
         # This is more efficient than instantiating it ad-hoc.
         {
-          inherit pkgs inputs;
+          inherit
+            pkgs
+            lib
+            mkDisableOption
+            inputs
+            ;
           alacritty = if isLinux then (nixGLWrap pkgs.alacritty) else pkgs.alacritty;
           wezterm = if isLinux then (nixGLWrap pkgs.wezterm) else pkgs.wezterm;
           tsh17 = pkgs.teleport_17;
           darwin-rebuild = inputs.nix-darwin.outputs.packages.${system}.darwin-rebuild;
         }
       );
+
       inherit
         (inputs-raw.flake-utils.lib.eachDefaultSystem (system: {
           s = forSystem system;
@@ -201,18 +216,25 @@
         (
           let
             system = "aarch64-darwin";
-            inputs = s.${system}.inputs;
-            pkgs = s.${system}.pkgs;
-            lib = inputs.nixpkgs.lib;
+            inherit (s.${system})
+              inputs
+              pkgs
+              lib
+              mkDisableOption
+              ;
           in
           inputs.nix-darwin.lib.darwinSystem rec {
             inherit system;
             specialArgs = {
-              inherit hostname username inputs;
+              inherit
+                hostname
+                username
+                inputs
+                mkDisableOption
+                ;
             };
             modules = [
               modulePath
-
               # setup home-manager
               inputs.home-manager.darwinModules.home-manager
               {
@@ -227,6 +249,7 @@
                       isWork
                       pkgs
                       inputs
+                      mkDisableOption
                       ;
                     inherit (pkgs) alacritty;
                   };
@@ -238,6 +261,7 @@
             ];
           }
         );
+
       nixosConfig =
         {
           modulePath,
@@ -250,9 +274,12 @@
         }:
         (
           let
-            inputs = s.${system}.inputs;
-            pkgs = s.${system}.pkgs;
-            lib = inputs.nixpkgs.lib;
+            inherit (s.${system})
+              inputs
+              pkgs
+              lib
+              mkDisableOption
+              ;
           in
           inputs.nixpkgs.lib.nixosSystem rec {
             specialArgs = {
@@ -261,6 +288,7 @@
                 hostname
                 isWork
                 inputs
+                mkDisableOption
                 self
                 ;
               modulesPath = "${inputs.nixpkgs}/nixos/modules";
@@ -271,11 +299,8 @@
                   inherit pkgs;
                 };
               }
-
               ./modules/common.nix
-
               modulePath
-
               # setup home-manager
               inputs.home-manager.nixosModules.home-manager
               {
@@ -291,6 +316,7 @@
                       isWork
                       pkgs
                       inputs
+                      mkDisableOption
                       ;
                     inherit (pkgs) alacritty;
                   };
@@ -305,6 +331,7 @@
             ];
           }
         );
+
       nixosAsahiConfig =
         {
           modulePath,
@@ -324,6 +351,7 @@
           system = "aarch64-linux";
           readOnlyPkgs = false;
         });
+
       homeManagerConfig =
         {
           username,
@@ -334,8 +362,12 @@
         }:
         (
           let
-            inputs = s.${system}.inputs;
-            pkgs = s.${system}.pkgs;
+            inherit (s.${system})
+              inputs
+              pkgs
+              lib
+              mkDisableOption
+              ;
           in
           inputs.home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
@@ -354,11 +386,13 @@
                 isWork
                 inputs
                 hostname
+                mkDisableOption
                 ;
               inherit (s.${system}) alacritty;
             };
           }
         );
+
     in
     {
       nixosConfigurations."wsl" = nixosConfig {

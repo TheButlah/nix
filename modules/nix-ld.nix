@@ -1,4 +1,5 @@
 {
+  mkDisableOption,
   pkgs,
   config,
   lib,
@@ -12,16 +13,7 @@ let
   inherit (lib)
     mkIf
     mkEnableOption
-    mkOption
     ;
-  mkDisableOption =
-    name:
-    mkOption {
-      type = lib.types.bool;
-      example = true;
-      default = true;
-      description = "Whether to enable ${name}.";
-    };
 
   system = pkgs.stdenv.hostPlatform.system;
   crossVars =

@@ -1,8 +1,9 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   username,
+  mkDisableOption,
   ...
 }:
 let
@@ -20,17 +21,8 @@ let
     mkIf
     mkEnableOption
     mkDefault
-    mkOption
     ;
 
-  mkDisableOption =
-    name:
-    mkOption {
-      type = lib.types.bool;
-      example = true;
-      default = true;
-      description = "Whether to enable ${name}.";
-    };
 in
 {
   options.thebutlah.${modname} = {

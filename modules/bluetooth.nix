@@ -3,6 +3,7 @@
   config,
   lib,
   username,
+  mkDisableOption,
   ...
 }:
 let
@@ -14,14 +15,6 @@ let
     mkEnableOption
     mkOption
     ;
-  mkDisableOption =
-    name:
-    mkOption {
-      type = lib.types.bool;
-      example = true;
-      default = true;
-      description = "Whether to enable ${name}.";
-    };
 in
 {
   options.thebutlah.${modname} = {

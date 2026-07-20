@@ -3,6 +3,7 @@
   config,
   lib,
   username,
+  mkDisableOption,
   ...
 }:
 let
@@ -17,19 +18,10 @@ let
   inherit (lib)
     mkIf
     mkEnableOption
-    mkOption
     ;
   stripSlash = lib.removeSuffix "/";
 
   homeDirectory = if isDarwin then "/Users/${username}" else "/home/${username}";
-  mkDisableOption =
-    name:
-    mkOption {
-      type = lib.types.bool;
-      example = true;
-      default = true;
-      description = "Whether to enable ${name}.";
-    };
 in
 # See https://github.com/nix-community/home-manager/issues/414#issuecomment-427163925
 {
