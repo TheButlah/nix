@@ -6,7 +6,7 @@
   ...
 }:
 let
-  modname = "nix-ld";
+  modname = "nixLd";
   cfg = config.thebutlah."${modname}";
 
   inherit (lib)

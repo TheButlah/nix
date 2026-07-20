@@ -23,15 +23,6 @@ let
             --add-flags "--js-flags=--nodecommit_pooled_pages"
     '';
   });
-
-  pkgsAarch64 = import pkgs.path {
-    system = "aarch64-linux";
-    config = config.nixpkgs.config;
-  };
-  aarch64DynamicLinker = pkgsAarch64.stdenv.cc.bintools.dynamicLinker;
-  aarch64LdsoDir = pkgsAarch64.stdenv.hostPlatform.libDir;
-  aarch64LdsoName = builtins.baseNameOf aarch64DynamicLinker;
-  secureBoot = true;
 in
 {
   imports = [
@@ -40,7 +31,6 @@ in
     inputs.niri-flake.nixosModules.niri
     inputs.disko.nixosModules.disko
     ./disko.nix
-    inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
   swapDevices = [
@@ -49,24 +39,6 @@ in
       size = 64 * 1024;
     }
   ];
-
-  # https://github.com/nix-community/lanzaboote/blob/747b7912f49e2885090c83364d88cf853a020ac1/docs/QUICK_START.md
-  # NOTE: Lanzaboote currently replaces the systemd-boot module.
-  # This setting is usually set to true in configuration.nix
-  # generated at installation time. So we force it to false
-  # for now.
-  boot.loader = {
-    systemd-boot = {
-      enable = !secureBoot;
-      editor = false;
-    };
-    timeout = 1;
-    efi.canTouchEfiVariables = false;
-  };
-  boot.lanzaboote = {
-    enable = secureBoot;
-    pkiBundle = "/var/lib/sbctl";
-  };
 
   services.fprintd.enable = true; # fingerprint sensor
 
@@ -111,13 +83,6 @@ in
     5353 # mDNS
     22000 # syncthing
   ];
-  networking.firewall.trustedInterfaces = [
-    "nxpeth0"
-  ];
-  # networking.firewall.interfaces."nxpeth0".allowedUDPPorts = [
-  #   53 # DNS for downstream client
-  #   67 # DHCP server on host
-  # ];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -175,7 +140,6 @@ in
     neovim
     pkgs.xwayland-satellite-stable
     ripgrep
-    sbctl # lanzaboote
     slack
     usbutils # lsusb
     v4l-utils # v4l2-ctl
@@ -203,6 +167,7 @@ in
       windowManager = "niri";
     };
     streaming.enable = true;
+    systemdBoot.secureBoot = true;
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,

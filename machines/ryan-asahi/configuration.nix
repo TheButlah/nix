@@ -40,16 +40,6 @@ in
     inputs.niri-flake.nixosModules.niri
   ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader = {
-    systemd-boot = {
-      enable = true; # true in asahi
-      editor = false;
-    };
-    timeout = 1;
-    efi.canTouchEfiVariables = false; # False in asahi
-  };
-
   hardware.asahi = {
     enable = true;
     # Ensures reproducibility of firmware
@@ -98,10 +88,6 @@ in
     5353 # mDNS
     22000 # syncthing
   ];
-  # networking.firewall.interfaces."nxpeth0".allowedUDPPorts = [
-  #   53 # DNS for downstream client
-  #   67 # DHCP server on host
-  # ];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";

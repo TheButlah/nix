@@ -15,17 +15,18 @@ in
 
   imports = [
     ./audio.nix
+    ./bluetooth.nix
+    ./devices.nix
+    ./display-manager.nix
+    ./inhibitor.nix
     ./monado.nix
+    ./nix-ld.nix
     ./selfhosting.nix
     ./ssh.nix
+    ./streaming.nix
+    ./systemd-boot.nix
     ./virtualization.nix
     ./vpn.nix
-    ./inhibitor.nix
-    ./display-manager.nix
-    ./bluetooth.nix
-    ./streaming.nix
-    ./nix-ld.nix
-    ./devices.nix
     ./xremap.nix
   ];
 

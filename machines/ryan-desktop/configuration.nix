@@ -34,20 +34,8 @@ in
     inputs.niri-flake.nixosModules.niri
     inputs.disko.nixosModules.disko
     ./disko.nix
-    inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
-  # https://github.com/nix-community/lanzaboote/blob/747b7912f49e2885090c83364d88cf853a020ac1/docs/QUICK_START.md
-  # NOTE: Lanzaboote currently replaces the systemd-boot module.
-  # This setting is usually set to true in configuration.nix
-  # generated at installation time. So we force it to false
-  # for now.
-  boot.loader.systemd-boot.enable = !secureBoot;
-  boot.loader.efi.canTouchEfiVariables = false;
-  boot.lanzaboote = {
-    enable = secureBoot;
-    pkiBundle = "/var/lib/sbctl";
-  };
   boot.kernelParams = [
     "usbcore.autosuspend=-1" # https://www.kernel.org/doc/html/v4.16/driver-api/usb/power-management.html#changing-the-default-idle-delay-time
   ];
@@ -218,7 +206,6 @@ in
     pkgs.xwayland-satellite-stable
     # protonplus # Manage steam proton versions
     ripgrep
-    sbctl # lanzaboote
     usbutils # lsusb
     v4l-utils # v4l2-ctl
     vim
@@ -265,6 +252,7 @@ in
     ssh.enable = true;
     vpn.enable = true;
     streaming.enable = true;
+    systemdBoot.secureBoot = true;
   };
 
   services.ollama = {
