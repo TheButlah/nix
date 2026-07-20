@@ -26,6 +26,7 @@ in
     ./streaming.nix
     ./nix-ld.nix
     ./devices.nix
+    ./xremap.nix
   ];
 
   nix.settings = {

@@ -31,7 +31,6 @@ in
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    inputs.xremap-flake.nixosModules.default
     inputs.niri-flake.nixosModules.niri
     inputs.disko.nixosModules.disko
     ./disko.nix
@@ -118,14 +117,6 @@ in
 
   # Set your time zone.
   time.timeZone = "America/New_York";
-
-  services.xremap = {
-    enable = true;
-    userName = "${username}";
-    serviceMode = "user";
-    withWlroots = true;
-    yamlConfig = builtins.readFile ../../xdg/xremap.yaml;
-  };
 
   # We don't enable x11
   services.xserver.enable = false;
