@@ -31,7 +31,6 @@ in
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    inputs.niri-flake.nixosModules.niri
     inputs.disko.nixosModules.disko
     ./disko.nix
   ];
@@ -124,12 +123,6 @@ in
       enable = true;
     };
   };
-  # tiling window manager
-  programs.niri = {
-    enable = true;
-    package = pkgs.niri-stable;
-  };
-  niri-flake.cache.enable = false;
   # https://nixos.wiki/wiki/Wayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
   # TODO: not working rn, I think I need to switch to niri-flake
