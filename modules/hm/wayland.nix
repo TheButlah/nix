@@ -120,6 +120,10 @@ in
       in
       {
         enable = true;
+        # Home Manager defaults this to [ "-w" ], but hyprlock stays in the
+        # foreground until it is unlocked. Waiting for it blocks swayidle and
+        # queues the session lock event, which relaunches hyprlock on unlock.
+        extraArgs = [ ];
         timeouts = [
           {
             timeout = 30; # in seconds

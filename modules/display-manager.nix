@@ -51,6 +51,8 @@ in
           };
         };
       };
+
+      security.pam.services.hyprlock = { };
     }
 
     (mkIf (cfg.windowManager == "niri") {
