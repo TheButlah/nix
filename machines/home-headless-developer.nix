@@ -33,6 +33,7 @@ in
     in
     {
       "*" = {
+        identityAgent = "~/.1password/agent.sock";
         identityFile = "${defaultSsh}";
         identitiesOnly = true;
       };
