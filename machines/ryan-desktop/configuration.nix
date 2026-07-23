@@ -203,7 +203,6 @@ in
     lighthouse-steamvr # control lighthouse power
     mesa-demos # glxinfo, etc
     neovim
-    pkgs.xwayland-satellite-stable
     # protonplus # Manage steam proton versions
     ripgrep
     usbutils # lsusb

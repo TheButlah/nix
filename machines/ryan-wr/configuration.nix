@@ -138,7 +138,6 @@ in
     libsecret # needed for gnome-keyring
     mesa-demos
     neovim
-    pkgs.xwayland-satellite-stable
     ripgrep
     slack
     usbutils # lsusb

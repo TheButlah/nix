@@ -22,7 +22,7 @@ in
   nixos-apple-silicon = inputs-raw.nixos-apple-silicon;
   anyrun = inputs-raw.anyrun;
   inhibitor = inputs-raw.inhibitor;
-  niri-flake = inputs-raw.niri-flake;
+  # niri-flake = inputs-raw.niri-flake;
   awww = inputs-raw.awww;
   xremap-flake = inputs-raw.xremap-flake;
   kolide-launcher = inputs-raw.kolide-launcher;

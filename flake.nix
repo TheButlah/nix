@@ -83,11 +83,11 @@
       inputs.nixpkgs.follows = "nixos-26_05";
     };
 
-    niri-flake = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixos-unstable";
-      inputs.nixpkgs-stable.follows = "nixos-26_05";
-    };
+    # niri-flake = {
+    #   url = "github:sodiboo/niri-flake";
+    #   inputs.nixpkgs.follows = "nixos-unstable";
+    #   inputs.nixpkgs-stable.follows = "nixos-26_05";
+    # };
 
     inhibitor = {
       url = "github:TheButlah/inhibitor";
@@ -129,7 +129,7 @@
         import inputs.nixpkgs {
           inherit system;
           overlays = [
-            inputs.niri-flake.overlays.niri
+            # inputs.niri-flake.overlays.niri
             inputs.nixgl.overlay
             inputs.inhibitor.overlays.${system}.default
             inputs.nixos-apple-silicon.overlays.apple-silicon-overlay

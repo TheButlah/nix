@@ -13,11 +13,12 @@ let
     mkIf
     mkEnableOption
     mkOption
+    mkMerge
     ;
 
   windowManagers = {
     niri = rec {
-      initialSession = "${pkgs.niri}/bin/niri-session";
+      initialSession = "${config.programs.niri.package}/bin/niri-session";
       defaultSession = initialSession;
     };
   };
@@ -32,22 +33,42 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    services.greetd = {
-      enable = true;
-      useTextGreeter = true; # prevent error messages breaking tty
-      settings = {
-        initial_session = {
-          command = windowManager.initialSession;
-          user = username;
-        };
+  config = mkIf cfg.enable (mkMerge [
+    {
+      services.greetd = {
+        enable = true;
+        useTextGreeter = true; # prevent error messages breaking tty
+        settings = {
+          initial_session = {
+            command = windowManager.initialSession;
+            user = username;
+          };
 
-        # Fallback greeter
-        default_session = {
-          command = "${lib.getExe pkgs.greetd.tuigreet} --time --remember --cmd \"${windowManager.defaultSession}\"";
-          user = username;
+          # Fallback greeter
+          default_session = {
+            command = "${lib.getExe pkgs.tuigreet} --time --remember --cmd ${windowManager.defaultSession}";
+            user = "greeter";
+          };
         };
       };
-    };
-  };
+    }
+
+    (mkIf (cfg.windowManager == "niri") {
+      programs.niri.enable = true;
+
+      # niri-session re-execs itself through an unqualified `bash`, but greetd's
+      # default service PATH does not include bash.
+      systemd.services.greetd.path = [ pkgs.bash ];
+
+      # NixOS otherwise injects a stripped PATH via Environment= on the niri.service
+      # unit which shadows the imported user-manager PATH. Disabling the default
+      # lets niri inherit the full PATH set up by niri-session.
+      systemd.user.services.niri.enableDefaultPath = false;
+
+      environment.systemPackages = with pkgs; [
+        # xwayland-satellite-stable
+        xwayland-satellite
+      ];
+    })
+  ]);
 }

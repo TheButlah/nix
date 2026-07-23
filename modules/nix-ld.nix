@@ -22,7 +22,9 @@ let
         dynamicLinker = pkgsCross.stdenv.cc.bintools.dynamicLinker;
         ldsoDir = pkgsCross.stdenv.hostPlatform.libDir;
         ldsoName = builtins.baseNameOf dynamicLinker;
-        crossSystem = pkgsCross.stdenv.hostPlatform.system;
+        # nix-ld uses shell-compatible platform suffixes such as
+        # x86_64_linux, not Nix system names such as x86_64-linux.
+        crossSystem = lib.replaceStrings [ "-" ] [ "_" ] pkgsCross.stdenv.hostPlatform.system;
         inherit pkgsCross;
       };
       aarch64PkgsCross = pkgs.pkgsCross.aarch64-multiplatform;

@@ -52,7 +52,15 @@ in
 
     xdg.configFile = {
       "hypr/hyprlock.conf".source = ../../xdg/hyprlock.conf;
-      "niri/config.kdl".source = ../../xdg/niri.kdl;
+      "niri/config.kdl".source =
+        pkgs.runCommand "niri-config-checked"
+          {
+            nativeBuildInputs = [ pkgs.niri ];
+          }
+          ''
+            niri validate --config ${../../xdg/niri.kdl}
+            cp ${../../xdg/niri.kdl} $out
+          '';
       "swaylock/config".source = ../../xdg/swaylock.config;
       "waybar/config.jsonc".source = ../../xdg/waybar.config.jsonc;
       "waybar/style.css".source = ../../xdg/waybar.style.css;

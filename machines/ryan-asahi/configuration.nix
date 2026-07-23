@@ -37,7 +37,7 @@ in
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
-    inputs.niri-flake.nixosModules.niri
+    # inputs.niri-flake.nixosModules.niri
   ];
 
   hardware.asahi = {
@@ -101,12 +101,12 @@ in
   services.gnome.gnome-keyring.enable = true;
   services.gnome.gcr-ssh-agent.enable = false;
   programs.seahorse.enable = true; # gnome keyring UI
-  # tiling window manager
-  programs.niri = {
-    enable = true;
-    package = pkgs.niri-stable;
-  };
-  niri-flake.cache.enable = false;
+  # # tiling window manager
+  # programs.niri = {
+  #   enable = true;
+  #   package = pkgs.niri-stable;
+  # };
+  # niri-flake.cache.enable = false;
   # https://nixos.wiki/wiki/Wayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
   # TODO: not working rn, I think I need to switch to niri-flake
@@ -145,7 +145,6 @@ in
     libsecret # needed for gnome-keyring
     mesa-demos
     neovim
-    pkgs.xwayland-satellite-stable
     ripgrep
     usbutils # lsusb
     v4l-utils # v4l2-ctl
