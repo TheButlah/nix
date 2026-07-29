@@ -543,7 +543,8 @@ binds {
     // Makes the column "fill the rest of the space".
     Mod+Ctrl+F { expand-column-to-available-width; }
 
-    Mod+C { center-column; }
+    Mod+C { spawn "makoctl" "dismiss" "--all"; }
+    Mod+Shift+C { center-column; }
 
     // Finer width adjustments.
     // This command can also:
