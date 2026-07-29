@@ -1,0 +1,27 @@
+{
+	"description": "Desktop notifications when Codex is waiting for user input.",
+	"hooks": {
+		"PermissionRequest": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "notify-send codex-code \"codex needs your permission\"",
+						"timeout": 5
+					}
+				]
+			}
+		],
+		"Stop": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "notify-send codex-code \"codex is idle\"; printf '{}\\n'",
+						"timeout": 5
+					}
+				]
+			}
+		]
+	}
+}

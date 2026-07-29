@@ -81,6 +81,9 @@ in
           # unstable.ramalama
           unstable.whisper-cpp
         ]
+        ++ lib.optionals (cfg.ai && isLinux) [
+          libnotify
+        ]
         ++ lib.optionals cfg.rust [
           # Build tools
           cargo-binutils
@@ -97,6 +100,9 @@ in
     home.file = {
       ".claude/settings.json" = mkIf cfg.ai {
         source = ../../xdg/claude.json;
+      };
+      ".codex/hooks.json" = mkIf (cfg.ai && isLinux) {
+        source = ../../xdg/codex-hooks.json;
       };
     };
 
