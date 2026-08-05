@@ -418,6 +418,14 @@
         homeManagerCfg = ./machines/ryan-wr/home.nix;
         isWork = false;
       };
+      nixosConfigurations."ryan-rvn" = nixosConfig {
+        username = "ryan";
+        hostname = "ryan-rvn";
+        system = "x86_64-linux";
+        modulePath = ./machines/ryan-rvn/configuration.nix;
+        homeManagerCfg = ./machines/ryan-rvn/home.nix;
+        isWork = false;
+      };
       nixosConfigurations."ryan-asahi" = nixosAsahiConfig {
         username = "ryan";
         isWork = false;
