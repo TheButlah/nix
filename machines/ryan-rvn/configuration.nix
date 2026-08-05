@@ -152,7 +152,7 @@ in
     vpn.enable = true;
     inhibitor = {
       enable = true;
-      builtinName = "Framework Laptop 16 Keyboard Module - ANSI Keyboard";
+      builtinName = "AT Translated Set 2 keyboard";
     };
     displayManager = {
       enable = true;
