@@ -20,10 +20,12 @@ in
     enable = mkEnableOption modname;
     mullvad = mkDisableOption "mullvad";
     tailscale = mkDisableOption "tailscale";
+    zerotier = mkEnableOption "zerotier";
   };
 
   config = mkIf cfg.enable {
     services.mullvad-vpn.enable = cfg.mullvad;
     services.tailscale.enable = cfg.tailscale;
+    services.zerotierone.enable = cfg.zerotier;
   };
 }

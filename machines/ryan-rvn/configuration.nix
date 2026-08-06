@@ -149,7 +149,10 @@ in
   thebutlah = {
     # monado.enable = true;
     # selfhosting.enable = true;
-    vpn.enable = true;
+    vpn = {
+      enable = true;
+      zerotier = true;
+    };
     inhibitor = {
       enable = true;
       builtinName = "AT Translated Set 2 keyboard";
