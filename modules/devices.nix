@@ -181,6 +181,8 @@ in
     })
 
     (mkIf cfg.yubico {
+      # For yubikey smart card
+      services.pcscd.enable = true;
       users.users.${username}.extraGroups = [ "yubihsm" ];
       users.groups = {
         yubihsm = { };

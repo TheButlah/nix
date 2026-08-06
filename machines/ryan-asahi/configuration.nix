@@ -163,9 +163,6 @@ in
     openFirewall = true;
   };
 
-  # For yubikey smart card
-  services.pcscd.enable = true;
-
   services.ollama = {
     enable = true;
     package = pkgs.unstable.ollama-vulkan;
