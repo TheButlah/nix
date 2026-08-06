@@ -31,6 +31,7 @@ in
       type = lib.types.enum (lib.attrNames windowManagers);
       description = "The window manager to launch";
     };
+    autologin = mkEnableOption "autologin";
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -38,17 +39,21 @@ in
       services.greetd = {
         enable = true;
         useTextGreeter = true; # prevent error messages breaking tty
-        settings = {
-          initial_session = {
-            command = windowManager.initialSession;
-            user = username;
-          };
-
+        settings = rec {
           # Fallback greeter
           default_session = {
             command = "${lib.getExe pkgs.tuigreet} --time --remember --cmd ${windowManager.defaultSession}";
             user = "greeter";
           };
+          initial_session =
+            if cfg.autologin then
+              {
+                command = windowManager.initialSession;
+                user = username;
+              }
+            else
+              default_session;
+
         };
       };
 

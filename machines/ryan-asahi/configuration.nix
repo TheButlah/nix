@@ -180,6 +180,7 @@ in
     displayManager = {
       enable = true;
       windowManager = "niri";
+      autologin = true;
     };
     streaming.enable = true;
   };

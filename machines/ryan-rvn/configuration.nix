@@ -159,7 +159,7 @@ in
       windowManager = "niri";
     };
     streaming.enable = true;
-    systemdBoot.secureBoot = false;
+    systemdBoot.secureBoot = true;
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
