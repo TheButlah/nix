@@ -62,5 +62,10 @@ in
         User = "git";
         IdentityFile = "${defaultSsh}";
       };
+      "rvn" = {
+        Hostname = "192.168.196.188"; # s1.in.raven.computer
+        User = "ryan";
+        IdentityFile = "${rvnSsh}";
+      };
     };
 }
