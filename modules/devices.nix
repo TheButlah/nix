@@ -143,11 +143,15 @@ in
       services.usbguard.rules = ''
         allow id 0525:a4a2 serial "" name "RNDIS/Ethernet Gadget" hash "VtfbWFxVs6nMUHJ2hSFVw9A2aqtbUZ4i97rFBoFDG38=" with-interface equals { 02:02:ff 0a:00:00 02:06:00 0a:00:00 0a:00:00 } with-connect-type "unknown" # NXP
       '';
-      services.udev.extraRules = ''
-        # IMX usb ethernet
-        ACTION=="add", SUBSYSTEM=="net", SUBSYSTEMS=="usb", ATTRS{idVendor}=="0525", ATTRS{idProduct}=="a4a2", NAME="nxpeth%n"
-      '';
-
+      services.udev = {
+        packages = with pkgs; [
+          uuu # adds udev rules
+        ];
+        extraRules = ''
+          # IMX usb ethernet
+          ACTION=="add", SUBSYSTEM=="net", SUBSYSTEMS=="usb", ATTRS{idVendor}=="0525", ATTRS{idProduct}=="a4a2", NAME="nxpeth%n"
+        '';
+      };
       networking.firewall.trustedInterfaces = [ "nxpeth0" ];
       networking.networkmanager.ensureProfiles.profiles = {
         "NXP Ethernet" = {
@@ -163,7 +167,7 @@ in
             # Pin the host-side address/subnet instead of letting NM auto-pick 10.42.x.0/24
             address1 = "10.42.0.1/24";
             shared-dhcp-range = "10.42.0.2,10.42.0.2"; # Device IP
-            shared-dhcp-lease-time = "2147483647"; # 2^31
+            shared-dhcp-lease-time = "120"; # 2 minutes
           };
           ipv6 = {
             method = "link-local"; # Keep IPv6 link-local alive on the USB link
@@ -188,7 +192,6 @@ in
         yubihsm = { };
       };
       services.udev = {
-        enable = true;
         packages = with pkgs; [
           yubikey-personalization # needed for yubikey-manager
         ];
