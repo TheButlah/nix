@@ -16,6 +16,11 @@ in
     ../../modules/hm/common.nix
   ];
 
+  targets.darwin = {
+    copyApps.enable = true;
+    linkApps.enable = false;
+  };
+
   home.packages = with pkgs; [
     # nixgl.nixGLIntel
     # nixgl.nixVulkanIntel
@@ -28,7 +33,10 @@ in
 
   thebutlah = {
     _1password.enable = true;
-    developer.enable = true;
+    developer = {
+      enable = true;
+      ai = false;
+    };
     terminal = {
       enable = true;
       nvim = true;

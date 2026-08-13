@@ -11,6 +11,7 @@ let
   inherit (inputs) self;
 in
 {
+
   nix = {
     enable = false; # managed by determinate
     package = pkgs.nix;
@@ -49,7 +50,7 @@ in
       #   };
       # };
     };
-    auto-optimise-store = true;
+    settings.auto-optimise-store = true;
   };
   nixpkgs.flake = {
     setFlakeRegistry = false; # incompatible with determinate
@@ -102,6 +103,10 @@ in
   # currently disabled due to bug, we get it from brew instead:
   # https://github.com/nix-darwin/nix-darwin/issues/1041
   services.karabiner-elements.enable = false;
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.meslo-lg
+  ];
 
   security.sudo.extraConfig = ''
     Defaults timestamp_timeout=60
