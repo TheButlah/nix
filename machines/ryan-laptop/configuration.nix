@@ -84,8 +84,8 @@ in
     "com.apple.keyboard.fnState" = true;
     AppleInterfaceStyleSwitchesAutomatically = true;
     AppleICUForce24HourTime = true;
-    # Whether to enable “Natural” scrolling direction
-    "com.apple.swipescrolldirection" = false;
+    # enable “Natural” scrolling direction
+    "com.apple.swipescrolldirection" = true;
   };
   # default dock animation when autohiding is trash.
   # make it a lot snappier.
