@@ -120,6 +120,7 @@ in
       "mullvadvpn"
       "obs"
       "spotify"
+      "slack"
       "tailscale"
       "tidal"
     ];
