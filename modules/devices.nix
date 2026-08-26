@@ -164,13 +164,9 @@ in
           ethernet = { };
           ipv4 = {
             method = "shared";
-            # Pin the host-side address/subnet instead of letting NM auto-pick 10.42.x.0/24
-            address1 = "10.42.0.1/24";
-            shared-dhcp-range = "10.42.0.2,10.42.0.2"; # Device IP
-            shared-dhcp-lease-time = "120"; # 2 minutes
           };
           ipv6 = {
-            method = "link-local"; # Keep IPv6 link-local alive on the USB link
+            method = "shared"; # Keep IPv6 link-local alive on the USB link
           };
           proxy = { };
         };
