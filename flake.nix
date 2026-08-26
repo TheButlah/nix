@@ -325,9 +325,6 @@
             ]
             ++ lib.optionals readOnlyPkgs [
               inputs.nixpkgs.nixosModules.readOnlyPkgs
-            ]
-            ++ lib.optionals isWork [
-              inputs.kolide-launcher.nixosModules.kolide-launcher
             ];
           }
         );

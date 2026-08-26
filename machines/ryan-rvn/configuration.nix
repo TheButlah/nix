@@ -163,6 +163,7 @@ in
     };
     streaming.enable = true;
     systemdBoot.secureBoot = true;
+    kolide.enable = true;
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,

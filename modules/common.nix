@@ -19,6 +19,7 @@ in
     ./devices.nix
     ./display-manager.nix
     ./inhibitor.nix
+    ./kolide.nix
     ./monado.nix
     ./nix-ld.nix
     ./selfhosting.nix
