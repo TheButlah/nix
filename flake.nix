@@ -208,7 +208,6 @@
         {
           modulePath,
           username,
-          isWork,
           hostname,
           homeManagerCfg,
           readOnlyPkgs ? true,
@@ -246,7 +245,6 @@
                   extraSpecialArgs = rec {
                     inherit
                       username
-                      isWork
                       pkgs
                       inputs
                       mkDisableOption
@@ -255,9 +253,6 @@
                   };
                 };
               }
-            ]
-            ++ lib.optionals isWork [
-              # inputs.kolide-launcher.nixosModules.kolide-launcher
             ];
           }
         );
@@ -268,7 +263,6 @@
           username,
           hostname,
           system,
-          isWork,
           readOnlyPkgs ? true,
           homeManagerCfg,
         }:
@@ -286,7 +280,6 @@
               inherit
                 username
                 hostname
-                isWork
                 inputs
                 mkDisableOption
                 self
@@ -313,7 +306,6 @@
                     inherit
                       username
                       hostname
-                      isWork
                       pkgs
                       inputs
                       mkDisableOption
@@ -334,7 +326,6 @@
           modulePath,
           username,
           hostname,
-          isWork,
           homeManagerCfg,
         }:
         (nixosConfig {
@@ -342,7 +333,6 @@
             modulePath
             username
             hostname
-            isWork
             homeManagerCfg
             ;
           system = "aarch64-linux";
@@ -354,7 +344,6 @@
           username,
           hostname,
           system,
-          isWork,
           homeManagerCfg,
         }:
         (
@@ -380,7 +369,6 @@
             extraSpecialArgs = {
               inherit
                 username
-                isWork
                 inputs
                 hostname
                 mkDisableOption
@@ -395,14 +383,12 @@
       nixosConfigurations."wsl" = nixosConfig {
         username = "ryan";
         system = "x86_64-linux";
-        isWork = false;
         modulePath = ./machines/wsl/configuration.nix;
         hostname = "wsl";
       };
       nixosConfigurations."ryan-desktop" = nixosConfig {
         username = "ryan";
         system = "x86_64-linux";
-        isWork = false;
         modulePath = ./machines/ryan-desktop/configuration.nix;
         homeManagerCfg = ./machines/ryan-desktop/home.nix;
         hostname = "ryan-desktop";
@@ -413,7 +399,6 @@
         system = "x86_64-linux";
         modulePath = ./machines/ryan-wr/configuration.nix;
         homeManagerCfg = ./machines/ryan-wr/home.nix;
-        isWork = false;
       };
       nixosConfigurations."ryan-rvn" = nixosConfig {
         username = "ryan";
@@ -421,11 +406,9 @@
         system = "x86_64-linux";
         modulePath = ./machines/ryan-rvn/configuration.nix;
         homeManagerCfg = ./machines/ryan-rvn/home.nix;
-        isWork = false;
       };
       nixosConfigurations."ryan-asahi" = nixosAsahiConfig {
         username = "ryan";
-        isWork = false;
         modulePath = ./machines/ryan-asahi/configuration.nix;
         hostname = "ryan-asahi";
         homeManagerCfg = ./machines/ryan-asahi/home.nix;
@@ -433,14 +416,12 @@
       nixosConfigurations."li-matrix" = nixosConfig {
         username = "foobar";
         system = "x86_64-linux";
-        isWork = false;
         modulePath = ./machines/li-matrix/configuration.nix;
         hostname = "li-matrix";
         homeManagerCfg = ./machines/li-matrix/home.nix;
       };
       darwinConfigurations."ryan-laptop" = darwinConfig {
         username = "ryan";
-        isWork = false;
         modulePath = ./machines/ryan-laptop/configuration.nix;
         hostname = "ryan-laptop";
         homeManagerCfg = ./machines/ryan-laptop/home.nix;
@@ -448,42 +429,36 @@
       homeConfigurations."ryan@x86" = homeManagerConfig {
         username = "ryan";
         system = "x86_64-linux";
-        isWork = false;
         hostname = "x86";
         homeManagerCfg = ./machines/home-headless-developer.nix;
       };
       homeConfigurations."ryan@aarch64" = homeManagerConfig {
         username = "ryan";
         system = "aarch64-linux";
-        isWork = false;
         hostname = "aarch64";
         homeManagerCfg = ./machines/home-headless-developer.nix;
       };
       homeConfigurations."vscode@aarch64" = homeManagerConfig {
         username = "vscode";
         system = "aarch64-linux";
-        isWork = false;
         hostname = "aarch64";
         homeManagerCfg = ./machines/home-headless-developer.nix;
       };
       homeConfigurations."vscode@x86" = homeManagerConfig {
         username = "vscode";
         system = "x86_64-linux";
-        isWork = false;
         hostname = "x86";
         homeManagerCfg = ./machines/home-headless-developer.nix;
       };
       homeConfigurations."vscode@ryan-wr" = homeManagerConfig {
         username = "vscode";
         system = "x86_64-linux";
-        isWork = false;
         hostname = "ryan-wr";
         homeManagerCfg = ./machines/home-headless-developer.nix;
       };
       homeConfigurations."deck@steamdeck" = homeManagerConfig {
         username = "deck";
         system = "x86_64-linux";
-        isWork = false;
         hostname = "steamdeck";
         homeManagerCfg = ./machines/steamdeck/home.nix;
       };

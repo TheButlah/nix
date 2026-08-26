@@ -30,10 +30,7 @@ in
     _1password.enable = true;
     developer.enable = true;
     music.enable = true;
-    social = {
-      enable = false;
-      isWork = true;
-    };
+    social.enable = false;
     terminal = {
       enable = true;
       nvim = true;

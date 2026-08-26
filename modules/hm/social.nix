@@ -3,6 +3,7 @@
   config,
   lib,
   username,
+  mkDisableOption,
   ...
 }:
 let
@@ -24,13 +25,13 @@ in
 {
   options.thebutlah.${modname} = {
     enable = mkEnableOption "social apps";
-    isWork = mkEnableOption "work-only mode";
+    discord = mkDisableOption "discord";
   };
 
   config = mkIf cfg.enable {
     home.packages =
       with pkgs;
-      lib.optionals (!cfg.isWork && isLinux) [
+      lib.optionals cfg.discord [
         unstable.legcord
       ];
   };

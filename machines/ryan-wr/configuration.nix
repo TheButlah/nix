@@ -5,7 +5,6 @@
   config,
   hostname,
   username,
-  isWork,
   ...
 }:
 let

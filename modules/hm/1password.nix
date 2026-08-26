@@ -38,7 +38,6 @@ in
 {
   options.thebutlah.${modname} = {
     enable = mkEnableOption "1password";
-    isWork = mkEnableOption "work account";
   };
 
   config = mkIf cfg.enable {

@@ -5,7 +5,6 @@
   lib,
   username,
   hostname,
-  isWork,
   alacritty ? pkgs.alacritty,
   ...
 }:
