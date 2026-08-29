@@ -60,7 +60,7 @@ in
         IdentityFile = "${defaultSsh}";
       };
       "rvn" = {
-        Hostname = "192.168.196.188"; # s1.in.raven.computer
+        Hostname = "raven-server-1.taileafc26.ts.net";
         User = "ryan";
         IdentityFile = "${rvnSsh}";
       };

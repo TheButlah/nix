@@ -150,7 +150,7 @@ in
     # selfhosting.enable = true;
     vpn = {
       enable = true;
-      zerotier = true;
+      # zerotier = true;
     };
     inhibitor = {
       enable = true;
