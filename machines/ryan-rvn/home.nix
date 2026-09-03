@@ -54,6 +54,11 @@ in
         User = "git";
         IdentityFile = "${rvnSsh}";
       };
+      "rvn-gl" = {
+        HostName = "gitlab.com";
+        User = "git";
+        IdentityFile = "${rvnSsh}";
+      };
       "gh" = {
         Hostname = "github.com";
         User = "git";
