@@ -22,6 +22,7 @@ in
     ./kolide.nix
     ./monado.nix
     ./nix-ld.nix
+    ./nvidia.nix
     ./selfhosting.nix
     ./ssh.nix
     ./streaming.nix
