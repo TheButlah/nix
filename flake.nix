@@ -83,9 +83,9 @@
       inputs.nixpkgs.follows = "nixos-26_05";
     };
 
-    comfyui-nix-devshell = {
-      url = "github:aldenparker/comfyui-nix-devshell";
-      inputs.nixpkgs.follows = "nixos-unstable";
+    comfyui-nix = {
+      url = "github:utensils/comfyui-nix";
+      inputs.nixpkgs.follows = "nixos-26_05";
     };
 
     nixpkgs-xr = {
@@ -116,6 +116,7 @@
             (import overlays/libdjinterop.nix)
             (import overlays/direnv-no-check.nix)
             inputs.nixpkgs-xr.overlays.default
+            inputs.comfyui-nix.overlays.default
           ];
           config = {
             allowUnfree = true;
@@ -505,8 +506,6 @@
           packages."disko" = inputs.disko.packages.${system}.disko;
           packages."disko-installer" = inputs.disko.packages.${system}.disko-install;
           packages.tsh17 = tsh17;
-
-          devShells.comfyui = inputs.comfyui-nix-devshell.devShells.${system}.cuda-beta;
 
           # This formats the nix files, not the rest of the repo.
           formatter = pkgs.nixfmt-tree;

@@ -188,6 +188,7 @@ in
     streaming.enable = true;
     systemdBoot.secureBoot = true;
     nvidia.enable = true;
+    comfyui.enable = true;
   };
 
   services.ollama = {

@@ -16,6 +16,7 @@ in
   imports = [
     ./audio.nix
     ./bluetooth.nix
+    ./comfyui.nix
     ./devices.nix
     ./display-manager.nix
     ./inhibitor.nix
