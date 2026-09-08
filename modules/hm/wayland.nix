@@ -48,6 +48,7 @@ in
       nautilus # For file picker
       hyprlock
       lockscreen
+      awww # for animated wallpaper
     ];
 
     xdg.configFile = {

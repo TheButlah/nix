@@ -28,16 +28,6 @@
       inputs.nixpkgs.follows = "nixos-26_05";
     };
 
-    # Replacement for rustup
-    fenix-linux = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixos-26_05";
-    };
-    fenix-darwin = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs-26_05-darwin";
-    };
-
     # Manages user settings
     home-manager-linux = {
       url = "github:nix-community/home-manager/release-26.05";
@@ -71,23 +61,11 @@
       inputs.nixpkgs.follows = "nixos-26_05";
     };
 
-    # Rust animated wallpaper
-    awww = {
-      url = "git+https://codeberg.org/LGFae/awww";
-      inputs.nixpkgs.follows = "nixos-26_05";
-    };
-
     # rust keyboard remapper via evdev and uinput
     xremap-flake = {
       url = "github:xremap/nix-flake";
       inputs.nixpkgs.follows = "nixos-26_05";
     };
-
-    # niri-flake = {
-    #   url = "github:sodiboo/niri-flake";
-    #   inputs.nixpkgs.follows = "nixos-unstable";
-    #   inputs.nixpkgs-stable.follows = "nixos-26_05";
-    # };
 
     inhibitor = {
       url = "github:TheButlah/inhibitor";
@@ -129,7 +107,6 @@
         import inputs.nixpkgs {
           inherit system;
           overlays = [
-            # inputs.niri-flake.overlays.niri
             inputs.nixgl.overlay
             inputs.inhibitor.overlays.${system}.default
             inputs.nixos-apple-silicon.overlays.apple-silicon-overlay
@@ -138,7 +115,6 @@
             (import overlays/karabiner-14.nix)
             (import overlays/libdjinterop.nix)
             (import overlays/direnv-no-check.nix)
-            inputs.awww.overlays.default
             inputs.nixpkgs-xr.overlays.default
           ];
           config = {
