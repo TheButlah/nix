@@ -54,6 +54,7 @@ in
   networking.networkmanager = {
     enable = true;
     wifi.backend = "iwd";
+    dns = "systemd-resolved";
     settings.connection.mdns = 2;
   };
   networking.wireless.iwd = {
@@ -61,6 +62,7 @@ in
     settings = {
       General = {
         EnableNetworkConfiguration = true;
+        Country = "US";
       };
       IPv6 = {
         Enabled = true;
@@ -70,9 +72,6 @@ in
       };
     };
   };
-  networking.interfaces."${ethernetAdapter}" = {
-    wakeOnLan.enable = true;
-  };
   services.resolved = {
     enable = true;
     # set to "false" if giving you trouble
@@ -81,7 +80,9 @@ in
       MulticastDNS = true;
     };
   };
-
+  networking.interfaces."${ethernetAdapter}" = {
+    wakeOnLan.enable = true;
+  };
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
     57621 # spotify https://nixos.wiki/wiki/Spotify
@@ -93,40 +94,16 @@ in
     22000 # syncthing
   ];
 
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   # Set your time zone.
   time.timeZone = "America/New_York";
 
   # We don't enable x11
   services.xserver.enable = false;
+  services.gnome.gnome-keyring.enable = true;
+  services.gnome.gcr-ssh-agent.enable = false;
   programs.seahorse.enable = true; # gnome keyring UI
-  services.displayManager = {
-    # KDE login/display manager
-    sddm = {
-      enable = true;
-      wayland.enable = true;
-    };
-    # this is the desktop manager that gets launched
-    defaultSession = "niri";
-  };
-  # KDE plasma window manager
-  services.desktopManager = {
-    plasma6 = {
-      enable = true;
-    };
-  };
   # https://nixos.wiki/wiki/Wayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  # TODO: not working rn, I think I need to switch to niri-flake
-  # programs.xwayland.enable = true;
 
   # Enable OpenGL
   hardware.graphics = {
@@ -163,12 +140,6 @@ in
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = linuxPackages.nvidiaPackages.beta;
   };
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.libinput.enable = true;
 
   programs = {
     firefox.enable = true;
@@ -240,9 +211,16 @@ in
 
   thebutlah = {
     monado.enable = true;
-    selfhosting.enable = true;
+    # selfhosting.enable = true;
+    vpn = {
+      enable = true;
+      # zerotier = true;
+    };
     ssh.enable = true;
-    vpn.enable = true;
+    displayManager = {
+      enable = true;
+      windowManager = "niri";
+    };
     streaming.enable = true;
     systemdBoot.secureBoot = true;
   };
@@ -252,11 +230,6 @@ in
     package = pkgs.unstable.ollama-cuda;
     host = "100.94.243.29";
   };
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

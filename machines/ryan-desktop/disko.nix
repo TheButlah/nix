@@ -43,8 +43,8 @@
                   allowDiscards = true; # https://wiki.archlinux.org/title/Dm-crypt/Specialties#Discard/TRIM_support_for_solid_state_drives_(SSD)
                   crypttabExtraOpts = [
                     "tpm2-device=auto"
-                    # Choose your PCR binding; 7 is a safe default (Secure Boot policy).
-                    "tpm2-pcrs=7"
+                    # https://uapi-group.org/specifications/specs/linux_tpm_pcr_registry/
+                    "tpm2-pcrs=0+1+7"
                   ];
                 };
                 content = {
