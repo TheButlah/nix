@@ -107,6 +107,10 @@ in
       };
     };
 
+    home.sessionVariables = lib.attrsets.optionalAttrs cfg.ai {
+      OPENCODE_ENABLE_EXA = mkIf cfg.ai "1";
+    };
+
     xdg.enable = true;
     xdg.configFile = {
       "mods/mods.yml" = mkIf cfg.ai {
