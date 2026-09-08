@@ -80,6 +80,7 @@ in
           unstable.ollama
           # unstable.ramalama
           unstable.whisper-cpp
+          unstable.opencode
         ]
         ++ lib.optionals (cfg.ai && isLinux) [
           libnotify
@@ -110,6 +111,9 @@ in
     xdg.configFile = {
       "mods/mods.yml" = mkIf cfg.ai {
         source = ../../xdg/mods.yml;
+      };
+      "opencode/opencode.json" = mkIf cfg.ai {
+        source = ../../xdg/opencode.json;
       };
       "worktrunk/config.toml" = {
         source = ../../xdg/worktrunk.toml;
