@@ -25,6 +25,7 @@ in
     ./social.nix
     ./terminal.nix
     ./wayland.nix
+    ./eda.nix
   ];
 
   home = {

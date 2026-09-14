@@ -36,6 +36,7 @@ in
       nvim = true;
     };
     wayland.enable = isLinux;
+    eda.enable = true;
   };
 
   programs.ssh.settings =
