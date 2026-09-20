@@ -45,6 +45,7 @@ in
     home.packages = with pkgs; [
       (fromFile "gnome-color" ../../scripts/gnome-color.sh)
       wl-clipboard
+      wl-mirror # for screen mirroring
       nautilus # For file picker
       hyprlock
       lockscreen
